@@ -1,0 +1,74 @@
+[
+  {
+    "id": "PM-001",
+    "tanggal": "2026-06-06",
+    "asal_sekolah": "SMAN 1 SUMENEP",
+    "tingkat_kelas": "10 SMA UMUM",
+    "mapel": "Matematika Wajib",
+    "materi": "Fungsi Kuadrat dan Grafik Parabola",
+    "tanggal_uh": "2026-06-15",
+    "pengajar": "Ahmad Fauzi, S.Pd.",
+    "keterangan": "Siswa aktif mengerjakan latihan soal di papan tulis.",
+    "status": "Terjadwal UH"
+  },
+  {
+    "id": "PM-002",
+    "tanggal": "2026-06-06",
+    "asal_sekolah": "SMAN 2 SUMENEP",
+    "tingkat_kelas": "11 SMA IPA",
+    "mapel": "Fisika",
+    "materi": "Dinamika Rotasi dan Kesetimbangan Benda Tegar",
+    "tanggal_uh": "2026-06-18",
+    "pengajar": "Dra. Siti Aminah",
+    "keterangan": "Praktikum sederhana momen gaya.",
+    "status": "Selesai Materi"
+  },
+  {
+    "id": "PM-003",
+    "tanggal": "2026-06-05",
+    "asal_sekolah": "SMPN 1 SUMENEP",
+    "tingkat_kelas": "8 SMP UMUM",
+    "mapel": "IPA Terpadu",
+    "materi": "Sistem Pernapasan Manusia & Gangguannya",
+    "tanggal_uh": "2026-06-12",
+    "pengajar": "Budi Santoso, M.Pd.",
+    "keterangan": "Diskusi kelompok mengenai bahaya rokok bagi paru-paru.",
+    "status": "Mendekati UH"
+  },
+  {
+    "id": "PM-004",
+    "tanggal": "2026-06-05",
+    "asal_sekolah": "SDN PANDIAN I",
+    "tingkat_kelas": "6 SD DASAR",
+    "mapel": "Matematika",
+    "materi": "Operasi Hitung Bilangan Bulat & Pecahan",
+    "tanggal_uh": "2026-06-10",
+    "pengajar": "Nurul Hidayah, S.Pd.",
+    "keterangan": "Latihan soal cerita.",
+    "status": "Mendekati UH"
+  },
+  {
+    "id": "PM-005",
+    "tanggal": "2026-06-04",
+    "asal_sekolah": "SMAN 1 SUMENEP",
+    "tingkat_kelas": "12 SMA IPA",
+    "mapel": "Kimia",
+    "materi": "Sifat Koligatif Larutan (Kenaikan Titik Didih)",
+    "tanggal_uh": "2026-06-14",
+    "pengajar": "Ir. H. Zainal Arifin",
+    "keterangan": "Perhitungan molalitas dan fraksi mol.",
+    "status": "Terjadwal UH"
+  },
+  {
+    "id": "PM-006",
+    "tanggal": "2026-06-04",
+    "asal_sekolah": "SMPN 2 SUMENEP",
+    "tingkat_kelas": "9 SMP UMUM",
+    "mapel": "Bahasa Inggris",
+    "materi": "Narrative Text: Legend & Myth Structure",
+    "tanggal_uh": "2026-06-16",
+    "pengajar": "Rina Wati, S.Pd.",
+    "keterangan": "Reading comprehension and vocabulary building.",
+    "status": "Selesai Materi"
+  }
+]

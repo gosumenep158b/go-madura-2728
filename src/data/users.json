@@ -1,0 +1,58 @@
+[
+  {
+    "nik": "1202502515",
+    "nama": "Elvis Sahri",
+    "jabatan": "Kanit",
+    "username": "1202502515",
+    "password": "admin123",
+    "role": "super admin"
+  },
+  {
+    "nik": "2025239238",
+    "nama": "Kamila",
+    "jabatan": "PH",
+    "username": "2025239238",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "nik": "2025239280",
+    "nama": "Dyah Ayu Shofa Noer Azizah",
+    "jabatan": "PH",
+    "username": "2025239280",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "nik": "2022229015",
+    "nama": "Dwi Fitriaini Nur Anisa",
+    "jabatan": "CS",
+    "username": "2022229015",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "nik": "1510800003",
+    "nama": "Subarkah Arif",
+    "jabatan": "TI",
+    "username": "1510800003",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "nik": "2024138000",
+    "nama": "Adi Wijaya Jaka Pradana",
+    "jabatan": "Staf Pengajaran & Kesiswaan",
+    "username": "2024138000",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "nik": "1402502276",
+    "nama": "Al Hidayat",
+    "jabatan": "PH",
+    "username": "1402502276",
+    "password": "admin123",
+    "role": "admin"
+  }
+]
