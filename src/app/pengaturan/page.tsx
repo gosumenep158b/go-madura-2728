@@ -183,6 +183,13 @@ export default function PengaturanAdminPage() {
   const [cProgram, setCProgram] = useState('Reguler Non SD');
   const [cTingkat, setCTingkat] = useState('12 SMA UMUM');
   const [cNumber, setCNumber] = useState('001');
+  const [editingClassId, setEditingClassId] = useState<number | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
+  const [editNamaKelompok, setEditNamaKelompok] = useState('');
+  const [editTingkat, setEditTingkat] = useState('');
+  const [editRuang, setEditRuang] = useState('');
+  const [editKapasitas, setEditKapasitas] = useState(25);
+  const [editHariJam, setEditHariJam] = useState('');
   const [cRuang, setCRuang] = useState('UGM');
   const [cHari1, setCHari1] = useState('Senin');
   const [cHari1S1Awal, setCHari1S1Awal] = useState('16.00');
@@ -195,6 +202,48 @@ export default function PengaturanAdminPage() {
   const [cHari2S1Akhir, setcHari2S1Akhir] = useState('17.30');
   const [cHari2S2Awal, setcHari2S2Awal] = useState('18.00');
   const [cHari2S2Akhir, setcHari2S2Akhir] = useState('19.30');
+
+  async function handleDeleteClass(id: number, nama: string) {
+    if (!window.confirm(`Yakin ingin menghapus kelas ${nama} (ID: ${id})?`)) return;
+    const { error } = await supabase.from('admin_classes').delete().eq('id', id);
+    if (error) {
+      alert('Gagal menghapus kelas: ' + error.message);
+    } else {
+      alert(`Berhasil menghapus kelas ${nama}!`);
+      fetchClasses();
+    }
+  }
+
+  function startEditClass(c: any) {
+    setEditingClassId(c.id);
+    setEditNamaKelompok(c.nama_kelompok ?? c.class_name ?? '');
+    setEditTingkat(c.tingkat_kelas ?? '');
+    setEditRuang(c.ruang ?? c.unit_name ?? 'UGM');
+    setEditKapasitas(Number(c.kapasitas ?? c.capacity ?? 25));
+    setEditHariJam(c.hari_jam ?? c.schedule ?? '');
+    setEditModalOpen(true);
+  }
+
+  async function handleSaveEdit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editingClassId) return;
+    const { error } = await supabase.from('admin_classes').update({
+      nama_kelompok: editNamaKelompok,
+      tingkat_kelas: editTingkat,
+      ruang: editRuang,
+      kapasitas: Number(editKapasitas),
+      hari_jam: editHariJam
+    }).eq('id', editingClassId);
+
+    if (error) {
+      alert('Gagal memperbarui kelas: ' + error.message);
+    } else {
+      alert('Berhasil memperbarui kelas!');
+      setEditModalOpen(false);
+      setEditingClassId(null);
+      fetchClasses();
+    }
+  }
 
   async function handleAddClass(e: React.FormEvent) {
     e.preventDefault();
@@ -542,6 +591,7 @@ export default function PengaturanAdminPage() {
                         <th className="p-3">Kapasitas</th>
                         <th className="p-3">Terisi</th>
                         <th className="p-3">Sisa Daya Kursi</th>
+                        <th className="p-3 text-center">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
