@@ -184,11 +184,15 @@ export default function ModulPenawaranBimbel() {
   const [slpByMonth, setSlpByMonth] = useState<Record<string,number>>(SLP_DISCOUNT_BY_MONTH);
   const [promoByMonth, setPromoByMonth] = useState<Record<string,number>>(PROMO_RATE_BY_MONTH);
   const [kelasOptions, setKelasOptions] = useState<any[]>([]);
+  const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
+  const [historyList, setHistoryList] = useState<any[]>([]);
+  const [loadingHistory, setLoadingHistory] = useState<boolean>(false);
   const [selectedKelasId, setSelectedKelasId] = useState<string>('');
 
   // Identitas
   const [namaSiswa, setNamaSiswa] = useState<string>('');
   const [noHp, setNoHp] = useState<string>('');
+  const [noHpOrtu, setNoHpOrtu] = useState<string>('');
   const [asalSekolah, setAsalSekolah] = useState<string>('');
   const [noRegInput, setNoRegInput] = useState<string>('');
   const [slpCheckResult, setSlpCheckResult] = useState<any>(null);
@@ -331,6 +335,48 @@ export default function ModulPenawaranBimbel() {
     }
   }
 
+  
+  async function savePenawaranHistory(actionType: string) {
+    try {
+      const k = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null;
+      await supabase.from('penawaran_history').insert({
+        nama_siswa: namaSiswa,
+        asal_sekolah: asalSekolah,
+        no_hp_siswa: noHp,
+        no_hp_ortu: noHpOrtu,
+        jenjang: grade,
+        unit: selectedUnit,
+        kelas_id: selectedKelasId || null,
+        nama_kelas: k ? k.nama_kelompok : null,
+        student_type: studentType,
+        bulan_daftar: bulanDaftar,
+        base_price: basePrice,
+        total_net: Math.round(finalNet),
+        total_savings: Math.round(totalSavings),
+        payment_method: paymentMethod,
+        action_type: actionType
+      });
+      console.log('Penawaran saved to history successfully');
+    } catch (e) {
+      console.error('Failed to save history:', e);
+    }
+  }
+
+  
+  async function fetchHistory() {
+    setLoadingHistory(true);
+    try {
+      const { data, error } = await supabase.from('penawaran_history').select('*').order('created_at', { ascending: false }).limit(50);
+      if (!error && data) {
+        setHistoryList(data);
+      }
+    } catch(e) {
+      console.error(e);
+    }
+    setLoadingHistory(false);
+    setShowHistoryModal(true);
+  }
+
   function handleSendWhatsApp() {
     if (!namaSiswa || !noHp || !asalSekolah) {
       alert('Mohon lengkapi Nama Siswa, No. WhatsApp, dan Asal Sekolah.');
@@ -344,6 +390,7 @@ export default function ModulPenawaranBimbel() {
     const facilitiesListStr = currentGradeFacilities.map((f) => `  - ${f}`).join('\n');
     const rincianDiskon = discountLogs.map(d => `  - ${d.label}: -Rp ${Math.round(d.amount).toLocaleString('id-ID')}`).join('\n');
 
+    savePenawaranHistory('whatsapp');
     const waText = encodeURIComponent(
       `📄 *SURAT PENAWARAN RESMI BIMBINGAN BELAJAR GANESHA OPERATION*\n` +
       `Cabang: *${selectedUnit}* (TA 2027/2028)\n\n` +
@@ -399,7 +446,7 @@ export default function ModulPenawaranBimbel() {
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={() => window.print()}
+              onClick={() => { savePenawaranHistory('print'); window.print(); }}
               className="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
             >
               <span>🖨️ Cetak Surat Penawaran</span>
@@ -506,16 +553,28 @@ export default function ModulPenawaranBimbel() {
                   className="w-full mt-1 p-2 border rounded-xl text-sm"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-700">No. WhatsApp Orang Tua / Siswa</label>
-                <input
-                  type="text"
-                  value={noHp}
-                  onChange={(e) => setNoHp(e.target.value)}
-                  placeholder="08xxxxxxxxxx"
-                  className="w-full mt-1 p-2 border rounded-xl text-sm"
-                />
-              </div>
+              <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700">No. WA Siswa</label>
+                    <input
+                      type="text"
+                      value={noHp}
+                      onChange={(e) => setNoHp(e.target.value)}
+                      placeholder="08..."
+                      className="w-full mt-1 p-2 border rounded-xl text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700">No. WA Orang Tua</label>
+                    <input
+                      type="text"
+                      value={noHpOrtu}
+                      onChange={(e) => setNoHpOrtu(e.target.value)}
+                      placeholder="08..."
+                      className="w-full mt-1 p-2 border rounded-xl text-sm"
+                    />
+                  </div>
+                </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-700">Asal Sekolah</label>
                 <input
