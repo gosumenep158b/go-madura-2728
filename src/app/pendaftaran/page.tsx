@@ -558,12 +558,22 @@ export default function ModulPenawaranBimbel() {
             <div>
               <label className="block text-xs font-semibold text-gray-700">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
               {(() => {
+                console.log("DEBUG KELAS:", { kelasOptions, grade, selectedUnit });
                 const filtered = kelasOptions.filter((c:any) => {
-                  const matchUnit = (c.ruang ?? c.unit_name ?? '').toLowerCase() === (selectedUnit ?? '').toLowerCase();
-                  const matchGrade = (c.tingkat_kelas ?? '').toLowerCase().includes((grade ?? '').toLowerCase()) || (grade ?? '').toLowerCase().includes((c.tingkat_kelas ?? '').toLowerCase());
+                  // Relax unit and grade matching so classes are never hidden due to strict naming differences
+                  const u1 = (c.ruang ?? c.unit_name ?? '').toLowerCase();
+                  const u2 = (selectedUnit ?? '').toLowerCase();
+                  const matchUnit = !u1 || !u2 || u1.includes(u2) || u2.includes(u1);
+                  
+                  const g1 = (c.tingkat_kelas ?? '').toLowerCase();
+                  const g2 = (grade ?? '').toLowerCase();
+                  const matchGrade = !g1 || !g2 || g1.includes(g2) || g2.includes(g1);
+                  
                   return matchUnit && matchGrade;
                 });
-                if (!filtered.length) {
+                // Fallback: if still empty, show all kelasOptions so user can pick any created class
+                const displayList = filtered.length > 0 ? filtered : kelasOptions;
+                if (!displayList.length) {
                   const hasAnyForGrade = kelasOptions.some((c:any)=> c.tingkat_kelas === grade);
                   return (
                     <div className="mt-1 p-3 rounded-xl border border-dashed bg-gray-50 text-xs text-gray-500">
@@ -575,7 +585,7 @@ export default function ModulPenawaranBimbel() {
                 return (
                   <select value={selectedKelasId} onChange={e=> setSelectedKelasId(e.target.value)} className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white">
                     <option value="">— Pilih Kelas —</option>
-                    {filtered.map((c:any)=> (
+                    {displayList.map((c:any)=> (
                       <option key={c.id} value={String(c.id)}>{c.nama_kelompok} — {c.hari_jam} ({c.ruang})</option>
                     ))}
                   </select>
