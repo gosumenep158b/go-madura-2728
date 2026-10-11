@@ -178,24 +178,65 @@ export default function PengaturanAdminPage() {
     const m = nama.trim().match(/^(\d{1,2})/);
     return m ? m[1] : '12';
   }
+  const [cUnit, setCUnit] = useState('Unit Agus Salim');
+  const [cProgram, setCProgram] = useState('Reguler Non SD');
+  const [cTingkat, setCTingkat] = useState('12 SMA UMUM');
+  const [cNumber, setCNumber] = useState('001');
+  const [cRuang, setCRuang] = useState('UGM');
+  const [cHari1, setCHari1] = useState('Senin');
+  const [cJam1Awal, setCJam1Awal] = useState('16.00');
+  const [cJam1Akhir, setCJam1Akhir] = useState('17.30');
+  const [cHari2, setCHari2] = useState('Kamis');
+  const [cJam2Awal, setCJam2Awal] = useState('16.00');
+  const [cJam2Akhir, setCJam2Akhir] = useState('17.30');
+
   async function handleAddClass(e: React.FormEvent) {
     e.preventDefault();
-    if (!newClassName) return;
+    let codeLetter = 'R';
+    if (cProgram === 'Eksekutif Silver') codeLetter = 'S';
+    else if (cProgram === 'Eksekutif Medical Class') codeLetter = 'M';
+    
+    let tingkatNum = cTingkat.replace(/[^0-9]/g, '');
+    if (!tingkatNum) tingkatNum = '12';
+    
+    const generatedName = `${tingkatNum}-${codeLetter}-${cNumber}`;
+    
+    let capacity = 25;
+    if (cProgram === 'Reguler SD') capacity = 20;
+    else if (cProgram === 'Reguler Non SD') capacity = 25;
+    else if (cProgram === 'Eksekutif Silver') capacity = 20;
+    else if (cProgram === 'Eksekutif Medical Class') capacity = 15;
+    
+    const scheduleStr = `${cHari1} (${cJam1Awal}-${cJam1Akhir}) & ${cHari2} (${cJam2Awal}-${cJam2Akhir})`;
+
+    for (const existing of classes) {
+      if ((existing.ruang ?? existing.unit_name) === cRuang) {
+        const existingSchedule = String(existing.hari_jam ?? existing.schedule ?? '');
+        if (existingSchedule.includes(cHari1) || existingSchedule.includes(cHari2)) {
+          if (!window.confirm(`⚠️ Perhatian: Ruangan ${cRuang} sudah digunakan pada jadwal terkait (${existingSchedule}) oleh kelas ${existing.nama_kelompok ?? existing.class_name}. Tetap lanjutkan?`)) {
+            return;
+          }
+          break;
+        }
+      }
+    }
+
     const { error } = await supabase.from('admin_classes').insert([{
-      tingkat_kelas: newClassTingkat,
-      nama_kelompok: newClassName,
-      ruang: newClassUnit,
-      kapasitas: 25,
-      hari_jam: newClassSchedule,
-      kurikulum: 'K. Merdeka',
+      tingkat_kelas: cTingkat,
+      nama_kelompok: generatedName,
+      ruang: cRuang,
+      kapasitas: capacity,
+      hari_jam: scheduleStr,
+      kurikulum: cProgram,
       is_active: true,
     }]);
+
     if (error) {
       alert('Gagal menambah kelas: ' + error.message);
     } else {
-      setNewClassName('');
+      alert(`Berhasil membuat kelas: ${generatedName} (${capacity} kursi) di ruang ${cRuang}!`);
+      setCNumber(String(Number(cNumber) + 1).padStart(3, '0'));
       fetchClasses();
-      alert('Kelas baru berhasil ditambahkan!');
     }
   }
 
@@ -341,38 +382,109 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'classes' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
-              <h2 className="text-lg font-bold text-gray-900">Tambah Kelas Baru</h2>
-              <p className="text-xs text-gray-500">Tentukan <b>Tingkat Kelas</b> dulu — kelas ini nanti muncul sebagai pilihan di modul Pendaftaran sesuai jenjang yang dipilih siswa.</p>
-              <form onSubmit={handleAddClass} className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Tingkat Kelas</label>
-                  <select value={newClassTingkat} onChange={(e)=> setNewClassTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50">
-                    {TINGKAT_OPTIONS.map(t=> <option key={t} value={t}>{t}</option>)}
-                  </select>
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">🏫 Kelola Jadwal &amp; Kelas (11 Poin Juklak GO)</h2>
+                <p className="text-xs text-gray-500">Sesuai spesifikasi: Pilih unit, program, tingkat, format nama kelas otomatis, validasi anti-bentrok ruangan, dan kapasitas otomatis.</p>
+              </div>
+
+              <form onSubmit={handleAddClass} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">1. Pilih Unit Cabang</label>
+                    <select value={cUnit} onChange={e=>setCUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50">
+                      {SEMADURA_UNITS.map(u => <option key={u} value={u}>{u} {u==='Unit Jokotole'?'(Medical Class)':''}</option>)}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">2. Pilih Program</label>
+                    <select value={cProgram} onChange={e=>{
+                      const p=e.target.value;
+                      setCProgram(p);
+                      if(p==='Reguler SD') setCTingkat('6 SD');
+                      else if(p==='Reguler Non SD') setCTingkat('12 SMA UMUM');
+                      else if(p==='Eksekutif Silver') setCTingkat('12 SMA Silver');
+                      else if(p==='Eksekutif Medical Class') setCTingkat('12 SMA Med');
+                    }} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50">
+                      <option value="Reguler SD">Reguler SD (Kls 4-6 SD)</option>
+                      <option value="Reguler Non SD">Reguler Non SD (Kls 7-12 SMA)</option>
+                      <option value="Eksekutif Silver">Eksekutif Silver (12 SMA Silver)</option>
+                      <option value="Eksekutif Medical Class">Eksekutif Medical Class (12 SMA Med)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">3. Pilih Tingkat Kelas</label>
+                    <select value={cTingkat} onChange={e=>setCTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50">
+                      {cProgram === 'Reguler SD' && ['6 SD','5 SD','4 SD'].map(x=> <option key={x} value={x}>{x}</option>)}
+                      {cProgram === 'Reguler Non SD' && ['12 SMA UMUM','11 SMA UMUM','10 SMA UMUM','9 SMP','8 SMP','7 SMP'].map(x=> <option key={x} value={x}>{x}</option>)}
+                      {cProgram === 'Eksekutif Silver' && ['12 SMA Silver'].map(x=> <option key={x} value={x}>{x}</option>)}
+                      {cProgram === 'Eksekutif Medical Class' && ['12 SMA Med'].map(x=> <option key={x} value={x}>{x}</option>)}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nama Kelas / Kelompok</label>
-                  <input type="text" placeholder="Contoh: 12-SMA-A" value={newClassName} onChange={(e) => setNewClassName(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm" />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-gray-50 border">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">4. Nomor / Suffix Nama Kelas</label>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-gray-500 bg-white px-2 py-2 border rounded-xl">
+                        {`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-`}
+                      </span>
+                      <input type="text" value={cNumber} onChange={e=>setCNumber(e.target.value)} className="w-20 p-2 border rounded-xl text-sm font-bold text-center" placeholder="001" />
+                    </div>
+                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-${cNumber}`}</b></p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">5. Pilih Ruangan (Anti-Bentrok)</label>
+                    <select value={cRuang} onChange={e=>setCRuang(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-white">
+                      {['UGM','Unair','ITB','ITS','UM','IPB','Unesa','UI','UB'].map(r => <option key={r} value={r}>Ruang {r}</option>)}
+                    </select>
+                    <p className="text-[10px] text-green-700 font-semibold mt-1">
+                      Kapasitas otomatis: <b>{cProgram==='Reguler SD'?'20':cProgram==='Reguler Non SD'?'25':cProgram==='Eksekutif Silver'?'20':'15'} siswa</b>
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col justify-end">
+                    <button type="submit" className="w-full bg-[#b70011] hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-sm">
+                      + 10. Simpan Jadwal &amp; Kelas
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Unit Cabang</label>
-                  <select value={newClassUnit} onChange={(e) => setNewClassUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm">
-                    {SEMADURA_UNITS.map(u => (<option key={u} value={u}>{u} {u === 'Unit Jokotole' ? '(Medical Class)' : ''}</option>))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Jadwal Belajar</label>
-                  <input type="text" placeholder="Senin & Kamis (15.00)" value={newClassSchedule} onChange={(e) => setNewClassSchedule(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm" />
-                </div>
-                <div className="flex items-end">
-                  <button type="submit" className="w-full bg-[#b70011] hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition">+ Simpan Kelas</button>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
+                  <div className="p-3 rounded-xl border bg-white space-y-2">
+                    <div className="text-xs font-bold text-gray-800">6 &amp; 7. Sesi Belajar 1 (Hari &amp; Jam)</div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
+                        {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
+                      </select>
+                      <input type="text" value={cJam1Awal} onChange={e=>setCJam1Awal(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="16.00" />
+                      <input type="text" value={cJam1Akhir} onChange={e=>setCJam1Akhir(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="17.30" />
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl border bg-white space-y-2">
+                    <div className="text-xs font-bold text-gray-800">8 &amp; 9. Sesi Belajar 2 (Hari &amp; Jam)</div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
+                        {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
+                      </select>
+                      <input type="text" value={cJam2Awal} onChange={e=>setCJam2Awal(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="16.00" />
+                      <input type="text" value={cJam2Akhir} onChange={e=>setCJam2Akhir(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="17.30" />
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
-              <h2 className="text-lg font-bold text-gray-900">Daftar Kelas Terdaftar di Supabase</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-gray-900">11. Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
+                <span className="text-xs text-gray-500">Muncul otomatis di modul Pendaftaran</span>
+              </div>
               {loadingClasses ? (
                 <p className="text-sm text-gray-500">Memuat daftar kelas...</p>
               ) : (
@@ -383,24 +495,33 @@ export default function PengaturanAdminPage() {
                         <th className="p-3">ID</th>
                         <th className="p-3">Tingkat</th>
                         <th className="p-3">Nama Kelas</th>
-                        <th className="p-3">Unit Cabang</th>
-                        <th className="p-3">Jadwal</th>
+                        <th className="p-3">Program</th>
+                        <th className="p-3">Ruangan (Anti-Bentrok)</th>
+                        <th className="p-3">Jadwal Sesi 1 &amp; 2</th>
                         <th className="p-3">Kapasitas</th>
                         <th className="p-3">Terisi</th>
+                        <th className="p-3">Sisa Daya Kursi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {classes.map((c) => (
-                        <tr key={c.id} className="border-b hover:bg-gray-50">
-                          <td className="p-3 font-mono">{c.id}</td>
-                          <td className="p-3"><span className="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">{c.tingkat_kelas ?? '-'}</span></td>
-                          <td className="p-3 font-bold text-[#b70011]">{c.nama_kelompok ?? c.class_name}</td>
-                          <td className="p-3">{c.ruang ?? c.unit_name}</td>
-                          <td className="p-3">{c.hari_jam ?? c.schedule}</td>
-                          <td className="p-3">{c.kapasitas ?? c.capacity} siswa</td>
-                          <td className="p-3 font-bold text-green-700">{c.enrolled ?? '-'} </td>
-                        </tr>
-                      ))}
+                      {classes.map((c) => {
+                        const cap = Number(c.kapasitas ?? c.capacity ?? 25);
+                        const enrolled = Number(c.enrolled ?? 0);
+                        const sisa = Math.max(0, cap - enrolled);
+                        return (
+                          <tr key={c.id} className="border-b hover:bg-gray-50">
+                            <td className="p-3 font-mono">{c.id}</td>
+                            <td className="p-3"><span className="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">{c.tingkat_kelas ?? '-'}</span></td>
+                            <td className="p-3 font-bold text-[#b70011]">{c.nama_kelompok ?? c.class_name}</td>
+                            <td className="p-3 font-semibold text-gray-700">{c.kurikulum ?? 'Reguler'}</td>
+                            <td className="p-3 font-bold text-indigo-700">Ruang {c.ruang ?? c.unit_name}</td>
+                            <td className="p-3">{c.hari_jam ?? c.schedule}</td>
+                            <td className="p-3">{cap} siswa</td>
+                            <td className="p-3 font-bold text-green-700">{enrolled}</td>
+                            <td className="p-3 font-black text-blue-700 bg-blue-50/50 rounded">{sisa} kursi tersisa</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -409,7 +530,7 @@ export default function PengaturanAdminPage() {
           </div>
         )}
 
-        {activeTab === 'prices' && (
+{activeTab === 'prices' && (
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
             <h2 className="text-lg font-bold text-gray-900">Pengaturan Harga &amp; Bundling per Jenjang</h2>
             <p className="text-xs text-gray-600">Harga dasar program bimbingan belajar TA 2027/2028 per jenjang kelas.</p>
