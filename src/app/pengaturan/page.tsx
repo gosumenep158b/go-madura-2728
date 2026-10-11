@@ -610,6 +610,12 @@ export default function PengaturanAdminPage() {
                             <td className="p-3">{cap} siswa</td>
                             <td className="p-3 font-bold text-green-700">{enrolled}</td>
                             <td className="p-3 font-black text-blue-700 bg-blue-50/50 rounded">{sisa} kursi tersisa</td>
+                            <td className="p-3 text-center">
+                              <div className="flex items-center justify-center gap-1.5">
+                                <button onClick={()=>startEditClass(c)} className="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-[11px] font-bold">Edit</button>
+                                <button onClick={()=>handleDeleteClass(c.id, c.nama_kelompok ?? c.class_name)} className="px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-[11px] font-bold">Hapus</button>
+                              </div>
+                            </td>
                           </tr>
                         );
                       })}
