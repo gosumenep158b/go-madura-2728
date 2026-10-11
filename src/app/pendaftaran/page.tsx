@@ -259,13 +259,7 @@ export default function ModulPenawaranBimbel() {
     else setBasePrice(DEFAULT_HARGA[grade] ?? 7500000);
   },[selectedUnit, grade, hargaLoaded, hargaMap]);
 
-  useEffect(()=>{
-    // reset pilihan kelas jika sudah tidak ada yang cocok di grade/unit baru
-    if(!kelasOptions.length) return;
-    if(!selectedKelasId) return;
-    const cur = kelasOptions.find((c:any)=> String(c.id)===selectedKelasId);
-    if(!cur || cur.tingkat_kelas !== grade || cur.ruang !== selectedUnit) setSelectedKelasId('');
-  },[grade, selectedUnit, kelasOptions, selectedKelasId]);
+  
 
   useEffect(()=>{
     const pRate = promoByMonth[bulanDaftar] ?? PROMO_RATE_BY_MONTH[bulanDaftar] ?? 0.20;
