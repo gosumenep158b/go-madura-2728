@@ -440,6 +440,7 @@ export default function ModulPenawaranBimbel() {
       <header className="sticky top-0 z-50 bg-[#faf8ff]/85 backdrop-blur-xl border-b border-gray-200 print:hidden">
         <div className="max-w-5xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain bg-white rounded-xl p-1.5 shadow-sm border border-red-100" />
             <div>
               <h1 className="font-bold text-lg leading-tight">Modul Penawaran Bimbel</h1>
               <span className="inline-block px-2 py-0.5 rounded-full bg-[#fea619] text-[#684000] text-xs font-bold">
