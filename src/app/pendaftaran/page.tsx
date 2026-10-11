@@ -719,12 +719,10 @@ export default function ModulPenawaranBimbel() {
             <div id="print-letter" className="bg-white p-6 rounded-2xl shadow-sm border border-red-200 space-y-4 print:border-none print:shadow-none print:p-0">
               
               <div className="text-center border-b pb-3 space-y-1">
-                <div className="flex justify-center items-center gap-2">
-                  <img src="/images/logo_go_standar.png" alt="Logo" className="h-7 w-auto object-contain" />
-                  <h3 className="font-extrabold text-sm text-red-700 uppercase tracking-wide">Ganesha Operation Semadura</h3>
+                <div className="flex justify-center items-center">
+                  <img src="/images/logo_go_standar.png" alt="Logo" className="h-9 w-auto object-contain" />
                 </div>
-                <p className="text-[11px] font-bold text-gray-800">SURAT PENAWARAN RESMI PROGRAM BMBINGAN BELAJAR</p>
-                <p className="text-[10px] text-gray-500">Kantor Cabang: <b>{selectedUnit}</b> | Tahun Ajaran 2027/2028</p>
+                <p className="text-[10px] text-gray-500 mt-1">Kantor Cabang: <b>{selectedUnit}</b> | Tahun Ajaran 2027/2028</p>
               </div>
 
               {/* Data Calon Siswa — Compact 1 Baris (Tanpa Duplikasi) */}
