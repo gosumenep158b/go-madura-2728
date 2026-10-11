@@ -444,7 +444,13 @@ export default function ModulPenawaranBimbel() {
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
+            <button
+              onClick={fetchHistory}
+              className="bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+            >
+              <span>📋 Riwayat & Reminder</span>
+            </button>
             <button
               onClick={() => { savePenawaranHistory('print'); window.print(); }}
               className="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
