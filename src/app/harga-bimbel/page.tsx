@@ -128,7 +128,10 @@ export default function HargaBimbelPage(){
   const filteredJenjangs = JENJANGS.filter(j=> !filter || j.toLowerCase().includes(filter.toLowerCase()) || DEFAULT_PROGRAM[j].toLowerCase().includes(filter.toLowerCase()));
 
   return (
-    <div className="min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
+    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
+      <Sidebar onTambah={() => {}} />
+      <div className="min-w-0 flex-1">
+        <MobileNav onTambah={() => {}} />
       <header className="sticky top-0 z-40 bg-[#faf8ff]/90 backdrop-blur-xl border-b border-gray-200">
         <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -256,6 +259,7 @@ export default function HargaBimbelPage(){
           <div className="bg-amber-50 p-4 rounded-2xl border border-amber-200 text-center"><div className="text-xs text-amber-800">Sumber Portal</div><div className="text-xs font-bold text-amber-900">admin_unit_program_prices</div></div>
         </div>
       </main>
+      </div>
     </div>
   );
 }

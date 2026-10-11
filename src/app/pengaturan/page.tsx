@@ -250,7 +250,10 @@ export default function PengaturanAdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24">
+    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
+      <Sidebar onTambah={() => {}} />
+      <div className="min-w-0 flex-1">
+        <MobileNav onTambah={() => {}} />
       <header className="sticky top-0 z-50 bg-[#faf8ff]/85 backdrop-blur-xl border-b border-gray-200">
         <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -659,6 +662,7 @@ export default function PengaturanAdminPage() {
         )}
 
       </main>
+      </div>
     </div>
   );
 }
