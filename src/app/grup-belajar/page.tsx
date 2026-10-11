@@ -26,21 +26,12 @@ interface KelasItem {
   max: number;
 }
 
-// Portal pendaftaran hanya simulasi — tidak ada dummy siswa/kelas.
-// Kelas resmi dikelola di Pengaturan > Kelola Kelas & Jadwal (tabel admin_classes).
-// Biarkan kosong agar tidak tampil dummy; admin buat kelas sesuai kebutuhan.
-const DEFAULT_KELAS: KelasItem[] = [];
-
 export default function GrupBelajarPage() {
   const [siswaList, setSiswaList] = useState<Siswa[]>([]);
+  const [adminClasses, setAdminClasses] = useState<KelasItem[]>([]);
   const [selectedKelas, setSelectedKelas] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-
-  // Modal assign siswa
-  const [assignModal, setAssignModal] = useState<boolean>(false);
-  const [unassignedSiswa, setUnassignedSiswa] = useState<Siswa[]>([]);
-  const [targetSiswaReg, setTargetSiswaReg] = useState<string>('');
 
   useEffect(() => {
     fetchData();
@@ -49,34 +40,52 @@ export default function GrupBelajarPage() {
   async function fetchData() {
     setLoading(true);
     try {
-      // Portal pendaftaran hanya simulasi — tidak otomatis insert ke registrations.
-      // Grup belajar hanya menampilkan siswa yang sudah ditetapkan admin (bukan dummy).
-      const { data, error } = await supabase.from('registrations').select('*');
-      if (error) throw error;
-      setSiswaList(data || []);
+      const [classRes, regRes] = await Promise.all([
+        supabase.from('admin_classes').select('*').order('id'),
+        supabase.from('registrations').select('*')
+      ]);
+
+      let loadedClasses: KelasItem[] = [];
+      if (!classRes.error && classRes.data && classRes.data.length > 0) {
+        loadedClasses = classRes.data.map((c: any) => ({
+          kelas: c.nama_kelompok,
+          tingkat: c.tingkat_kelas,
+          jadwal: c.hari_jam || 'Jadwal belum diatur',
+          ruang: c.ruang || 'UGM',
+          max: c.kapasitas || 20
+        }));
+      }
+
+      setAdminClasses(loadedClasses);
+      if (loadedClasses.length > 0 && (!selectedKelas || !loadedClasses.some(k => k.kelas === selectedKelas))) {
+        setSelectedKelas(loadedClasses[0].kelas);
+      }
+
+      if (!regRes.error && regRes.data) {
+        setSiswaList(regRes.data);
+      }
     } catch (err) {
       console.error(err);
-      setSiswaList([]);
     } finally {
       setLoading(false);
     }
   }
 
-  // Group siswa by kelas_go
+  // Group siswa by kelas_go matching nama_kelompok
   const kelasMap = useMemo(() => {
     const map: Record<string, Siswa[]> = {};
-    DEFAULT_KELAS.forEach((k) => {
+    adminClasses.forEach((k) => {
       map[k.kelas] = [];
     });
     siswaList.forEach((s) => {
-      const k = s.kelas_go || '4-SD-R-N-230';
+      const k = s.kelas_go || '';
       if (!map[k]) map[k] = [];
       map[k].push(s);
     });
     return map;
-  }, [siswaList]);
+  }, [adminClasses, siswaList]);
 
-  const activeKelasInfo = DEFAULT_KELAS.find((k) => k.kelas === selectedKelas) || null;
+  const activeKelasInfo = adminClasses.find((k) => k.kelas === selectedKelas) || null;
   const activeSiswa = activeKelasInfo ? (kelasMap[selectedKelas] || []) : [];
   const currentCount = activeSiswa.length;
   const isFull = activeKelasInfo ? currentCount >= activeKelasInfo.max : false;
@@ -112,14 +121,14 @@ export default function GrupBelajarPage() {
             {/* Daftar Kelas GO */}
             <div className="bg-white rounded-2xl p-4 shadow-sm border border-red-100 space-y-3">
               <h2 className="font-bold text-gray-800 text-sm px-2 uppercase tracking-wider">Pilih Grup Kelas GO</h2>
-              {DEFAULT_KELAS.length === 0 ? (
+              {adminClasses.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 p-4 text-xs leading-relaxed text-amber-800">
                   <p className="font-bold">Belum ada kelas.</p>
-                  <p className="mt-1">Portal hanya simulasi — kelas tidak dibuat otomatis. Buat kelas resmi di <a href="/pengaturan" className="underline font-bold">Pengaturan</a>.</p>
+                  <p className="mt-1">Buat kelas resmi di menu <a href="/pengaturan" className="underline font-bold">Pengaturan</a>.</p>
                 </div>
               ) : (
                 <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
-                  {DEFAULT_KELAS.map((k) => {
+                  {adminClasses.map((k) => {
                   const count = (kelasMap[k.kelas] || []).length;
                   const full = count >= k.max;
                   const isSelected = k.kelas === selectedKelas;
@@ -157,13 +166,13 @@ export default function GrupBelajarPage() {
               )}
             </div>
 
-            {/* Detail Roster — kosong jika belum ada kelas */}
+            {/* Detail Roster */}
             <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-red-100 flex flex-col justify-between">
               {!activeKelasInfo ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <div className="rounded-full bg-amber-100 p-4 text-2xl">📚</div>
-                  <h3 className="mt-3 font-bold text-gray-800">Belum ada kelas</h3>
-                  <p className="mt-1 max-w-md text-xs leading-relaxed text-gray-500">Grup belajar akan terisi setelah admin membuat kelas di <b>Pengaturan → Kelola Kelas &amp; Jadwal</b>. Portal pendaftaran hanya <b>simulasi biaya &amp; info fasilitas</b> — tidak otomatis menambah siswa ke grup.</p>
+                  <h3 className="mt-3 font-bold text-gray-800">Belum ada kelas dipilih</h3>
+                  <p className="mt-1 max-w-md text-xs leading-relaxed text-gray-500">Pilih kelas di sebelah kiri atau buat kelas baru di <b>Pengaturan → Kelola Kelas &amp; Jadwal</b>.</p>
                   <a href="/pengaturan" className="mt-4 rounded-xl bg-[#b70011] px-4 py-2 text-xs font-bold text-white">Buka Pengaturan</a>
                 </div>
               ) : (
@@ -192,7 +201,7 @@ export default function GrupBelajarPage() {
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
                   <div>
                     <h4 className="font-bold text-gray-800 text-sm">Daftar Teman Sekelas ({filteredSiswa.length} Siswa)</h4>
-                    <p className="text-xs text-gray-500">Siswa yang tergabung dalam grup belajar ini beserta asal sekolahnya.</p>
+                    <p className="text-xs text-gray-500">Siswa yang tergabung dalam grup belajar ini.</p>
                   </div>
 
                   <div className="w-full sm:w-auto">
