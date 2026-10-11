@@ -681,7 +681,22 @@ export default function ModulPenawaranBimbel() {
                 <span><span className="text-gray-500">No. WA:</span> <b>{noHp || '(Belum diisi)'}</b></span>
                 <span><span className="text-gray-500">Jenjang:</span> <b>{grade}</b></span>
                 <span><span className="text-gray-500">Status:</span> <b>{studentType.toUpperCase()} ({bulanDaftar})</b></span>
-                {(() => { const k = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null; return k ? (<span><span className="text-gray-500">Kelas:</span> <b>{k.nama_kelompok} — {k.hari_jam}</b></span>) : null; })()}
+                {(() => { 
+                  const k = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null; 
+                  return k ? (
+                    <div className="w-full mt-2 pt-2 border-t border-red-100 flex items-center justify-between bg-red-50/50 px-2.5 py-1.5 rounded-lg text-xs">
+                      <div className="flex items-center gap-1.5 font-bold text-red-800">
+                        <span>🏫 Kelas GO Terpilih:</span>
+                        <span className="bg-red-700 text-white px-2 py-0.5 rounded-md">{k.nama_kelompok}</span>
+                      </div>
+                      <div className="text-gray-600 text-[11px] font-medium">
+                        <span>📅 {k.hari_jam}</span>
+                        <span className="mx-1.5 text-gray-400">|</span>
+                        <span>📍 {k.ruang}</span>
+                      </div>
+                    </div>
+                  ) : null; 
+                })()}
               </div>
 
               {/* Rincian Perhitungan */}
