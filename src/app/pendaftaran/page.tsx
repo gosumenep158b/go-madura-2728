@@ -183,6 +183,8 @@ export default function ModulPenawaranBimbel() {
   const [hargaLoaded, setHargaLoaded] = useState(false);
   const [slpByMonth, setSlpByMonth] = useState<Record<string,number>>(SLP_DISCOUNT_BY_MONTH);
   const [promoByMonth, setPromoByMonth] = useState<Record<string,number>>(PROMO_RATE_BY_MONTH);
+  const [kelasOptions, setKelasOptions] = useState<any[]>([]);
+  const [selectedKelasId, setSelectedKelasId] = useState<string>('');
 
   // Identitas
   const [namaSiswa, setNamaSiswa] = useState<string>('');
@@ -240,6 +242,13 @@ export default function ModulPenawaranBimbel() {
         try{ const c=localStorage.getItem('monthly_discounts'); if(c){ const arr=JSON.parse(c); if(Array.isArray(arr)&&arr.length) apply(arr.map((x:any)=>({ bulan:x.bulan, slp_discount:x.slp_discount, promo_rate:x.promo_rate }))); } }catch{}
       }
     })();
+    // kelas master for dropdown
+    (async()=>{
+      try{
+        const { data } = await (supabase as any).from('admin_classes').select('id, tingkat_kelas, nama_kelompok, ruang, hari_jam, is_active').eq('is_active', true).order('id');
+        if(data) setKelasOptions(data as any[]);
+      }catch{}
+    })();
   },[]);
 
   useEffect(()=>{
@@ -249,6 +258,14 @@ export default function ModulPenawaranBimbel() {
     if(hit) setBasePrice(hit.harga);
     else setBasePrice(DEFAULT_HARGA[grade] ?? 7500000);
   },[selectedUnit, grade, hargaLoaded, hargaMap]);
+
+  useEffect(()=>{
+    // reset pilihan kelas jika sudah tidak ada yang cocok di grade/unit baru
+    if(!kelasOptions.length) return;
+    if(!selectedKelasId) return;
+    const cur = kelasOptions.find((c:any)=> String(c.id)===selectedKelasId);
+    if(!cur || cur.tingkat_kelas !== grade || cur.ruang !== selectedUnit) setSelectedKelasId('');
+  },[grade, selectedUnit, kelasOptions, selectedKelasId]);
 
   useEffect(()=>{
     const pRate = promoByMonth[bulanDaftar] ?? PROMO_RATE_BY_MONTH[bulanDaftar] ?? 0.20;
@@ -328,6 +345,7 @@ export default function ModulPenawaranBimbel() {
     const hargaKey = selectedUnit+"|"+grade;
     const hitProgram = hargaMap[hargaKey]?.program_name;
     const programName = hitProgram || 'TWT Eksekutif Silver';
+    const kelasTerpilih = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null;
 
     const facilitiesListStr = currentGradeFacilities.map((f) => `  - ${f}`).join('\n');
     const rincianDiskon = discountLogs.map(d => `  - ${d.label}: -Rp ${Math.round(d.amount).toLocaleString('id-ID')}`).join('\n');
@@ -340,6 +358,8 @@ export default function ModulPenawaranBimbel() {
       `Asal Sekolah: ${asalSekolah}\n` +
       `Program: *${programName}* (${grade})\n` +
       `Status: *${studentType.toUpperCase()}* | Bulan Daftar: *${bulanDaftar}*\n` +
+      (kelasTerpilih ? `Kelas: *${kelasTerpilih.nama_kelompok}* (${kelasTerpilih.tingkat_kelas}) - ${kelasTerpilih.hari_jam} @ ${kelasTerpilih.ruang}
+` : '') +
       `Metode: *${paymentMethod === 'cash' ? 'Lunas Tunai' : 'Cicilan 7x'}*\n\n` +
       `💰 *RINCIAN BIAYA & INVESTASI:*\n` +
       `Harga Normal: Rp ${basePrice.toLocaleString('id-ID')}\n` +
@@ -536,6 +556,33 @@ export default function ModulPenawaranBimbel() {
             </div>
 
             <div>
+              <label className="block text-xs font-semibold text-gray-700">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
+              {(() => {
+                const filtered = kelasOptions.filter((c:any) => c.tingkat_kelas === grade && c.ruang === selectedUnit);
+                if (!filtered.length) {
+                  const hasAnyForGrade = kelasOptions.some((c:any)=> c.tingkat_kelas === grade);
+                  return (
+                    <div className="mt-1 p-3 rounded-xl border border-dashed bg-gray-50 text-xs text-gray-500">
+                      {kelasOptions.length===0 ? 'Belum ada kelas dibuat — buat di menu Pengaturan > Kelola Kelas.' : hasAnyForGrade ? `Belum ada kelas untuk ${grade} di ${selectedUnit}. Buat di Pengaturan > Kelola Kelas.` : `Belum ada kelas untuk ${grade} di semua unit. Buat di Pengaturan > Kelola Kelas.`}
+                      <a href="/pengaturan" className="ml-1 text-[#b70011] font-bold underline">Buka Pengaturan →</a>
+                    </div>
+                  );
+                }
+                return (
+                  <select value={selectedKelasId} onChange={e=> setSelectedKelasId(e.target.value)} className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white">
+                    <option value="">— Pilih Kelas —</option>
+                    {filtered.map((c:any)=> (
+                      <option key={c.id} value={String(c.id)}>{c.nama_kelompok} — {c.hari_jam} ({c.ruang})</option>
+                    ))}
+                  </select>
+                );
+              })()}
+              {selectedKelasId ? (
+                <p className="text-[11px] text-gray-500 mt-1">Terpilih: <b>{(() => { const f = kelasOptions.find((c:any)=> String(c.id)===selectedKelasId); return f ? `${f.nama_kelompok} · ${f.hari_jam} · ${f.ruang}` : selectedKelasId; })()}</b> — akan tercantum di surat penawaran WhatsApp.</p>
+              ) : null}
+            </div>
+
+            <div>
               <label className="block text-xs font-semibold text-gray-700">Bulan Pendaftaran (Menentukan Diskon SLP &amp; Promo)</label>
               <select
                 value={bulanDaftar}
@@ -620,6 +667,7 @@ export default function ModulPenawaranBimbel() {
                 <span><span className="text-gray-500">No. WA:</span> <b>{noHp || '(Belum diisi)'}</b></span>
                 <span><span className="text-gray-500">Jenjang:</span> <b>{grade}</b></span>
                 <span><span className="text-gray-500">Status:</span> <b>{studentType.toUpperCase()} ({bulanDaftar})</b></span>
+                {(() => { const k = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null; return k ? (<span><span className="text-gray-500">Kelas:</span> <b>{k.nama_kelompok} — {k.hari_jam}</b></span>) : null; })()}
               </div>
 
               {/* Rincian Perhitungan */}

@@ -30,10 +30,12 @@ export default function PengaturanAdminPage() {
   const [uploadStats, setUploadStats] = useState<{ total: number; success: number; message: string } | null>(null);
   const [previewData, setPreviewData] = useState<any[]>([]);
 
+  const TINGKAT_OPTIONS = ['12 SMA','12 SMA SNBT','13 ALUMNI UMUM','11 SMA','10 SMA','9 SMP','8 SMP','7 SMP','6 SD','5 SD','4 SD'] as const;
   // Classes state
   const [classes, setClasses] = useState<any[]>([]);
   const [loadingClasses, setLoadingClasses] = useState(false);
   const [newClassName, setNewClassName] = useState('');
+  const [newClassTingkat, setNewClassTingkat] = useState<string>('12 SMA');
   const [newClassUnit, setNewClassUnit] = useState('Unit Jokotole');
   const [newClassSchedule, setNewClassSchedule] = useState('Senin & Kamis (15.00)');
 
@@ -179,12 +181,10 @@ export default function PengaturanAdminPage() {
   async function handleAddClass(e: React.FormEvent) {
     e.preventDefault();
     if (!newClassName) return;
-    // Mapping ke schema Supabase asli: admin_classes(tingkat_kelas, nama_kelompok, ruang, kapasitas, hari_jam, is_active, kurikulum)
-    // Kolom unit_name/capacity/class_name tidak ada di DB — unit disimpan di `ruang` sementara (lihat SQL migrasi di bawah untuk kolom proper)
     const { error } = await supabase.from('admin_classes').insert([{
-      tingkat_kelas: parseTingkat(newClassName),
+      tingkat_kelas: newClassTingkat,
       nama_kelompok: newClassName,
-      ruang: newClassUnit, // TODO: ganti ke unit_name setelah migrasi ALTER TABLE
+      ruang: newClassUnit,
       kapasitas: 25,
       hari_jam: newClassSchedule,
       kurikulum: 'K. Merdeka',
@@ -343,43 +343,30 @@ export default function PengaturanAdminPage() {
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
               <h2 className="text-lg font-bold text-gray-900">Tambah Kelas Baru</h2>
-              <form onSubmit={handleAddClass} className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <p className="text-xs text-gray-500">Tentukan <b>Tingkat Kelas</b> dulu — kelas ini nanti muncul sebagai pilihan di modul Pendaftaran sesuai jenjang yang dipilih siswa.</p>
+              <form onSubmit={handleAddClass} className="grid grid-cols-1 md:grid-cols-5 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nama Kelas</label>
-                  <input 
-                    type="text" 
-                    placeholder="Contoh: 12-SMA-A" 
-                    value={newClassName} 
-                    onChange={(e) => setNewClassName(e.target.value)}
-                    className="w-full p-2.5 border rounded-xl text-sm"
-                  />
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Tingkat Kelas</label>
+                  <select value={newClassTingkat} onChange={(e)=> setNewClassTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50">
+                    {TINGKAT_OPTIONS.map(t=> <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Nama Kelas / Kelompok</label>
+                  <input type="text" placeholder="Contoh: 12-SMA-A" value={newClassName} onChange={(e) => setNewClassName(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Unit Cabang</label>
-                  <select 
-                    value={newClassUnit} 
-                    onChange={(e) => setNewClassUnit(e.target.value)}
-                    className="w-full p-2.5 border rounded-xl text-sm"
-                  >
-                    {SEMADURA_UNITS.map(u => (
-                      <option key={u} value={u}>{u} {u === 'Unit Jokotole' ? '(Medical Class)' : ''}</option>
-                    ))}
+                  <select value={newClassUnit} onChange={(e) => setNewClassUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm">
+                    {SEMADURA_UNITS.map(u => (<option key={u} value={u}>{u} {u === 'Unit Jokotole' ? '(Medical Class)' : ''}</option>))}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Jadwal Belajar</label>
-                  <input 
-                    type="text" 
-                    placeholder="Senin & Kamis (15.00)" 
-                    value={newClassSchedule} 
-                    onChange={(e) => setNewClassSchedule(e.target.value)}
-                    className="w-full p-2.5 border rounded-xl text-sm"
-                  />
+                  <input type="text" placeholder="Senin & Kamis (15.00)" value={newClassSchedule} onChange={(e) => setNewClassSchedule(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm" />
                 </div>
                 <div className="flex items-end">
-                  <button type="submit" className="w-full bg-[#b70011] hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition">
-                    + Simpan Kelas
-                  </button>
+                  <button type="submit" className="w-full bg-[#b70011] hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition">+ Simpan Kelas</button>
                 </div>
               </form>
             </div>
@@ -394,6 +381,7 @@ export default function PengaturanAdminPage() {
                     <thead>
                       <tr className="bg-gray-100 text-gray-700 border-b">
                         <th className="p-3">ID</th>
+                        <th className="p-3">Tingkat</th>
                         <th className="p-3">Nama Kelas</th>
                         <th className="p-3">Unit Cabang</th>
                         <th className="p-3">Jadwal</th>
@@ -405,6 +393,7 @@ export default function PengaturanAdminPage() {
                       {classes.map((c) => (
                         <tr key={c.id} className="border-b hover:bg-gray-50">
                           <td className="p-3 font-mono">{c.id}</td>
+                          <td className="p-3"><span className="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">{c.tingkat_kelas ?? '-'}</span></td>
                           <td className="p-3 font-bold text-[#b70011]">{c.nama_kelompok ?? c.class_name}</td>
                           <td className="p-3">{c.ruang ?? c.unit_name}</td>
                           <td className="p-3">{c.hari_jam ?? c.schedule}</td>
