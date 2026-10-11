@@ -41,3 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# temp scripts
+check_classes.ts
+dedup.js
+insert_class.ts
+tmp_*.mjs
+tmp_*.js
