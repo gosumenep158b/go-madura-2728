@@ -199,7 +199,15 @@ export default function PengaturanAdminPage() {
     let tingkatNum = cTingkat.replace(/[^0-9]/g, '');
     if (!tingkatNum) tingkatNum = '12';
     
-    const generatedName = `${tingkatNum}-${codeLetter}-${cNumber}`;
+    let jenjangLabel = 'UMUM';
+    if (cTingkat.includes('SD')) jenjangLabel = 'SD';
+    else if (cTingkat.includes('SMP')) jenjangLabel = 'SMP';
+    else if (cTingkat.includes(' SMA ')) jenjangLabel = 'UMUM';
+    else if (cTingkat.includes('Silver')) jenjangLabel = 'Silver';
+    else if (cTingkat.includes('Med')) jenjangLabel = 'Med';
+    else if (cTingkat.includes('SMA')) jenjangLabel = 'UMUM';
+    
+    const generatedName = `${tingkatNum}-${jenjangLabel}-${codeLetter}-N-${cNumber}`;
     
     let capacity = 25;
     if (cProgram === 'Reguler SD') capacity = 20;
@@ -384,8 +392,8 @@ export default function PengaturanAdminPage() {
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
               <div>
-                <h2 className="text-lg font-bold text-gray-900">🏫 Kelola Jadwal &amp; Kelas (11 Poin Juklak GO)</h2>
-                <p className="text-xs text-gray-500">Sesuai spesifikasi: Pilih unit, program, tingkat, format nama kelas otomatis, validasi anti-bentrok ruangan, dan kapasitas otomatis.</p>
+                <h2 className="text-lg font-bold text-gray-900">🏫 Kelola Jadwal &amp; Kelas</h2>
+                <p className="text-xs text-gray-500">Buat jadwal kelas baru dengan format nama otomatis sesuai jenjang (SD/SMP/SMA) dan anti-bentrok ruangan.</p>
               </div>
 
               <form onSubmit={handleAddClass} className="space-y-4">
