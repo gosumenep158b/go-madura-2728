@@ -399,14 +399,14 @@ export default function PengaturanAdminPage() {
               <form onSubmit={handleAddClass} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">1. Pilih Unit Cabang</label>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Unit Cabang</label>
                     <select value={cUnit} onChange={e=>setCUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50">
                       {SEMADURA_UNITS.map(u => <option key={u} value={u}>{u} {u==='Unit Jokotole'?'(Medical Class)':''}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">2. Pilih Program</label>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Program</label>
                     <select value={cProgram} onChange={e=>{
                       const p=e.target.value;
                       setCProgram(p);
@@ -423,7 +423,7 @@ export default function PengaturanAdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">3. Pilih Tingkat Kelas</label>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Tingkat Kelas</label>
                     <select value={cTingkat} onChange={e=>setCTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50">
                       {cProgram === 'Reguler SD' && ['6 SD','5 SD','4 SD'].map(x=> <option key={x} value={x}>{x}</option>)}
                       {cProgram === 'Reguler Non SD' && ['12 SMA UMUM','11 SMA UMUM','10 SMA UMUM','9 SMP','8 SMP','7 SMP'].map(x=> <option key={x} value={x}>{x}</option>)}
@@ -435,7 +435,7 @@ export default function PengaturanAdminPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-gray-50 border">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">4. Nomor / Suffix Nama Kelas</label>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Nomor / Suffix Nama Kelas</label>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-500 bg-white px-2 py-2 border rounded-xl">
                         {`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-`}
@@ -446,7 +446,7 @@ export default function PengaturanAdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">5. Pilih Ruangan (Anti-Bentrok)</label>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Ruangan (Anti-Bentrok)</label>
                     <select value={cRuang} onChange={e=>setCRuang(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-white">
                       {['UGM','Unair','ITB','ITS','UM','IPB','Unesa','UI','UB'].map(r => <option key={r} value={r}>Ruang {r}</option>)}
                     </select>
@@ -457,14 +457,14 @@ export default function PengaturanAdminPage() {
 
                   <div className="flex flex-col justify-end">
                     <button type="submit" className="w-full bg-[#b70011] hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-sm">
-                      + 10. Simpan Jadwal &amp; Kelas
+                      + Simpan Jadwal &amp; Kelas
                     </button>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
                   <div className="p-3 rounded-xl border bg-white space-y-2">
-                    <div className="text-xs font-bold text-gray-800">6 &amp; 7. Sesi Belajar 1 (Hari &amp; Jam)</div>
+                    <div className="text-xs font-bold text-gray-800">Sesi Belajar 1 (Hari &amp; Jam)</div>
                     <div className="grid grid-cols-3 gap-2">
                       <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
@@ -475,7 +475,7 @@ export default function PengaturanAdminPage() {
                   </div>
 
                   <div className="p-3 rounded-xl border bg-white space-y-2">
-                    <div className="text-xs font-bold text-gray-800">8 &amp; 9. Sesi Belajar 2 (Hari &amp; Jam)</div>
+                    <div className="text-xs font-bold text-gray-800">Sesi Belajar 2 (Hari &amp; Jam)</div>
                     <div className="grid grid-cols-3 gap-2">
                       <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
@@ -490,7 +490,7 @@ export default function PengaturanAdminPage() {
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-bold text-gray-900">11. Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
+                <h2 className="text-lg font-bold text-gray-900">Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
                 <span className="text-xs text-gray-500">Muncul otomatis di modul Pendaftaran</span>
               </div>
               {loadingClasses ? (
