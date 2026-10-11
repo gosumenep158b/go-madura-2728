@@ -181,6 +181,8 @@ export default function ModulPenawaranBimbel() {
 
   const [hargaMap, setHargaMap] = useState<Record<string,{harga:number; program_name:string; medical_addon:number}>>({});
   const [hargaLoaded, setHargaLoaded] = useState(false);
+  const [slpByMonth, setSlpByMonth] = useState<Record<string,number>>(SLP_DISCOUNT_BY_MONTH);
+  const [promoByMonth, setPromoByMonth] = useState<Record<string,number>>(PROMO_RATE_BY_MONTH);
 
   // Identitas
   const [namaSiswa, setNamaSiswa] = useState<string>('');
@@ -219,6 +221,25 @@ export default function ModulPenawaranBimbel() {
       }catch{}
       setHargaLoaded(true);
     })();
+    // monthly discounts: try Supabase admin_monthly_discounts, fallback localStorage
+    (async()=>{
+      const apply = (rows:any[])=>{
+        const slp: Record<string,number>={}; const promo: Record<string,number>={};
+        rows.forEach((r:any)=>{ slp[r.bulan]=Number(r.slp_discount); promo[r.bulan]=Number(r.promo_rate); });
+        if(Object.keys(slp).length) setSlpByMonth(slp);
+        if(Object.keys(promo).length) setPromoByMonth(promo);
+      };
+      try{
+        const { data, error } = await (supabase as any).from('admin_monthly_discounts').select('bulan, slp_discount, promo_rate');
+        if(!error && data && data.length) apply(data as any[]);
+        else {
+          const c = typeof window!=='undefined' ? localStorage.getItem('monthly_discounts') : null;
+          if(c){ const arr=JSON.parse(c); if(Array.isArray(arr) && arr.length) apply(arr.map((x:any)=>({ bulan:x.bulan, slp_discount:x.slp_discount, promo_rate:x.promo_rate }))); }
+        }
+      }catch{
+        try{ const c=localStorage.getItem('monthly_discounts'); if(c){ const arr=JSON.parse(c); if(Array.isArray(arr)&&arr.length) apply(arr.map((x:any)=>({ bulan:x.bulan, slp_discount:x.slp_discount, promo_rate:x.promo_rate }))); } }catch{}
+      }
+    })();
   },[]);
 
   useEffect(()=>{
@@ -230,12 +251,12 @@ export default function ModulPenawaranBimbel() {
   },[selectedUnit, grade, hargaLoaded, hargaMap]);
 
   useEffect(()=>{
-    const pRate = PROMO_RATE_BY_MONTH[bulanDaftar] ?? 0.20;
+    const pRate = promoByMonth[bulanDaftar] ?? PROMO_RATE_BY_MONTH[bulanDaftar] ?? 0.20;
     setDiscounts(prev => prev.map(d => d.type.includes('Diskon Promo') ? { ...d, percent: pRate * 100 } : d));
-  }, [bulanDaftar]);
+  }, [bulanDaftar, promoByMonth]);
 
   const regFee = studentType === 'fresh' ? 200000 : 0;
-  const slpDynamicNominal = studentType === 'slp' ? (SLP_DISCOUNT_BY_MONTH[bulanDaftar] ?? 250000) : 0;
+  const slpDynamicNominal = studentType === 'slp' ? (slpByMonth[bulanDaftar] ?? SLP_DISCOUNT_BY_MONTH[bulanDaftar] ?? 250000) : 0;
 
   let current = basePrice;
   const discountLogs: { label: string; amount: number }[] = [];
@@ -521,8 +542,8 @@ export default function ModulPenawaranBimbel() {
                 onChange={(e) => setBulanDaftar(e.target.value)}
                 className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-amber-50 text-amber-900"
               >
-                {Object.keys(SLP_DISCOUNT_BY_MONTH).map((b) => (
-                  <option key={b} value={b}>{b} 2026 (Diskon SLP: Rp {SLP_DISCOUNT_BY_MONTH[b].toLocaleString('id-ID')} | Promo: {PROMO_RATE_BY_MONTH[b]*100}%)</option>
+                {(['November','Desember','Januari','Februari','Maret','April','Mei','Juni'] as const).map((b) => (
+                  <option key={b} value={b}>{b} 2026 (Diskon SLP: Rp {(slpByMonth[b] ?? SLP_DISCOUNT_BY_MONTH[b] ?? 0).toLocaleString('id-ID')} | Promo: {((promoByMonth[b] ?? PROMO_RATE_BY_MONTH[b] ?? 0)*100).toFixed(0)}%)</option>
                 ))}
               </select>
             </div>

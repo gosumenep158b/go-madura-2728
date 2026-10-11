@@ -16,6 +16,12 @@ const SEMADURA_UNITS = [
   'Unit Cempaka'
 ];
 
+const MONTH_ORDER = ['November','Desember','Januari','Februari','Maret','April','Mei','Juni'] as const;
+const DEFAULT_SLP_BY_MONTH: Record<string,number> = { November:250000, Desember:225000, Januari:200000, Februari:175000, Maret:150000, April:125000, Mei:100000, Juni:75000 };
+const DEFAULT_PROMO_BY_MONTH: Record<string,number> = { November:0.20, Desember:0.17, Januari:0.14, Februari:0.11, Maret:0.08, April:0.05, Mei:0.03, Juni:0.01 };
+
+type MonthlyRow = { bulan: string; slp_discount: number; promo_rate: number };
+
 export default function PengaturanAdminPage() {
   const [activeTab, setActiveTab] = useState<'upload' | 'classes' | 'prices' | 'discounts'>('upload');
   
@@ -31,9 +37,77 @@ export default function PengaturanAdminPage() {
   const [newClassUnit, setNewClassUnit] = useState('Unit Jokotole');
   const [newClassSchedule, setNewClassSchedule] = useState('Senin & Kamis (15.00)');
 
+  // Monthly discounts state (Diskon Modul/Promo % + Diskon SLP Rp per bulan)
+  const [monthly, setMonthly] = useState<MonthlyRow[]>(MONTH_ORDER.map(b=>({ bulan:b, slp_discount: DEFAULT_SLP_BY_MONTH[b], promo_rate: DEFAULT_PROMO_BY_MONTH[b] })));
+  const [loadingMonthly, setLoadingMonthly] = useState(false);
+  const [savingMonthly, setSavingMonthly] = useState(false);
+  const [monthlyMsg, setMonthlyMsg] = useState<{type:'ok'|'err'|'info', text:string}|null>(null);
+
   useEffect(() => {
     fetchClasses();
+    fetchMonthly();
   }, []);
+
+  async function fetchMonthly(){
+    setLoadingMonthly(true); setMonthlyMsg(null);
+    try{
+      const { data, error } = await supabase.from('admin_monthly_discounts').select('bulan, slp_discount, promo_rate');
+      if(error) throw error;
+      if(data && data.length){
+        const map = new Map<string, {slp:number, promo:number}>();
+        (data as any[]).forEach(r=> map.set(r.bulan, { slp: Number(r.slp_discount), promo: Number(r.promo_rate) }));
+        const next = MONTH_ORDER.map(b=>{
+          const hit = map.get(b);
+          return hit ? { bulan:b, slp_discount: hit.slp, promo_rate: hit.promo } : { bulan:b, slp_discount: DEFAULT_SLP_BY_MONTH[b], promo_rate: DEFAULT_PROMO_BY_MONTH[b] };
+        });
+        setMonthly(next);
+        try{ localStorage.setItem('monthly_discounts', JSON.stringify(next)); }catch{}
+      }
+    }catch(e:any){
+      const msg = String(e?.message||'');
+      const isMissing = msg.toLowerCase().includes('does not exist') || msg.toLowerCase().includes('relation') || msg.toLowerCase().includes('schema cache') || (e as any)?.code==='42P01' || (e as any)?.code==='PGRST205';
+      if(isMissing){
+        // fallback localStorage else defaults
+        try{
+          const cached = localStorage.getItem('monthly_discounts');
+          if(cached){ const parsed = JSON.parse(cached); if(Array.isArray(parsed) && parsed.length){ setMonthly(parsed); setMonthlyMsg({type:'info', text:'Tabel admin_monthly_discounts belum ada — memakai simpanan lokal. Jalankan database/monthly_discounts_schema.sql di Supabase SQL Editor lalu Muat Ulang untuk simpan permanen.'}); setLoadingMonthly(false); return; } }
+        }catch{}
+        setMonthlyMsg({type:'info', text:'Tabel admin_monthly_discounts belum ada di Supabase. Edit tetap bisa disimpan lokal — jalankan SQL di database/monthly_discounts_schema.sql untuk aktifkan simpan permanen.'});
+      } else {
+        setMonthlyMsg({type:'err', text:'Gagal memuat diskon bulanan: '+msg});
+      }
+    } finally { setLoadingMonthly(false); }
+  }
+
+  function updMonthly(bulan:string, field:'slp_discount'|'promo_rate', val:number){
+    setMonthly(prev=> prev.map(r=> r.bulan===bulan ? { ...r, [field]: val } : r));
+  }
+
+  async function saveMonthly(){
+    setSavingMonthly(true); setMonthlyMsg(null);
+    // always cache locally
+    try{ localStorage.setItem('monthly_discounts', JSON.stringify(monthly)); }catch{}
+    try{
+      const payload = monthly.map(r=>({ bulan:r.bulan, slp_discount: Math.round(r.slp_discount), promo_rate: Number(r.promo_rate) }));
+      const { error } = await (supabase as any).from('admin_monthly_discounts').upsert(payload, { onConflict:'bulan' });
+      if(error) throw error;
+      setMonthlyMsg({type:'ok', text:'Tersimpan ke Supabase — halaman Pendaftaran akan otomatis pakai nilai baru.'});
+    }catch(e:any){
+      const msg = String(e?.message||'');
+      const isMissing = msg.toLowerCase().includes('does not exist') || msg.toLowerCase().includes('relation') || msg.toLowerCase().includes('schema cache') || (e as any)?.code==='42P01' || (e as any)?.code==='PGRST205';
+      if(isMissing){
+        setMonthlyMsg({type:'info', text:'Tersimpan lokal (browser ini). Agar tersimpan permanen untuk semua admin & siswa, jalankan SQL di database/monthly_discounts_schema.sql via Supabase Dashboard > SQL Editor.'});
+      } else {
+        setMonthlyMsg({type:'err', text:'Gagal simpan ke Supabase: '+msg+' (tetap tersimpan lokal).'});
+      }
+    } finally { setSavingMonthly(false); }
+  }
+
+  function resetMonthlyDefault(){
+    const next = MONTH_ORDER.map(b=>({ bulan:b, slp_discount: DEFAULT_SLP_BY_MONTH[b], promo_rate: DEFAULT_PROMO_BY_MONTH[b] }));
+    setMonthly(next);
+    setMonthlyMsg({type:'info', text:'Dikembalikan ke default Juklak — klik Simpan untuk menyimpan.'});
+  }
 
   async function fetchClasses() {
     setLoadingClasses(true);
@@ -381,18 +455,87 @@ export default function PengaturanAdminPage() {
         )}
 
         {activeTab === 'discounts' && (
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Aturan Diskon Berjenjang (Successive Discount)</h2>
-            <p className="text-xs text-gray-600">Urutan penerapan diskon otomatis di sistem:</p>
-            <ol className="list-decimal list-inside text-xs space-y-2 text-gray-700 font-medium">
-              <li><b>Diskon Tetap SLP:</b> Potongan Rp 200.000 khusus Siswa SLP (Ex-GO).</li>
-              <li><b>Diskon Loyalitas SLP:</b> Pilihan dropdown 6%, 7%, atau 8%.</li>
-              <li><b>Diskon Ranking / Prestasi:</b> Ranking 1 (20%), Ranking 2-3 (10%), Ranking 4-5 (7%).</li>
-              <li><b>Diskon Adik-Kakak Kandung:</b> 5% potongan harga.</li>
-              <li><b>Diskon Anak Kandung Guru:</b> 50% potongan harga.</li>
-              <li><b>Diskon Promo (berlaku Lunas &amp; Cicilan):</b> 20% di bulan November 2026 — Desember 17%, Januari 14%, Februari 11%, Maret 8%, April 5%, Mei 3%, Juni 1%. Berlaku untuk pembayaran <b>lunas maupun cicilan</b> berdasarkan bulan daftar.</li>
-              <li><b>Biaya Pendaftaran Siswa Fresh:</b> Ditambahkan Rp 200.000 di akhir jika siswa baru.</li>
-            </ol>
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Diskon per Bulan — Modul (Promo %) &amp; SLP (Rp)</h2>
+                  <p className="text-xs text-gray-600 mt-1">Ubah <b>Diskon Modul</b> (persen promo lunas &amp; cicilan) dan <b>Diskon SLP</b> (Rp, khusus siswa lama) per bulan daftar. Nilai dipakai otomatis di <a href="/pendaftaran" className="text-[#b70011] underline">Pendaftaran</a> &amp; ringkasan pembayaran.</p>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={fetchMonthly} disabled={loadingMonthly} className="px-3 py-2 rounded-xl text-xs font-bold border bg-white hover:bg-gray-50 disabled:opacity-50">{loadingMonthly ? 'Memuat…' : '↻ Muat Ulang'}</button>
+                  <button onClick={resetMonthlyDefault} className="px-3 py-2 rounded-xl text-xs font-bold border bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100">Reset Default Juklak</button>
+                </div>
+              </div>
+
+              {monthlyMsg && (
+                <div className={`p-3 rounded-xl text-xs font-medium border ${monthlyMsg.type==='ok' ? 'bg-green-50 border-green-200 text-green-800' : monthlyMsg.type==='err' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+                  {monthlyMsg.text}
+                </div>
+              )}
+
+              <div className="overflow-x-auto -mx-1">
+                <table className="w-full text-sm border-collapse min-w-[520px]">
+                  <thead>
+                    <tr className="bg-gray-50 text-gray-700 border-y">
+                      <th className="text-left p-3 font-bold">Bulan Daftar</th>
+                      <th className="text-left p-3 font-bold">Diskon Modul (Promo) <span className="font-normal text-gray-500">— %</span></th>
+                      <th className="text-left p-3 font-bold">Diskon SLP <span className="font-normal text-gray-500">— Rp</span></th>
+                      <th className="text-left p-3 font-bold">Preview</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {monthly.map(r=>(
+                      <tr key={r.bulan} className="border-b hover:bg-gray-50/70">
+                        <td className="p-3 font-bold text-[#b70011]">{r.bulan}</td>
+                        <td className="p-2">
+                          <div className="flex items-center gap-2">
+                            <input type="number" min={0} max={100} step={0.1}
+                              value={Number((r.promo_rate*100).toFixed(1))}
+                              onChange={e=> updMonthly(r.bulan,'promo_rate', Math.max(0,Math.min(100, Number(e.target.value)||0))/100)}
+                              className="w-24 p-2 border rounded-xl text-sm font-mono" />
+                            <span className="text-xs text-gray-500">%</span>
+                          </div>
+                        </td>
+                        <td className="p-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500">Rp</span>
+                            <input type="number" min={0} step={5000}
+                              value={r.slp_discount}
+                              onChange={e=> updMonthly(r.bulan,'slp_discount', Math.max(0, Math.round(Number(e.target.value)||0)))}
+                              className="w-32 p-2 border rounded-xl text-sm font-mono" />
+                          </div>
+                        </td>
+                        <td className="p-3 text-xs text-gray-600">
+                          Promo <b>{(r.promo_rate*100).toFixed(0)}%</b> · SLP <b>Rp {r.slp_discount.toLocaleString('id-ID')}</b>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                <button onClick={saveMonthly} disabled={savingMonthly} className="bg-[#b70011] hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm disabled:opacity-50 shadow-sm">
+                  {savingMonthly ? 'Menyimpan…' : '💾 Simpan Diskon Bulanan'}
+                </button>
+                <span className="text-xs text-gray-500 self-center">Disimpan ke Supabase (<code>admin_monthly_discounts</code>) + cache lokal. Jika tabel belum ada, jalankan <code>database/monthly_discounts_schema.sql</code> di SQL Editor.</span>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+              <h3 className="font-bold text-sm text-gray-900">Urutan Penerapan Diskon (Successive Discount)</h3>
+              <p className="text-xs text-gray-600">Sistem menerapkan diskon berurutan — nilai <b>Promo %</b> dan <b>SLP Rp</b> di atas diambil per <b>bulan daftar</b>:</p>
+              <ol className="list-decimal list-inside text-xs space-y-2 text-gray-700 font-medium">
+                <li><b>Diskon Tetap SLP:</b> Potongan sesuai tabel di atas (kolom SLP Rp) — khusus Siswa Lama/Ex-GO.</li>
+                <li><b>Diskon Loyalitas SLP:</b> Pilihan dropdown 6%, 7%, atau 8%.</li>
+                <li><b>Diskon Ranking / Prestasi:</b> Ranking 1 (20%), Ranking 2-3 (10%), Ranking 4-5 (7%).</li>
+                <li><b>Diskon Adik-Kakak Kandung:</b> 5%.</li>
+                <li><b>Diskon Anak Kandung Guru:</b> 50%.</li>
+                <li><b>Diskon Promo Modul:</b> Persen sesuai tabel di atas (kolom Promo %) — berlaku <b>lunas maupun cicilan</b>.</li>
+                <li><b>Biaya Pendaftaran Siswa Fresh:</b> +Rp 200.000 di akhir jika siswa baru.</li>
+              </ol>
+            </div>
           </div>
         )}
 
