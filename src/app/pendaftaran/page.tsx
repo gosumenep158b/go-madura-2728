@@ -438,28 +438,26 @@ export default function ModulPenawaranBimbel() {
       ` }} />
 
       <header className="sticky top-0 z-50 bg-[#faf8ff]/85 backdrop-blur-xl border-b border-gray-200 print:hidden">
-        <div className="max-w-5xl mx-auto h-16 px-4 flex items-center justify-between">
+        {/* Desktop: satu baris. Mobile: dua baris (judul di atas, tombol di bawah) */}
+        <div className="max-w-5xl mx-auto px-4 py-2 md:h-16 md:py-0 md:flex md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain bg-white rounded-xl p-1.5 shadow-sm border border-red-100" />
-            <div>
-              <h1 className="font-bold text-lg leading-tight">Modul Penawaran Bimbel</h1>
-              <span className="inline-block px-2 py-0.5 rounded-full bg-[#fea619] text-[#684000] text-xs font-bold">
-                Ganesha Operation Semadura · TA 2027/2028
-              </span>
+            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto shrink-0 object-contain bg-white rounded-xl p-1.5 shadow-sm border border-red-100" />
+            <div className="min-w-0">
+              <h1 className="font-bold text-base md:text-lg leading-tight truncate">Modul Penawaran Bimbel</h1>
             </div>
           </div>
-                    <div className="flex items-center gap-3">
+          <div className="mt-2 md:mt-0 flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
             <button
               onClick={fetchHistory}
-              className="bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="shrink-0 bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
             >
-              <span>📋 Riwayat & Reminder</span>
+              <span>📋 Riwayat</span>
             </button>
             <button
               onClick={() => { savePenawaranHistory('print'); window.print(); }}
-              className="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
+              className="shrink-0 bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
             >
-              <span>🖨️ Cetak Surat Penawaran</span>
+              <span>🖨️ Cetak Surat</span>
             </button>
           </div>
         </div>
@@ -469,11 +467,11 @@ export default function ModulPenawaranBimbel() {
         
         {/* Banner */}
         <div className="bg-[#dc2626] text-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col gap-2 print:hidden">
-          <div className="flex items-center justify-between">
-            <span className="px-3 py-1 rounded-full bg-[#fea619] text-[#684000] text-xs font-bold uppercase tracking-wider">
-              📄 Surat Penawaran Resmi & Kalkulator Diskon Dinamis
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-[#fea619] text-[#684000] text-[11px] md:text-xs font-bold uppercase tracking-wider leading-snug">
+              📄 Surat Penawaran Resmi & Kalkulator Diskon
             </span>
-            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full">{selectedUnit}</span>
+            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full shrink-0">{selectedUnit}</span>
           </div>
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-1">
             Modul Penawaran Bimbel Ganesha Operation Semadura
