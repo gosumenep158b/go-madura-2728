@@ -185,11 +185,16 @@ export default function PengaturanAdminPage() {
   const [cNumber, setCNumber] = useState('001');
   const [cRuang, setCRuang] = useState('UGM');
   const [cHari1, setCHari1] = useState('Senin');
-  const [cJam1Awal, setCJam1Awal] = useState('16.00');
-  const [cJam1Akhir, setCJam1Akhir] = useState('17.30');
+  const [cHari1S1Awal, setCHari1S1Awal] = useState('16.00');
+  const [cHari1S1Akhir, setCHari1S1Akhir] = useState('17.30');
+  const [cHari1S2Awal, setCHari1S2Awal] = useState('18.00');
+  const [cHari1S2Akhir, setCHari1S2Akhir] = useState('19.30');
+
   const [cHari2, setCHari2] = useState('Kamis');
-  const [cJam2Awal, setCJam2Awal] = useState('16.00');
-  const [cJam2Akhir, setCJam2Akhir] = useState('17.30');
+  const [cHari2S1Awal, setcHari2S1Awal] = useState('16.00');
+  const [cHari2S1Akhir, setcHari2S1Akhir] = useState('17.30');
+  const [cHari2S2Awal, setcHari2S2Awal] = useState('18.00');
+  const [cHari2S2Akhir, setcHari2S2Akhir] = useState('19.30');
 
   async function handleAddClass(e: React.FormEvent) {
     e.preventDefault();
@@ -216,7 +221,7 @@ export default function PengaturanAdminPage() {
     else if (cProgram === 'Eksekutif Silver') capacity = 20;
     else if (cProgram === 'Eksekutif Medical Class') capacity = 15;
     
-    const scheduleStr = `${cHari1} (${cJam1Awal}-${cJam1Akhir}) & ${cHari2} (${cJam2Awal}-${cJam2Akhir})`;
+    const scheduleStr = `${cHari1}: S1(${cHari1S1Awal}-${cHari1S1Akhir}) S2(${cHari1S2Awal}-${cHari1S2Akhir}) | ${cHari2}: S1(${cHari2S1Awal}-${cHari2S1Akhir}) S2(${cHari2S2Awal}-${cHari2S2Akhir})`;
 
     for (const existing of classes) {
       if ((existing.ruang ?? existing.unit_name) === cRuang) {
@@ -467,25 +472,49 @@ export default function PengaturanAdminPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
-                  <div className="p-3 rounded-xl border bg-white space-y-2">
-                    <div className="text-xs font-bold text-gray-800">Sesi Belajar 1 (Hari &amp; Jam)</div>
-                    <div className="grid grid-cols-3 gap-2">
-                      <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
+                  <div className="p-4 rounded-xl border bg-white space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black uppercase tracking-wider text-red-700">Pertemuan Hari 1</span>
+                      <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 text-red-800">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
                       </select>
-                      <input type="text" value={cJam1Awal} onChange={e=>setCJam1Awal(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="16.00" />
-                      <input type="text" value={cJam1Akhir} onChange={e=>setCJam1Akhir(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="17.30" />
+                    </div>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                        <input type="text" value={cHari1S1Awal} onChange={e=>setCHari1S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="16.00" />
+                        <span>s.d.</span>
+                        <input type="text" value={cHari1S1Akhir} onChange={e=>setCHari1S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="17.30" />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                        <input type="text" value={cHari1S2Awal} onChange={e=>setCHari1S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="18.00" />
+                        <span>s.d.</span>
+                        <input type="text" value={cHari1S2Akhir} onChange={e=>setCHari1S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="19.30" />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-xl border bg-white space-y-2">
-                    <div className="text-xs font-bold text-gray-800">Sesi Belajar 2 (Hari &amp; Jam)</div>
-                    <div className="grid grid-cols-3 gap-2">
-                      <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-2 border rounded-lg text-xs font-semibold">
+                  <div className="p-4 rounded-xl border bg-white space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black uppercase tracking-wider text-red-700">Pertemuan Hari 2</span>
+                      <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 text-red-800">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
                       </select>
-                      <input type="text" value={cJam2Awal} onChange={e=>setCJam2Awal(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="16.00" />
-                      <input type="text" value={cJam2Akhir} onChange={e=>setCJam2Akhir(e.target.value)} className="p-2 border rounded-lg text-xs text-center" placeholder="17.30" />
+                    </div>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                        <input type="text" value={cHari2S1Awal} onChange={e=>setcHari2S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="16.00" />
+                        <span>s.d.</span>
+                        <input type="text" value={cHari2S1Akhir} onChange={e=>setcHari2S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="17.30" />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                        <input type="text" value={cHari2S2Awal} onChange={e=>setcHari2S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="18.00" />
+                        <span>s.d.</span>
+                        <input type="text" value={cHari2S2Akhir} onChange={e=>setcHari2S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="19.30" />
+                      </div>
                     </div>
                   </div>
                 </div>
