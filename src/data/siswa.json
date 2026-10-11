@@ -9,7 +9,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-18"
+    "tgl_daftar": "2026-07-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150217123001",
@@ -21,7 +25,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PANDIAN I",
-    "tgl_daftar": "2026-07-18"
+    "tgl_daftar": "2026-07-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110202123003",
@@ -33,7 +41,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-18"
+    "tgl_daftar": "2026-07-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "131013050201",
@@ -45,7 +57,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-18"
+    "tgl_daftar": "2026-07-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090404123001",
@@ -57,7 +73,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 GAPURA",
-    "tgl_daftar": "2026-07-17"
+    "tgl_daftar": "2026-07-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "111221123001",
@@ -69,7 +89,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-07-17"
+    "tgl_daftar": "2026-07-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "141225123001",
@@ -81,7 +105,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PARSANGA II",
-    "tgl_daftar": "2026-07-16"
+    "tgl_daftar": "2026-07-16",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121217123001",
@@ -93,7 +121,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-16"
+    "tgl_daftar": "2026-07-16",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080510123002",
@@ -105,7 +137,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 GAPURA",
-    "tgl_daftar": "2026-07-15"
+    "tgl_daftar": "2026-07-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150911123001",
@@ -117,7 +153,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDN PANDIAN I",
-    "tgl_daftar": "2026-07-15"
+    "tgl_daftar": "2026-07-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120423123001",
@@ -129,7 +169,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-15"
+    "tgl_daftar": "2026-07-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150903123001",
@@ -141,7 +185,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "MTSN 2 SUMENEP",
-    "tgl_daftar": "2026-07-15"
+    "tgl_daftar": "2026-07-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "131025123001",
@@ -153,7 +201,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-07-15"
+    "tgl_daftar": "2026-07-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090216123001",
@@ -165,7 +217,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-14"
+    "tgl_daftar": "2026-07-14",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101021123001",
@@ -177,7 +233,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150325123001",
@@ -189,7 +249,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PANGARANGAN I",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080827123001",
@@ -201,7 +265,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110217051801",
@@ -213,7 +281,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110202123002",
@@ -225,7 +297,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090221123001",
@@ -237,7 +313,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101119123001",
@@ -249,7 +329,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110517123001",
@@ -261,7 +345,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-13"
+    "tgl_daftar": "2026-07-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090604123001",
@@ -273,7 +361,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA NEGERI 3 SUMENEP",
-    "tgl_daftar": "2026-07-11"
+    "tgl_daftar": "2026-07-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091227123001",
@@ -285,7 +377,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-11"
+    "tgl_daftar": "2026-07-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100606123001",
@@ -297,7 +393,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-10"
+    "tgl_daftar": "2026-07-10",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090312123001",
@@ -309,7 +409,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-09"
+    "tgl_daftar": "2026-07-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100315123001",
@@ -321,7 +425,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-09"
+    "tgl_daftar": "2026-07-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090516123001",
@@ -333,7 +441,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA NEGERI 3 SUMENEP",
-    "tgl_daftar": "2026-07-09"
+    "tgl_daftar": "2026-07-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090616051801",
@@ -345,7 +457,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-09"
+    "tgl_daftar": "2026-07-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100907123001",
@@ -357,7 +473,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-08"
+    "tgl_daftar": "2026-07-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "071211123003",
@@ -369,7 +489,11 @@
     "kelas_go": "13-ALUMNI-PRV-N-230",
     "tingkat_kelas": "13 ALUMNI UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-08"
+    "tgl_daftar": "2026-07-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100626123001",
@@ -381,7 +505,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-08"
+    "tgl_daftar": "2026-07-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110406123001",
@@ -393,7 +521,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 GAPURA",
-    "tgl_daftar": "2026-07-08"
+    "tgl_daftar": "2026-07-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100418123001",
@@ -405,7 +537,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-07"
+    "tgl_daftar": "2026-07-07",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "141019123001",
@@ -417,7 +553,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN I",
-    "tgl_daftar": "2026-07-07"
+    "tgl_daftar": "2026-07-07",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130119123001",
@@ -429,7 +569,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-07-07"
+    "tgl_daftar": "2026-07-07",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091209123001",
@@ -441,7 +585,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-07"
+    "tgl_daftar": "2026-07-07",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101014051801",
@@ -453,7 +601,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 KALIANGET",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090728123001",
@@ -465,7 +617,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081210123001",
@@ -477,7 +633,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150219123001",
@@ -489,7 +649,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PANDIAN I",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "170209123001",
@@ -501,7 +665,11 @@
     "kelas_go": "4-SD-R-N-230",
     "tingkat_kelas": "4 SD DASAR",
     "asal_sekolah": "SDN PANGARANGAN V",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090901123001",
@@ -513,7 +681,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101201123001",
@@ -525,7 +697,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100921123003",
@@ -537,7 +713,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-06"
+    "tgl_daftar": "2026-07-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121122123001",
@@ -549,7 +729,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091123123001",
@@ -561,7 +745,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100401123002",
@@ -573,7 +761,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090912123001",
@@ -585,7 +777,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "845200249188",
@@ -597,7 +793,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120613123001",
@@ -609,7 +809,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-07-04"
+    "tgl_daftar": "2026-07-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080619123001",
@@ -621,7 +825,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-03"
+    "tgl_daftar": "2026-07-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150107123001",
@@ -633,7 +841,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDIT AL-HIDAYAH",
-    "tgl_daftar": "2026-07-02"
+    "tgl_daftar": "2026-07-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110425123001",
@@ -645,7 +857,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-02"
+    "tgl_daftar": "2026-07-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100727123003",
@@ -657,7 +873,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-01"
+    "tgl_daftar": "2026-07-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110501123001",
@@ -669,7 +889,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-01"
+    "tgl_daftar": "2026-07-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140228123001",
@@ -681,7 +905,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-07-01"
+    "tgl_daftar": "2026-07-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120120123001",
@@ -693,7 +921,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-01"
+    "tgl_daftar": "2026-07-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120717123001",
@@ -705,7 +937,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-07-01"
+    "tgl_daftar": "2026-07-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100619123001",
@@ -717,7 +953,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-30"
+    "tgl_daftar": "2026-06-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090731123001",
@@ -729,7 +969,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-30"
+    "tgl_daftar": "2026-06-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090706123001",
@@ -741,7 +985,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-29"
+    "tgl_daftar": "2026-06-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "160426123001",
@@ -753,7 +1001,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDI LUKMANUL AL HAKIM",
-    "tgl_daftar": "2026-06-29"
+    "tgl_daftar": "2026-06-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "161215123001",
@@ -765,7 +1017,11 @@
     "kelas_go": "4-SD-R-N-230",
     "tingkat_kelas": "4 SD DASAR",
     "asal_sekolah": "SDI LUKMANUL AL HAKIM",
-    "tgl_daftar": "2026-06-27"
+    "tgl_daftar": "2026-06-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090420123001",
@@ -777,7 +1033,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-06-27"
+    "tgl_daftar": "2026-06-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130804123001",
@@ -789,7 +1049,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMP BINAR",
-    "tgl_daftar": "2026-06-27"
+    "tgl_daftar": "2026-06-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090308123001",
@@ -801,7 +1065,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-27"
+    "tgl_daftar": "2026-06-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110416123001",
@@ -813,7 +1081,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-26"
+    "tgl_daftar": "2026-06-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150207123001",
@@ -825,7 +1097,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN I",
-    "tgl_daftar": "2026-06-26"
+    "tgl_daftar": "2026-06-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090526123001",
@@ -837,7 +1113,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-26"
+    "tgl_daftar": "2026-06-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130401123002",
@@ -849,7 +1129,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-06-25"
+    "tgl_daftar": "2026-06-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091004123001",
@@ -861,7 +1145,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-25"
+    "tgl_daftar": "2026-06-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121025123001",
@@ -873,7 +1161,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 3 SUMENEP",
-    "tgl_daftar": "2026-06-25"
+    "tgl_daftar": "2026-06-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091224123001",
@@ -885,7 +1177,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 GAPURA",
-    "tgl_daftar": "2026-06-25"
+    "tgl_daftar": "2026-06-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090122123001",
@@ -897,7 +1193,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-25"
+    "tgl_daftar": "2026-06-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100108123001",
@@ -909,7 +1209,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 BLUTO",
-    "tgl_daftar": "2026-06-24"
+    "tgl_daftar": "2026-06-24",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140902123001",
@@ -921,7 +1225,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN KEBUNAN I",
-    "tgl_daftar": "2026-06-23"
+    "tgl_daftar": "2026-06-23",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121214123001",
@@ -933,7 +1241,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-06-23"
+    "tgl_daftar": "2026-06-23",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090416123001",
@@ -945,7 +1257,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-22"
+    "tgl_daftar": "2026-06-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100803123001",
@@ -957,7 +1273,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-22"
+    "tgl_daftar": "2026-06-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101209123001",
@@ -969,7 +1289,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-22"
+    "tgl_daftar": "2026-06-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "070323123002",
@@ -981,7 +1305,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMK (STM) N 1 KALIANGET",
-    "tgl_daftar": "2026-06-22"
+    "tgl_daftar": "2026-06-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100129123001",
@@ -993,7 +1321,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-22"
+    "tgl_daftar": "2026-06-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110624123001",
@@ -1005,7 +1337,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-20"
+    "tgl_daftar": "2026-06-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100529123001",
@@ -1017,7 +1353,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-20"
+    "tgl_daftar": "2026-06-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100416123001",
@@ -1029,7 +1369,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-20"
+    "tgl_daftar": "2026-06-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090423123001",
@@ -1041,7 +1385,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-19"
+    "tgl_daftar": "2026-06-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120804123001",
@@ -1053,7 +1401,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-19"
+    "tgl_daftar": "2026-06-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101224123001",
@@ -1065,7 +1417,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-06-19"
+    "tgl_daftar": "2026-06-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140614123001",
@@ -1077,7 +1433,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-18"
+    "tgl_daftar": "2026-06-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110622123001",
@@ -1089,7 +1449,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-17"
+    "tgl_daftar": "2026-06-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120428123001",
@@ -1101,7 +1465,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130622123001",
@@ -1113,7 +1481,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130104123001",
@@ -1125,7 +1497,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130125123001",
@@ -1137,7 +1513,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 KALIANGET",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080616123001",
@@ -1149,7 +1529,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091223123001",
@@ -1161,7 +1545,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-15"
+    "tgl_daftar": "2026-06-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100221123001",
@@ -1173,7 +1561,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-11"
+    "tgl_daftar": "2026-06-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090608123003",
@@ -1185,7 +1577,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-11"
+    "tgl_daftar": "2026-06-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120211123001",
@@ -1197,7 +1593,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-10"
+    "tgl_daftar": "2026-06-10",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120328123001",
@@ -1209,7 +1609,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-06-06"
+    "tgl_daftar": "2026-06-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "131114123001",
@@ -1221,7 +1625,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-06"
+    "tgl_daftar": "2026-06-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130621123001",
@@ -1233,7 +1641,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 KALIANGET",
-    "tgl_daftar": "2026-06-05"
+    "tgl_daftar": "2026-06-05",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130817123001",
@@ -1245,7 +1657,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-06-04"
+    "tgl_daftar": "2026-06-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090907123001",
@@ -1257,7 +1673,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-06-02"
+    "tgl_daftar": "2026-06-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090209123001",
@@ -1269,7 +1689,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-06-02"
+    "tgl_daftar": "2026-06-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140422123001",
@@ -1281,7 +1705,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PANGARANGAN III",
-    "tgl_daftar": "2026-05-31"
+    "tgl_daftar": "2026-05-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140914123001",
@@ -1293,7 +1721,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN BATUAN I",
-    "tgl_daftar": "2026-05-30"
+    "tgl_daftar": "2026-05-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120928123001",
@@ -1305,7 +1737,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-05-28"
+    "tgl_daftar": "2026-05-28",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100921123002",
@@ -1317,7 +1753,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-05-25"
+    "tgl_daftar": "2026-05-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090313123002",
@@ -1329,7 +1769,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-05-23"
+    "tgl_daftar": "2026-05-23",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100521123001",
@@ -1341,7 +1785,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-21"
+    "tgl_daftar": "2026-05-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090304123002",
@@ -1353,7 +1801,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-05-21"
+    "tgl_daftar": "2026-05-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130715123001",
@@ -1365,7 +1817,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-05-20"
+    "tgl_daftar": "2026-05-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100727123002",
@@ -1377,7 +1833,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-20"
+    "tgl_daftar": "2026-05-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100309123001",
@@ -1389,7 +1849,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-18"
+    "tgl_daftar": "2026-05-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080721123003",
@@ -1401,7 +1865,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-15"
+    "tgl_daftar": "2026-05-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100927123001",
@@ -1413,7 +1881,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 KALIANGET",
-    "tgl_daftar": "2026-05-15"
+    "tgl_daftar": "2026-05-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091211123001",
@@ -1425,7 +1897,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 KALIANGET",
-    "tgl_daftar": "2026-05-12"
+    "tgl_daftar": "2026-05-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130117123001",
@@ -1437,7 +1913,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-05-12"
+    "tgl_daftar": "2026-05-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090212051801",
@@ -1449,7 +1929,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-05"
+    "tgl_daftar": "2026-05-05",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100912051801",
@@ -1461,7 +1945,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-04"
+    "tgl_daftar": "2026-05-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080807123001",
@@ -1473,7 +1961,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-04"
+    "tgl_daftar": "2026-05-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100313123002",
@@ -1485,7 +1977,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-04"
+    "tgl_daftar": "2026-05-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090123123001",
@@ -1497,7 +1993,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-05-04"
+    "tgl_daftar": "2026-05-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100326123001",
@@ -1509,7 +2009,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-30"
+    "tgl_daftar": "2026-04-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090726123002",
@@ -1521,7 +2025,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-30"
+    "tgl_daftar": "2026-04-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140722123001",
@@ -1533,7 +2041,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN II",
-    "tgl_daftar": "2026-04-30"
+    "tgl_daftar": "2026-04-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090213123001",
@@ -1545,7 +2057,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-29"
+    "tgl_daftar": "2026-04-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121229123001",
@@ -1557,7 +2073,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-04-29"
+    "tgl_daftar": "2026-04-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091231123001",
@@ -1569,7 +2089,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-28"
+    "tgl_daftar": "2026-04-28",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090113123001",
@@ -1581,7 +2105,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-27"
+    "tgl_daftar": "2026-04-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100102123001",
@@ -1593,7 +2121,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-27"
+    "tgl_daftar": "2026-04-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081108123001",
@@ -1605,7 +2137,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-27"
+    "tgl_daftar": "2026-04-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090421123001",
@@ -1617,7 +2153,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-25"
+    "tgl_daftar": "2026-04-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100727123001",
@@ -1629,7 +2169,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-24"
+    "tgl_daftar": "2026-04-24",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090411123001",
@@ -1641,7 +2185,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-22"
+    "tgl_daftar": "2026-04-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110930123001",
@@ -1653,7 +2201,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-04-21"
+    "tgl_daftar": "2026-04-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091101123001",
@@ -1665,7 +2217,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-21"
+    "tgl_daftar": "2026-04-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090619123001",
@@ -1677,7 +2233,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA NEGERI 3 SUMENEP",
-    "tgl_daftar": "2026-04-16"
+    "tgl_daftar": "2026-04-16",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130321123001",
@@ -1689,7 +2249,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-04-14"
+    "tgl_daftar": "2026-04-14",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121020123001",
@@ -1701,7 +2265,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-04-11"
+    "tgl_daftar": "2026-04-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100401123001",
@@ -1713,7 +2281,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-09"
+    "tgl_daftar": "2026-04-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081028123002",
@@ -1725,7 +2297,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-08"
+    "tgl_daftar": "2026-04-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "121117123001",
@@ -1737,7 +2313,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 3 SUMENEP",
-    "tgl_daftar": "2026-04-04"
+    "tgl_daftar": "2026-04-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080901123002",
@@ -1749,7 +2329,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-04-04"
+    "tgl_daftar": "2026-04-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080707123001",
@@ -1761,7 +2345,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-31"
+    "tgl_daftar": "2026-03-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110211123001",
@@ -1773,7 +2361,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-31"
+    "tgl_daftar": "2026-03-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100106123001",
@@ -1785,7 +2377,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-03-30"
+    "tgl_daftar": "2026-03-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130317123001",
@@ -1797,7 +2393,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-03-17"
+    "tgl_daftar": "2026-03-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090503123001",
@@ -1809,7 +2409,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-09"
+    "tgl_daftar": "2026-03-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090318123001",
@@ -1821,7 +2425,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-07"
+    "tgl_daftar": "2026-03-07",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081214123002",
@@ -1833,7 +2441,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-06"
+    "tgl_daftar": "2026-03-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090208123001",
@@ -1845,7 +2457,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-03-05"
+    "tgl_daftar": "2026-03-05",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120131123001",
@@ -1857,7 +2473,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-03-03"
+    "tgl_daftar": "2026-03-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090507051801",
@@ -1869,7 +2489,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-02-28"
+    "tgl_daftar": "2026-02-28",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150314123001",
@@ -1881,7 +2505,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PINGGIR PAPAS II",
-    "tgl_daftar": "2026-02-26"
+    "tgl_daftar": "2026-02-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090515123001",
@@ -1893,7 +2521,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA MUHAMMADIYAH 1 SUMENEP",
-    "tgl_daftar": "2026-02-24"
+    "tgl_daftar": "2026-02-24",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081107123001",
@@ -1905,7 +2537,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-02-19"
+    "tgl_daftar": "2026-02-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120709123001",
@@ -1917,7 +2553,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-02-18"
+    "tgl_daftar": "2026-02-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "111010123001",
@@ -1929,7 +2569,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-02-16"
+    "tgl_daftar": "2026-02-16",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090608123002",
@@ -1941,7 +2585,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-02-14"
+    "tgl_daftar": "2026-02-14",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090506123001",
@@ -1953,7 +2601,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-02-14"
+    "tgl_daftar": "2026-02-14",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100411123001",
@@ -1965,7 +2617,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-02-02"
+    "tgl_daftar": "2026-02-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080608123001",
@@ -1977,7 +2633,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-01-30"
+    "tgl_daftar": "2026-01-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090519123001",
@@ -1989,7 +2649,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-01-30"
+    "tgl_daftar": "2026-01-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100817123001",
@@ -2001,7 +2665,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-01-30"
+    "tgl_daftar": "2026-01-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "160306123001",
@@ -2013,7 +2681,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDN PARSANGA I",
-    "tgl_daftar": "2026-01-24"
+    "tgl_daftar": "2026-01-24",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091010123001",
@@ -2025,7 +2697,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-01-20"
+    "tgl_daftar": "2026-01-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140129123001",
@@ -2037,7 +2713,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-01-20"
+    "tgl_daftar": "2026-01-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091230123001",
@@ -2049,7 +2729,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-01-20"
+    "tgl_daftar": "2026-01-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080727123001",
@@ -2061,7 +2745,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-01-17"
+    "tgl_daftar": "2026-01-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "161101123001",
@@ -2073,7 +2761,11 @@
     "kelas_go": "4-SD-R-N-230",
     "tingkat_kelas": "4 SD DASAR",
     "asal_sekolah": "SDI LUKMANUL AL HAKIM",
-    "tgl_daftar": "2026-01-13"
+    "tgl_daftar": "2026-01-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "111030123001",
@@ -2085,7 +2777,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-01-10"
+    "tgl_daftar": "2026-01-10",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090329123001",
@@ -2097,7 +2793,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-01-09"
+    "tgl_daftar": "2026-01-09",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091008051801",
@@ -2109,7 +2809,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-01-08"
+    "tgl_daftar": "2026-01-08",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081111123001",
@@ -2121,7 +2825,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-01-06"
+    "tgl_daftar": "2026-01-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150218123001",
@@ -2133,7 +2841,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDI LUKMANUL AL HAKIM",
-    "tgl_daftar": "2026-01-03"
+    "tgl_daftar": "2026-01-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120809123001",
@@ -2145,7 +2857,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-01-03"
+    "tgl_daftar": "2026-01-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120410123001",
@@ -2157,7 +2873,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "MTSN 2 SUMENEP",
-    "tgl_daftar": "2025-12-31"
+    "tgl_daftar": "2025-12-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120113123001",
@@ -2169,7 +2889,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-12-29"
+    "tgl_daftar": "2025-12-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101010123002",
@@ -2181,7 +2905,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-12-20"
+    "tgl_daftar": "2025-12-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110710123001",
@@ -2193,7 +2921,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-12-16"
+    "tgl_daftar": "2025-12-16",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120309123001",
@@ -2205,7 +2937,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2025-12-13"
+    "tgl_daftar": "2025-12-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080407051801",
@@ -2217,7 +2953,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-12-06"
+    "tgl_daftar": "2025-12-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140426123001",
@@ -2229,7 +2969,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN I",
-    "tgl_daftar": "2025-12-06"
+    "tgl_daftar": "2025-12-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080928123001",
@@ -2241,7 +2985,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-12-06"
+    "tgl_daftar": "2025-12-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "070505123002",
@@ -2253,7 +3001,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 KALIANGET",
-    "tgl_daftar": "2025-12-04"
+    "tgl_daftar": "2025-12-04",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090529123001",
@@ -2265,7 +3017,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-12-02"
+    "tgl_daftar": "2025-12-02",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "111204123001",
@@ -2277,7 +3033,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-12-01"
+    "tgl_daftar": "2025-12-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101010123001",
@@ -2289,7 +3049,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-12-01"
+    "tgl_daftar": "2025-12-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080918123001",
@@ -2301,7 +3065,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-12-01"
+    "tgl_daftar": "2025-12-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110328051801",
@@ -2313,7 +3081,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "140531123001",
@@ -2325,7 +3097,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN II",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110904051801",
@@ -2337,7 +3113,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090503051801",
@@ -2349,7 +3129,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "131202123001",
@@ -2361,7 +3145,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080606123001",
@@ -2373,7 +3161,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100516123001",
@@ -2385,7 +3177,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150113123001",
@@ -2397,7 +3193,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SD K SANG TIMUR",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "120121123001",
@@ -2409,7 +3209,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-29"
+    "tgl_daftar": "2025-11-29",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110617123002",
@@ -2421,7 +3225,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-28"
+    "tgl_daftar": "2025-11-28",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100807123001",
@@ -2433,7 +3241,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-27"
+    "tgl_daftar": "2025-11-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090904123001",
@@ -2445,7 +3257,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-27"
+    "tgl_daftar": "2025-11-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090313123001",
@@ -2457,7 +3273,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-26"
+    "tgl_daftar": "2025-11-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "101106123002",
@@ -2469,7 +3289,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 BLUTO",
-    "tgl_daftar": "2025-11-26"
+    "tgl_daftar": "2025-11-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130509123001",
@@ -2481,7 +3305,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-26"
+    "tgl_daftar": "2025-11-26",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080901123001",
@@ -2493,7 +3321,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-25"
+    "tgl_daftar": "2025-11-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090117123001",
@@ -2505,7 +3337,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-25"
+    "tgl_daftar": "2025-11-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090729123001",
@@ -2517,7 +3353,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-25"
+    "tgl_daftar": "2025-11-25",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090320123001",
@@ -2529,7 +3369,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-24"
+    "tgl_daftar": "2025-11-24",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100921123001",
@@ -2541,7 +3385,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-21"
+    "tgl_daftar": "2025-11-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080728123001",
@@ -2553,7 +3401,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080919123002",
@@ -2565,7 +3417,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080919123001",
@@ -2577,7 +3433,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "130718123001",
@@ -2589,7 +3449,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090702123002",
@@ -2601,7 +3465,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090121123001",
@@ -2613,7 +3481,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081019123001",
@@ -2625,7 +3497,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080709123001",
@@ -2637,7 +3513,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081219123001",
@@ -2649,7 +3529,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-20"
+    "tgl_daftar": "2025-11-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080826051801",
@@ -2661,7 +3545,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100107123001",
@@ -2673,7 +3561,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080526123001",
@@ -2685,7 +3577,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080719051801",
@@ -2697,7 +3593,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081214123001",
@@ -2709,7 +3609,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA MUHAMMADIYAH 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081202123001",
@@ -2721,7 +3625,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080929123001",
@@ -2733,7 +3641,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090128123001",
@@ -2745,7 +3657,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080816123001",
@@ -2757,7 +3673,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100412123001",
@@ -2769,7 +3689,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080104123002",
@@ -2781,7 +3705,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 BLUTO",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090726123001",
@@ -2793,7 +3721,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091022123001",
@@ -2805,7 +3737,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 BLUTO",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080715123001",
@@ -2817,7 +3753,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090305123001",
@@ -2829,7 +3769,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "111225123001",
@@ -2841,7 +3785,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090224123001",
@@ -2853,7 +3801,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-19"
+    "tgl_daftar": "2025-11-19",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080822123001",
@@ -2865,7 +3817,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 AMBUNTEN",
-    "tgl_daftar": "2025-11-18"
+    "tgl_daftar": "2025-11-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150726123001",
@@ -2877,7 +3833,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDN KOLOR II",
-    "tgl_daftar": "2025-11-18"
+    "tgl_daftar": "2025-11-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090803051801",
@@ -2889,7 +3849,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-18"
+    "tgl_daftar": "2025-11-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090206123001",
@@ -2901,7 +3865,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-18"
+    "tgl_daftar": "2025-11-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100429123001",
@@ -2913,7 +3881,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110617123001",
@@ -2925,7 +3897,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150606123001",
@@ -2937,7 +3913,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDIT AL-HIDAYAH",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081024123001",
@@ -2949,7 +3929,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091016051801",
@@ -2961,7 +3945,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090608123001",
@@ -2973,7 +3961,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-17"
+    "tgl_daftar": "2025-11-17",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090727123001",
@@ -2985,7 +3977,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-15"
+    "tgl_daftar": "2025-11-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "110606051801",
@@ -2997,7 +3993,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2025-11-15"
+    "tgl_daftar": "2025-11-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090925123001",
@@ -3009,7 +4009,11 @@
     "kelas_go": "11-UMUM-R-N-232-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-15"
+    "tgl_daftar": "2025-11-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090724123001",
@@ -3021,7 +4025,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-15"
+    "tgl_daftar": "2025-11-15",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100327123001",
@@ -3033,7 +4041,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-13"
+    "tgl_daftar": "2025-11-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080712051801",
@@ -3045,7 +4057,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-13"
+    "tgl_daftar": "2025-11-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090304123001",
@@ -3057,7 +4073,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-13"
+    "tgl_daftar": "2025-11-13",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090211123001",
@@ -3069,7 +4089,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100313123001",
@@ -3081,7 +4105,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080810123001",
@@ -3093,7 +4121,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080813123001",
@@ -3105,7 +4137,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081023123001",
@@ -3117,7 +4153,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 LENTENG",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081104123001",
@@ -3129,7 +4169,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA MUHAMMADIYAH 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "150820123001",
@@ -3141,7 +4185,11 @@
     "kelas_go": "5-SD-R-N-230",
     "tingkat_kelas": "5 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN II",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090205123001",
@@ -3153,7 +4201,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-233",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMA MUHAMMADIYAH 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090302123001",
@@ -3165,7 +4217,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090702123001",
@@ -3177,7 +4233,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081020123001",
@@ -3189,7 +4249,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-234",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080806123001",
@@ -3201,7 +4265,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081221123001",
@@ -3213,7 +4281,11 @@
     "kelas_go": "12-UMUM-R-N-231",
     "tingkat_kelas": "12 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100322123001",
@@ -3225,7 +4297,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081029123001",
@@ -3237,7 +4313,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080607051801",
@@ -3249,7 +4329,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-12"
+    "tgl_daftar": "2025-11-12",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "080602123002",
@@ -3261,7 +4345,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-232-SMANSA",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-11"
+    "tgl_daftar": "2025-11-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "100407123001",
@@ -3273,7 +4361,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2025-11-11"
+    "tgl_daftar": "2025-11-11",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "091025123001",
@@ -3285,7 +4377,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-20"
+    "tgl_daftar": "2026-07-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3297,7 +4393,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-20"
+    "tgl_daftar": "2026-07-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3309,7 +4409,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-20"
+    "tgl_daftar": "2026-07-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3321,7 +4425,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-20"
+    "tgl_daftar": "2026-07-20",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3333,7 +4441,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMP BINAR",
-    "tgl_daftar": "2026-07-18"
+    "tgl_daftar": "2026-07-18",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3345,7 +4457,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-21"
+    "tgl_daftar": "2026-07-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3357,7 +4473,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-21"
+    "tgl_daftar": "2026-07-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3369,7 +4489,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-21"
+    "tgl_daftar": "2026-07-21",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3381,7 +4505,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 1 KALIANGET",
-    "tgl_daftar": "2026-07-22"
+    "tgl_daftar": "2026-07-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3393,7 +4521,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "MAN SUMENEP",
-    "tgl_daftar": "2026-07-22"
+    "tgl_daftar": "2026-07-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3405,7 +4537,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-22"
+    "tgl_daftar": "2026-07-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3417,7 +4553,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-22"
+    "tgl_daftar": "2026-07-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3429,7 +4569,11 @@
     "kelas_go": "4-SD-R-N-230",
     "tingkat_kelas": "4 SD DASAR",
     "asal_sekolah": "SDI LUKMANUL AL HAKIM",
-    "tgl_daftar": "2026-07-22"
+    "tgl_daftar": "2026-07-22",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3441,7 +4585,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-07-27"
+    "tgl_daftar": "2026-07-27",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3453,7 +4601,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMK (SMEA) N 1 SUMENEP",
-    "tgl_daftar": "2026-07-28"
+    "tgl_daftar": "2026-07-28",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3465,7 +4617,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-07-30"
+    "tgl_daftar": "2026-07-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3477,7 +4633,11 @@
     "kelas_go": "11-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-30"
+    "tgl_daftar": "2026-07-30",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3489,7 +4649,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMPN 1 SUMENEP",
-    "tgl_daftar": "2026-07-31"
+    "tgl_daftar": "2026-07-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3501,7 +4665,11 @@
     "kelas_go": "6-SD-R-N-230",
     "tingkat_kelas": "6 SD DASAR",
     "asal_sekolah": "SDN PAJAGALAN II",
-    "tgl_daftar": "2026-07-31"
+    "tgl_daftar": "2026-07-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3513,7 +4681,11 @@
     "kelas_go": "8-SMP-R-N-230",
     "tingkat_kelas": "8 SMP UMUM",
     "asal_sekolah": "SMPN 2 SUMENEP",
-    "tgl_daftar": "2026-07-31"
+    "tgl_daftar": "2026-07-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "081015123002",
@@ -3525,7 +4697,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-07-31"
+    "tgl_daftar": "2026-07-31",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3537,7 +4713,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-08-01"
+    "tgl_daftar": "2026-08-01",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3549,7 +4729,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-08-03"
+    "tgl_daftar": "2026-08-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3561,7 +4745,11 @@
     "kelas_go": "7-SMP-R-N-230",
     "tingkat_kelas": "7 SMP UMUM",
     "asal_sekolah": "SMP INTEGRAL LUQMAN AL-HAKIM",
-    "tgl_daftar": "2026-08-03"
+    "tgl_daftar": "2026-08-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3573,7 +4761,11 @@
     "kelas_go": "10-UMUM-R-N-231",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-08-03"
+    "tgl_daftar": "2026-08-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3585,7 +4777,11 @@
     "kelas_go": "11-UMUM-R-N-231",
     "tingkat_kelas": "11 SMA UMUM",
     "asal_sekolah": "SMAN 2 SUMENEP",
-    "tgl_daftar": "2026-08-03"
+    "tgl_daftar": "2026-08-03",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3597,7 +4793,11 @@
     "kelas_go": "9-SMP-R-N-230",
     "tingkat_kelas": "9 SMP UMUM",
     "asal_sekolah": "SMPIT AL-HIDAYAH",
-    "tgl_daftar": "2026-08-05"
+    "tgl_daftar": "2026-08-05",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "",
@@ -3609,7 +4809,11 @@
     "kelas_go": "10-UMUM-R-N-230-SMANSA",
     "tingkat_kelas": "10 SMA UMUM",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-08-06"
+    "tgl_daftar": "2026-08-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090401123001",
@@ -3621,7 +4825,11 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-08-06"
+    "tgl_daftar": "2026-08-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   },
   {
     "no_reg": "090203123001",
@@ -3633,6 +4841,10 @@
     "kelas_go": "12-UMUM-R-N-SNBT-230",
     "tingkat_kelas": "12 SMA SNBT",
     "asal_sekolah": "SMAN 1 SUMENEP",
-    "tgl_daftar": "2026-08-06"
+    "tgl_daftar": "2026-08-06",
+    "tahun_ajaran": "2026/2027",
+    "status_bayar": "belum_lunas",
+    "total_tagihan": 0,
+    "sisa_tagihan": 0
   }
 ]

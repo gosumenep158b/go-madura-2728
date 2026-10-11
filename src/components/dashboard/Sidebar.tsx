@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, BarChart3, UserPlus, GraduationCap, LogOut, User, ShieldCheck, BookOpen } from 'lucide-react';
+import { LayoutDashboard, Settings, BarChart3, UserPlus, GraduationCap, LogOut, User, ShieldCheck, Users, Wallet } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface SidebarProps {
@@ -17,7 +17,11 @@ interface SessionUser {
 
 const NAV = [
   { href: '/', label: 'Dashboard Siswa', icon: LayoutDashboard },
-  { href: '/progress-materi', label: 'Progress Materi', icon: BookOpen },
+  { href: '/pendaftaran', label: 'Portal Pendaftaran', icon: UserPlus },
+  { href: '/harga-bimbel', label: 'Harga Bimbel', icon: Wallet },
+  { href: '/pembayaran', label: 'Pembayaran & Cicilan', icon: Wallet },
+  { href: '/grup-belajar', label: 'Grup Belajar', icon: Users },
+  { href: '/pengaturan', label: 'Pengaturan Admin', icon: Settings },
   { href: '/statistik', label: 'Data Statistik', icon: BarChart3 },
 ];
 
@@ -46,12 +50,10 @@ export default function Sidebar({ onTambah }: SidebarProps) {
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r border-red-100 bg-white lg:flex">
       <div className="flex items-center gap-3 border-b border-red-100 px-5 py-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-600 text-white shadow-sm">
-          <GraduationCap size={22} />
-        </div>
-        <div>
-          <p className="text-sm font-bold leading-tight text-red-700">GO Sumenep</p>
-          <p className="text-[11px] text-gray-500">Dashboard Siswa</p>
+        <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain" />
+        <div className="hidden xl:block">
+          <p className="text-sm font-bold leading-tight text-red-700">Ganesha Operation</p>
+          <p className="text-[11px] text-gray-500">Sumenep · TA 2027/2028</p>
         </div>
       </div>
 
@@ -123,7 +125,7 @@ export default function Sidebar({ onTambah }: SidebarProps) {
           </div>
         )}
 
-        <p className="text-center text-[11px] text-gray-400">TA 2026/2027</p>
+        <p className="text-center text-[11px] text-gray-400">TA 2027/2028</p>
       </div>
     </aside>
   );

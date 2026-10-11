@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { GraduationCap, Eye, EyeOff, LogIn } from 'lucide-react';
+import { Eye, EyeOff, LogIn, Award, Sparkles } from 'lucide-react';
 
 function LoginForm() {
   const router = useRouter();
@@ -40,101 +40,153 @@ function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-red-700 via-red-600 to-red-800 p-4">
-      {/* Decorative background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-white/5" />
-        <div className="absolute -bottom-24 -right-24 h-[480px] w-[480px] rounded-full bg-white/5" />
-        <div className="absolute left-1/2 top-1/4 h-64 w-64 -translate-x-1/2 rounded-full bg-white/5" />
+    <div className="min-h-screen w-full flex bg-[#faf8ff]">
+      {/* Left Side: Stunning Enhanced GO Building Hero (iofrm split-screen style) */}
+      <div className="hidden lg:flex lg:w-3/5 relative bg-red-950 overflow-hidden flex-col justify-between p-12 text-white shadow-2xl">
+        {/* Background Enhanced Image with Gradient Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/go_building_hero_enhanced.jpg" 
+            alt="Ganesha Operation Sumenep Building" 
+            className="w-full h-full object-cover object-center filter brightness-95 contrast-105 scale-105 transform hover:scale-100 transition duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-red-950/75 to-red-900/40" />
+        </div>
+
+        {/* Top Header / Logo */}
+        <div className="relative z-10 flex items-center justify-between">
+          <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-white/20 flex items-center gap-3">
+            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-9 w-auto object-contain" />
+          </div>
+          <div className="flex items-center gap-2 bg-amber-500 text-amber-950 px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg uppercase tracking-wider">
+            <Sparkles size={14} /> TA 2027/2028 Sumenep
+          </div>
+        </div>
+
+        {/* Middle / Bottom Content */}
+        <div className="relative z-10 space-y-5 max-w-xl mb-4">
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-300 border border-white/25 shadow-sm">
+            <Award size={15} /> Bimbel Tatap Muka Berbasis Teknologi Digital
+          </div>
+          <h1 className="text-4xl xl:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
+            Ganesha Operation <span className="text-amber-400">Sumenep</span>
+          </h1>
+          <p className="text-red-100 text-sm xl:text-base leading-relaxed font-medium drop-shadow">
+            Pusat bimbingan belajar terdepan dengan metode KREATIF. Mengantarkan ribuan siswa meraih impian masuk PTN &amp; PTK favorit.
+          </p>
+
+          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
+            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+              <div className="text-2xl font-black text-amber-400">207+</div>
+              <div className="text-xs text-red-100 font-medium">Siswa SLP Terverifikasi</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+              <div className="text-2xl font-black text-amber-400">20+</div>
+              <div className="text-xs text-red-100 font-medium">Kelas GO Aktif</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+              <div className="text-2xl font-black text-amber-400">100%</div>
+              <div className="text-xs text-red-100 font-medium">Fasilitas Unggulan</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div className="relative z-10 text-xs text-red-200 font-medium flex items-center justify-between">
+          <span>© 2026/2027 Ganesha Operation Sumenep</span>
+          <span className="text-amber-300 font-bold">The King of the Fastest Solution</span>
+        </div>
       </div>
 
-      <div className="relative w-full max-w-md">
-        {/* Card */}
-        <div className="overflow-hidden rounded-3xl bg-white shadow-2xl">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-red-700 to-red-600 px-8 py-8 text-center text-white">
-            <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 shadow-inner backdrop-blur-sm">
-              <GraduationCap size={32} className="text-white" />
+      {/* Right Side: Clean Modern Login Form */}
+      <div className="w-full lg:w-2/5 flex items-center justify-center p-6 sm:p-12 bg-white">
+        <div className="w-full max-w-md space-y-8">
+          
+          {/* Mobile Logo Header */}
+          <div className="lg:hidden text-center space-y-3">
+            <div className="inline-block bg-white p-3 rounded-2xl shadow-md border border-red-100">
+              <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain mx-auto" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight">GO Sumenep</h1>
-            <p className="mt-1 text-sm text-red-100">Dashboard Siswa TA 2026/2027</p>
-            <div className="mt-3 h-1 w-16 mx-auto rounded-full bg-white/40" />
+            <h2 className="text-xl font-black text-gray-900">Ganesha Operation Sumenep</h2>
+            <p className="text-xs text-gray-500">Dashboard Siswa TA 2026/2027</p>
           </div>
 
-          {/* Form */}
-          <div className="px-8 py-8">
-            <h2 className="mb-6 text-center text-base font-semibold text-gray-700">
-              Masuk ke Sistem
-            </h2>
+          <div className="space-y-2 text-center lg:text-left">
+            <h2 className="text-2xl font-black tracking-tight text-gray-900">Masuk ke Dashboard</h2>
+            <p className="text-sm text-gray-500">Masukkan username dan password Anda untuk melanjutkan.</p>
+          </div>
 
-            {error && (
-              <div className="mb-4 flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-200">
-                <span className="h-2 w-2 shrink-0 rounded-full bg-red-500" />
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700 border border-red-200 flex items-center gap-2">
+              <span>⚠️</span> {error}
+            </div>
+          )}
 
-            <form onSubmit={submit} className="space-y-4">
-              <div>
-                <label className="mb-1.5 block text-xs font-semibold text-gray-600">
-                  Username / NIK
-                </label>
-                <input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Masukkan username atau NIK"
-                  autoComplete="username"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-red-400 focus:bg-white focus:ring-2 focus:ring-red-100"
-                  required
-                />
-              </div>
+          <form onSubmit={submit} className="space-y-5">
+            <div>
+              <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-gray-700">
+                Username / NIK
+              </label>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Masukkan username atau NIK"
+                autoComplete="username"
+                className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3.5 text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
+                required
+              />
+            </div>
 
-              <div>
-                <label className="mb-1.5 block text-xs font-semibold text-gray-600">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
                   Password
                 </label>
-                <div className="relative">
-                  <input
-                    type={showPw ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Masukkan password"
-                    autoComplete="current-password"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-11 text-sm outline-none transition focus:border-red-400 focus:bg-white focus:ring-2 focus:ring-red-100"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPw((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600"
-                    tabIndex={-1}
-                  >
-                    {showPw ? <EyeOff size={17} /> : <Eye size={17} />}
-                  </button>
-                </div>
+                <a href="#" className="text-xs font-semibold text-red-600 hover:underline">
+                  Lupa password?
+                </a>
               </div>
+              <div className="relative">
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Masukkan password"
+                  autoComplete="current-password"
+                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3.5 pr-12 text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw((v) => !v)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600"
+                  tabIndex={-1}
+                >
+                  {showPw ? <EyeOff size={19} /> : <Eye size={19} />}
+                </button>
+              </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 disabled:opacity-60"
-              >
-                {loading ? (
-                  <span className="animate-pulse">Memverifikasi…</span>
-                ) : (
-                  <>
-                    <LogIn size={17} />
-                    Masuk
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-600 py-4 text-sm font-bold text-white shadow-lg shadow-red-600/30 transition hover:bg-red-700 disabled:opacity-60"
+            >
+              {loading ? (
+                <span className="animate-pulse">Memverifikasi Akses…</span>
+              ) : (
+                <>
+                  <LogIn size={18} />
+                  Masuk ke Sistem
+                </>
+              )}
+            </button>
+          </form>
 
-          {/* Footer */}
-          <div className="border-t border-gray-100 bg-gray-50 px-8 py-4 text-center text-xs text-gray-400">
+          <div className="text-center text-xs text-gray-400 pt-4 border-t">
             Ganesha Operation Sumenep · Sistem Manajemen Siswa
           </div>
+
         </div>
       </div>
     </div>
@@ -143,7 +195,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Memuat...</div>}>
       <LoginForm />
     </Suspense>
   );

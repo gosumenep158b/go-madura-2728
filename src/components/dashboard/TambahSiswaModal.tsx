@@ -39,6 +39,9 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     tingkat_kelas: '',
     asal_sekolah: '',
     tgl_daftar: new Date().toISOString().slice(0, 10),
+    tahun_ajaran: '2027/2028',
+    total_tagihan: '',
+    metode_bayar: '',
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -74,6 +77,10 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          tahun_ajaran: form.tahun_ajaran || '2027/2028',
+          total_tagihan: form.total_tagihan ? Number(String(form.total_tagihan).replace(/\D/g,'')) : 0,
+          sisa_tagihan: form.total_tagihan ? Number(String(form.total_tagihan).replace(/\D/g,'')) : 0,
+          status_bayar: form.total_tagihan ? 'belum_lunas' : 'belum_lunas',
           no_reg: form.no_reg.trim(),
           nama_siswa: form.nama_siswa.trim(),
           no_hp: fixPhone(form.no_hp),
@@ -98,6 +105,9 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         tingkat_kelas: '',
         asal_sekolah: '',
         tgl_daftar: new Date().toISOString().slice(0, 10),
+        tahun_ajaran: '2027/2028',
+        total_tagihan: '',
+        metode_bayar: '',
       });
     } catch {
       setError('Gagal terhubung ke server.');
@@ -185,6 +195,28 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
                   <option key={k} value={k} />
                 ))}
               </datalist>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-600">Tahun Ajaran *</label>
+              <select value={(form as unknown as { tahun_ajaran: string }).tahun_ajaran} onChange={set('tahun_ajaran' as unknown as keyof typeof form)} className={inputCls}>
+                <option value="2027/2028">2027/2028 (Aktif)</option>
+                <option value="2026/2027">2026/2027 (Arsip)</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-600">Total Tagihan (Rp)</label>
+              <input value={(form as unknown as { total_tagihan: string }).total_tagihan} onChange={set('total_tagihan' as unknown as keyof typeof form)} placeholder="cth: 5000000" className={`${inputCls} font-mono`} />
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-600">Metode</label>
+              <select value={(form as unknown as { metode_bayar: string }).metode_bayar} onChange={set('metode_bayar' as unknown as keyof typeof form)} className={inputCls}>
+                <option value="">— Pilih —</option>
+                <option value="lunas">Lunas</option>
+                <option value="cicilan">Cicilan</option>
+              </select>
             </div>
           </div>
 

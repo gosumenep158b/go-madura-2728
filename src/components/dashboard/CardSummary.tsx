@@ -1,6 +1,6 @@
 interface CardSummaryProps {
   title: string;
-  value: number;
+  value: number | string;
   description?: string;
   icon: React.ReactNode;
 }

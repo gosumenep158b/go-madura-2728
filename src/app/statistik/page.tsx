@@ -106,7 +106,7 @@ export default function StatistikPage() {
                     formatter={(value, name) => [value, name === 'terisi' ? 'Terisi' : 'Kapasitas']}
                     labelFormatter={(l) => `Kelas ${l}`}
                   />
-                  <Bar dataKey="terisi" fill="#dc2626" radius={[0, 6, 6, 0]} />
+                  <Bar dataKey="terisi" fill="#4f46e5" radius={[0, 6, 6, 0]} />
                   <Bar dataKey="max" fill="#fecaca" radius={[0, 6, 6, 0]} />
                   <ReferenceLine x={25} stroke="#991b1b" strokeDasharray="4 4" />
                 </BarChart>
