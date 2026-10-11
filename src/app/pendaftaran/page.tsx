@@ -558,7 +558,11 @@ export default function ModulPenawaranBimbel() {
             <div>
               <label className="block text-xs font-semibold text-gray-700">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
               {(() => {
-                const filtered = kelasOptions.filter((c:any) => c.tingkat_kelas === grade && c.ruang === selectedUnit);
+                const filtered = kelasOptions.filter((c:any) => {
+                  const matchUnit = (c.ruang ?? c.unit_name ?? '').toLowerCase() === (selectedUnit ?? '').toLowerCase();
+                  const matchGrade = (c.tingkat_kelas ?? '').toLowerCase().includes((grade ?? '').toLowerCase()) || (grade ?? '').toLowerCase().includes((c.tingkat_kelas ?? '').toLowerCase());
+                  return matchUnit && matchGrade;
+                });
                 if (!filtered.length) {
                   const hasAnyForGrade = kelasOptions.some((c:any)=> c.tingkat_kelas === grade);
                   return (
