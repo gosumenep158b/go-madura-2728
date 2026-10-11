@@ -420,7 +420,10 @@ export default function ModulPenawaranBimbel() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24 print:bg-white print:pb-0">
+    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24 print:bg-white print:pb-0">
+      <Sidebar onTambah={() => {}} />
+      <div className="min-w-0 flex-1">
+        <MobileNav onTambah={() => {}} />
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           @page { size: A4; margin: 10mm; }
@@ -835,6 +838,7 @@ export default function ModulPenawaranBimbel() {
         </div>
 
       </main>
+      </div>
     </div>
   );
 }
