@@ -438,11 +438,11 @@ export default function PengaturanAdminPage() {
                     <label className="block text-xs font-semibold text-gray-700 mb-1">Nomor / Suffix Nama Kelas</label>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-500 bg-white px-2 py-2 border rounded-xl">
-                        {`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-`}
+                        {`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'UMUM'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-N-`}
                       </span>
-                      <input type="text" value={cNumber} onChange={e=>setCNumber(e.target.value)} className="w-20 p-2 border rounded-xl text-sm font-bold text-center" placeholder="001" />
+                      <input type="text" value={cNumber} onChange={e=>setCNumber(e.target.value)} className="w-20 p-2 border rounded-xl text-sm font-bold text-center" placeholder="230" />
                     </div>
-                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-${cNumber}`}</b></p>
+                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'UMUM'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-N-${cNumber}`}</b></p>
                   </div>
 
                   <div>
