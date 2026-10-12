@@ -27,6 +27,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     no_hp: '',
     nama_ortu: '',
     no_hp_ortu: '',
+    unit: '',
     kelas_go: '',
     tingkat_kelas: '',
     program: '',
@@ -51,6 +52,22 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     return true;
   });
   const hasAnyKelas = kelasList.length>0;
+  // sync unit dari kelas terpilih; filterUnit sebagai fallback manual
+  useEffect(()=>{
+    if(form.kelas_go){
+      const found = kelasList.find(c=> c.nama_kelompok===form.kelas_go);
+      if(found?.unit && found.unit !== form.unit) setForm(f=>({...f, unit: found.unit || f.unit}));
+    }
+  }, [form.kelas_go]);
+  useEffect(()=>{
+    if(filterUnit && !form.unit) setForm(f=>({...f, unit: filterUnit}));
+    if(filterUnit && form.unit && filterUnit !== form.unit){
+      const stillMatch = kelasList.some(c=> c.nama_kelompok===form.kelas_go && (c.unit||'')===filterUnit);
+      if(!stillMatch) {
+        // kelas tidak cocok dengan unit baru -> reset kelas_go agar user pilih ulang? keep as is for now
+      }
+    }
+  }, [filterUnit]);
 
   useEffect(() => {
     if (!form.tingkat_kelas) return;
@@ -123,6 +140,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           no_hp: fixPhone(form.no_hp),
           no_hp_ortu: fixPhone(form.no_hp_ortu),
           program: form.program,
+          unit: form.unit || filterUnit || '',
         }),
       });
       const j = await res.json();
@@ -139,6 +157,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         no_hp: '',
         nama_ortu: '',
         no_hp_ortu: '',
+        unit: '',
         kelas_go: '',
         tingkat_kelas: '',
         program: '',
@@ -243,12 +262,12 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">Filter Unit (Kelas GO)</label>
-              <select value={filterUnit} onChange={e=>setFilterUnit(e.target.value)} className={inputCls}>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Unit *</label>
+              <select value={form.unit || filterUnit} onChange={e=>{ setFilterUnit(e.target.value); setForm(f=>({...f, unit: e.target.value})); }} className={inputCls}>
                 <option value="">— Semua Unit —</option>
                 {SEMADURA_UNITS.map((u:any)=>(<option key={u} value={u}>{u}</option>))}
               </select>
-              <p className="mt-1 text-[11px] text-gray-600">{hasAnyKelas ? `${kelasFiltered.length} kelas di ${filterUnit||'semua unit'}` : 'Belum ada kelas — buat di Pengaturan'}</p>
+              <p className="mt-1 text-[11px] text-gray-600">{form.unit ? `Unit terpilih: ${form.unit}` : hasAnyKelas ? `${kelasFiltered.length} kelas di ${filterUnit||'semua unit'}` : 'Belum ada kelas — buat di Pengaturan'}</p>
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-gray-800">Kelas GO {form.tingkat_kelas ? `(${form.tingkat_kelas})` : ''}</label>

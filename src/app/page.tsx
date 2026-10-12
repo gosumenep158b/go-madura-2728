@@ -7,6 +7,7 @@ import {
 } from 'recharts';
 import { Users, School, Layers, Search, CreditCard } from 'lucide-react';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
+import { SEMADURA_UNITS } from '@/lib/program';
 import CardSummary from '@/components/dashboard/CardSummary';
 import TambahSiswaModal from '@/components/dashboard/TambahSiswaModal';
 
@@ -17,6 +18,7 @@ interface Siswa {
   no_hp: string;
   nama_ortu: string;
   no_hp_ortu: string;
+  unit?: string;
   kelas_go: string;
   tingkat_kelas: string;
   asal_sekolah: string;
@@ -72,6 +74,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [filterTingkat, setFilterTingkat] = useState('Semua');
+  const [filterUnit, setFilterUnit] = useState('Semua');
   const [ta, setTa] = useState('2027/2028');
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -95,6 +98,12 @@ export default function Home() {
     return ['Semua', ...Array.from(s).sort()];
   }, [data]);
 
+  const unitOptions = useMemo(() => {
+    const fromData = new Set((data.map((d) => (d.unit || '').trim()).filter(Boolean) as string[]));
+    const all = new Set<string>([...(SEMADURA_UNITS as readonly string[]), ...fromData]);
+    return ['Semua', ...Array.from(all).sort()];
+  }, [data]);
+
   const kelasOptions = useMemo(
     () => [...(summary?.kapasitasKelas ?? [])].map((k) => k.kelas).sort(),
     [summary]
@@ -107,11 +116,13 @@ export default function Home() {
         !q ||
         d.nama_siswa.toLowerCase().includes(q) ||
         d.no_reg.includes(q) ||
-        d.asal_sekolah.toLowerCase().includes(q);
+        d.asal_sekolah.toLowerCase().includes(q) ||
+        (d.unit || '').toLowerCase().includes(q);
       const matchT = filterTingkat === 'Semua' || d.tingkat_kelas === filterTingkat;
-      return matchQ && matchT;
+      const matchUnit = filterUnit === 'Semua' || (d.unit || '').trim() === filterUnit;
+      return matchQ && matchT && matchUnit;
     });
-  }, [data, query, filterTingkat]);
+  }, [data, query, filterTingkat, filterUnit]);
 
   const tingkatChart = useMemo(
     () => [...(summary?.tingkatKelas ?? [])].sort((a, b) => b.jumlah - a.jumlah),
@@ -290,15 +301,25 @@ export default function Home() {
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
+                <select
+                  value={filterUnit}
+                  onChange={(e) => setFilterUnit(e.target.value)}
+                  className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-red-400"
+                >
+                  {unitOptions.map((u) => (
+                    <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[900px] text-left text-sm">
+              <table className="w-full min-w-[1000px] text-left text-sm">
                 <thead>
                   <tr className="bg-red-700 text-xs uppercase tracking-wide text-white">
                     <th className="px-4 py-3">No. Registrasi</th>
                     <th className="px-4 py-3">Nama Siswa</th>
                     <th className="px-4 py-3">Tingkat Kelas</th>
+                    <th className="px-4 py-3">Unit</th>
                     <th className="px-4 py-3">Kelas GO</th>
                     <th className="px-4 py-3">Asal Sekolah</th>
                     <th className="px-4 py-3">Tagihan / Sisa</th>
@@ -307,7 +328,7 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {filtered.length===0 ? (
-                    <tr><td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-400">Tidak ada data di TA {ta}. {ta==='2027/2028' ? 'Tambah siswa baru untuk TA ini.' : ''}</td></tr>
+                    <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">Tidak ada data di TA {ta}. {ta==='2027/2028' ? 'Tambah siswa baru untuk TA ini.' : ''}</td></tr>
                   ) : filtered.slice(0, 100).map((s, i) => {
                     const wa = s.sisa_tagihan>0 ? waOrtuLink(s) : null;
                     return (
@@ -319,6 +340,7 @@ export default function Home() {
                           {s.tingkat_kelas || '—'}
                         </span>
                       </td>
+                      <td className="px-4 py-2.5"><span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 border border-slate-200 whitespace-nowrap">{s.unit || '—'}</span></td>
                       <td className="px-4 py-2.5 text-xs text-gray-600">{s.kelas_go}</td>
                       <td className="px-4 py-2.5 text-xs text-gray-600">{s.asal_sekolah}</td>
                       <td className="px-4 py-2.5 text-xs">

@@ -46,7 +46,7 @@ export async function GET() {
         s.no_reg || '',                 // NO REGISTRASI (manual)
         '',                             // CABANG
         '',                             // KOTA
-        s.kelas_go || '',               // UNIT (Kelas GO)
+        s.unit || s.kelas_go || '',     // UNIT (nama unit / fallback kelas GO)
         s.tgl_lahir || '',              // TGL LAHIR
         s.program || '',                // PROGRAM
         s.status_bayar || '',           // STATUS BAYAR
