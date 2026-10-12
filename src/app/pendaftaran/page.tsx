@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
+import TambahSiswaModal from '@/components/dashboard/TambahSiswaModal';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qyjtbddnjvqhvukgubwb.supabase.co';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh';
@@ -189,6 +190,7 @@ export default function ModulPenawaranBimbel() {
   const [historyList, setHistoryList] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState<boolean>(false);
   const [selectedKelasId, setSelectedKelasId] = useState<string>('');
+  const [siswaModalOpen, setSiswaModalOpen] = useState<boolean>(false);
 
   // Identitas
   const [namaSiswa, setNamaSiswa] = useState<string>('');
@@ -419,11 +421,13 @@ export default function ModulPenawaranBimbel() {
     window.open(`https://wa.me/${noHp}?text=${waText}`, '_blank');
   }
 
+  const kelasNames = (kelasOptions as any[]).map((c: any) => c.nama_kelompok as string).filter(Boolean);
+
   return (
     <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24 print:bg-white print:pb-0">
-      <Sidebar onTambah={() => {}} />
+      <Sidebar onTambah={() => setSiswaModalOpen(true)} />
       <div className="min-w-0 flex-1">
-        <MobileNav onTambah={() => {}} />
+        <MobileNav onTambah={() => setSiswaModalOpen(true)} />
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           @page { size: A4; margin: 10mm; }
@@ -834,6 +838,7 @@ export default function ModulPenawaranBimbel() {
 
       </main>
       </div>
+      <TambahSiswaModal open={siswaModalOpen} onClose={() => setSiswaModalOpen(false)} onSuccess={() => setSiswaModalOpen(false)} kelasOptions={kelasNames} />
     </div>
   );
 }

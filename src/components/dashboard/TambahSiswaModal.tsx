@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 interface TambahSiswaModalProps {
@@ -24,6 +24,30 @@ const TINGKAT_OPTIONS = [
   '13 ALUMNI UMUM',
 ];
 
+const DEFAULT_HARGA: Record<string, number> = {
+  '13 ALUMNI UMUM': 11500000, '12 SMA SNBT': 11500000, '12 SMA UMUM': 11500000,
+  '11 SMA UMUM': 10200000, '10 SMA UMUM': 10200000,
+  '9 SMP UMUM': 8900000, '8 SMP UMUM': 8900000, '7 SMP UMUM': 8900000,
+  '6 SD DASAR': 7500000, '5 SD DASAR': 7500000, '4 SD DASAR': 7500000,
+};
+function mapTingkatToHargaKey(t: string): string {
+  const u = (t || '').toUpperCase().trim();
+  if (u.startsWith('13')) return '13 ALUMNI UMUM';
+  if (u.includes('12') && u.includes('SNBT')) return '12 SMA SNBT';
+  if (u.startsWith('12')) return '12 SMA UMUM';
+  if (u.startsWith('11')) return '11 SMA UMUM';
+  if (u.startsWith('10')) return '10 SMA UMUM';
+  if (u.startsWith('9')) return '9 SMP UMUM';
+  if (u.startsWith('8')) return '8 SMP UMUM';
+  if (u.startsWith('7')) return '7 SMP UMUM';
+  if (u.startsWith('6')) return '6 SD DASAR';
+  if (u.startsWith('5')) return '5 SD DASAR';
+  if (u.startsWith('4')) return '4 SD DASAR';
+  return t;
+}
+function fmtRp(n: number) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
+function parseRp(v: string) { const n = Number(String(v).replace(/\D/g, '')); return isNaN(n) ? 0 : n; }
+
 const inputCls =
   'w-full rounded-xl border border-red-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-gray-400 focus:border-red-400';
 
@@ -42,9 +66,22 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     tahun_ajaran: '2027/2028',
     total_tagihan: '',
     metode_bayar: '',
+    pembayaran_sekarang: '',
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const hargaNormal = form.tingkat_kelas ? (DEFAULT_HARGA[mapTingkatToHargaKey(form.tingkat_kelas)] ?? 0) : 0;
+  const hargaSetelahDiskonNum = parseRp(form.total_tagihan);
+  const bayarSekarangNum = parseRp((form as unknown as { pembayaran_sekarang: string }).pembayaran_sekarang || '');
+  const sisaNum = Math.max(0, (hargaSetelahDiskonNum || hargaNormal) - bayarSekarangNum);
+
+  useEffect(() => {
+    if (!form.tingkat_kelas) return;
+    const normal = DEFAULT_HARGA[mapTingkatToHargaKey(form.tingkat_kelas)] ?? 0;
+    if (normal && !form.total_tagihan) {
+      setForm(f => ({ ...f, total_tagihan: String(normal) }));
+    }
+  }, [form.tingkat_kelas]);
 
   if (!open) return null;
 
@@ -72,15 +109,24 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
     setSaving(true);
     try {
+      const tagihanFinal = hargaSetelahDiskonNum || hargaNormal || 0;
+      const sisaFinal = tagihanFinal ? sisaNum : 0;
+      let status: 'lunas' | 'cicilan' | 'belum_lunas' = 'belum_lunas';
+      if (tagihanFinal > 0) {
+        if (sisaFinal <= 0) status = 'lunas';
+        else if (sisaFinal < tagihanFinal) status = 'cicilan';
+        else status = 'belum_lunas';
+      }
       const res = await fetch('/api/siswa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
           tahun_ajaran: form.tahun_ajaran || '2027/2028',
-          total_tagihan: form.total_tagihan ? Number(String(form.total_tagihan).replace(/\D/g,'')) : 0,
-          sisa_tagihan: form.total_tagihan ? Number(String(form.total_tagihan).replace(/\D/g,'')) : 0,
-          status_bayar: form.total_tagihan ? 'belum_lunas' : 'belum_lunas',
+          total_tagihan: tagihanFinal,
+          sisa_tagihan: sisaFinal,
+          status_bayar: status,
+          metode_bayar: (form.metode_bayar as string) || (status === 'cicilan' ? 'cicilan' : status === 'lunas' ? 'lunas' : undefined),
           no_reg: form.no_reg.trim(),
           nama_siswa: form.nama_siswa.trim(),
           no_hp: fixPhone(form.no_hp),
@@ -108,6 +154,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         tahun_ajaran: '2027/2028',
         total_tagihan: '',
         metode_bayar: '',
+        pembayaran_sekarang: '',
       });
     } catch {
       setError('Gagal terhubung ke server.');
@@ -198,7 +245,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">Tahun Ajaran *</label>
               <select value={(form as unknown as { tahun_ajaran: string }).tahun_ajaran} onChange={set('tahun_ajaran' as unknown as keyof typeof form)} className={inputCls}>
@@ -207,16 +254,33 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Total Tagihan (Rp)</label>
-              <input value={(form as unknown as { total_tagihan: string }).total_tagihan} onChange={set('total_tagihan' as unknown as keyof typeof form)} placeholder="cth: 5000000" className={`${inputCls} font-mono`} />
-            </div>
-            <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">Metode</label>
               <select value={(form as unknown as { metode_bayar: string }).metode_bayar} onChange={set('metode_bayar' as unknown as keyof typeof form)} className={inputCls}>
                 <option value="">— Pilih —</option>
                 <option value="lunas">Lunas</option>
                 <option value="cicilan">Cicilan</option>
               </select>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3 space-y-3">
+            <p className="text-xs font-bold text-amber-800">Rincian Biaya</p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div>
+                <label className="mb-1 block text-xs font-medium text-gray-600">Harga Normal</label>
+                <div className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm font-mono text-gray-700">{hargaNormal ? fmtRp(hargaNormal) : '— pilih tingkat kelas'}</div>
+                <p className="mt-1 text-[11px] text-gray-500">Otomatis dari tingkat kelas</p>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-medium text-gray-600">Harga Setelah Diskon (Rp)</label>
+                <input value={form.total_tagihan} onChange={set('total_tagihan')} placeholder={hargaNormal ? String(hargaNormal) : 'cth: 5000000'} className={`${inputCls} font-mono`} inputMode="numeric" />
+                <p className="mt-1 text-[11px] text-gray-500">Isi manual / pakai Modul Penawaran</p>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-medium text-gray-600">Pembayaran Sekarang (Rp)</label>
+                <input value={(form as unknown as { pembayaran_sekarang: string }).pembayaran_sekarang} onChange={set('pembayaran_sekarang' as unknown as keyof typeof form)} placeholder="cth: 1000000" className={`${inputCls} font-mono`} inputMode="numeric" />
+                <p className="mt-1 text-[11px] text-gray-500">Sisa: <b className={sisaNum > 0 ? 'text-amber-700' : 'text-emerald-600'}>{fmtRp(sisaNum)}</b> {sisaNum <= 0 && (hargaSetelahDiskonNum || hargaNormal) > 0 ? '— Lunas' : ''}</p>
+              </div>
             </div>
           </div>
 
