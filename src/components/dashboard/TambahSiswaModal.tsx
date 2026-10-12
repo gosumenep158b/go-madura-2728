@@ -78,9 +78,10 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   useEffect(() => {
     if (!form.tingkat_kelas) return;
     const normal = DEFAULT_HARGA[mapTingkatToHargaKey(form.tingkat_kelas)] ?? 0;
-    if (normal && !form.total_tagihan) {
-      setForm(f => ({ ...f, total_tagihan: String(normal) }));
-    }
+    if (!normal) return;
+    // Selalu sinkron Harga Setelah Diskon = Harga Normal saat tingkat dipilih/diubah
+    // (siswa tanpa surat penawaran tetap dapat harga otomatis per jenjang; diskon bisa diedit manual setelahnya)
+    setForm(f => ({ ...f, total_tagihan: String(normal) }));
   }, [form.tingkat_kelas]);
 
   if (!open) return null;
