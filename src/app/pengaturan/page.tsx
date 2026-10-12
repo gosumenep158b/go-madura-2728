@@ -292,7 +292,8 @@ export default function PengaturanAdminPage() {
       hari_jam: scheduleStr,
       kurikulum: cProgram,
       is_active: true,
-    }]);
+      unit: cUnit,
+    } as any]);
 
     if (error) {
       alert('Gagal menambah kelas: ' + error.message);

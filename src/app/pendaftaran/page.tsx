@@ -250,7 +250,12 @@ export default function ModulPenawaranBimbel() {
     // kelas master for dropdown
     (async()=>{
       try{
-        const { data } = await (supabase as any).from('admin_classes').select('id, tingkat_kelas, nama_kelompok, ruang, hari_jam, is_active').eq('is_active', true).order('id');
+        let { data } = await (supabase as any).from('admin_classes').select('*').eq('is_active', true).order('id');
+        // fallback if * fails due to cache: retry explicit columns
+        if(!data){
+          const r2 = await (supabase as any).from('admin_classes').select('id, tingkat_kelas, nama_kelompok, ruang, hari_jam, is_active').eq('is_active', true).order('id');
+          data = r2.data;
+        }
         if(data) setKelasOptions(data as any[]);
       }catch{}
     })();
@@ -424,7 +429,8 @@ export default function ModulPenawaranBimbel() {
     window.open(`https://wa.me/${noHp}?text=${waText}`, '_blank');
   }
 
-  const kelasNames = (kelasOptions as any[]).map((c: any) => c.nama_kelompok as string).filter(Boolean);
+  // Pass full objects so TambahSiswaModal can filter by Unit; keep string fallback for legacy
+  const kelasForModal: any[] = (kelasOptions as any[]).map((c: any) => ({ id: c.id, nama_kelompok: c.nama_kelompok, tingkat_kelas: c.tingkat_kelas, unit: (c as any).unit, ruang: c.ruang, hari_jam: c.hari_jam }));
 
   return (
     <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24 print:bg-white print:pb-0">
@@ -641,10 +647,12 @@ export default function ModulPenawaranBimbel() {
               {(() => {
                 console.log("DEBUG KELAS:", { kelasOptions, grade, selectedUnit });
                 const filtered = kelasOptions.filter((c:any) => {
-                  // Relax unit and grade matching so classes are never hidden due to strict naming differences
-                  const u1 = (c.ruang ?? c.unit_name ?? '').toLowerCase();
-                  const u2 = (selectedUnit ?? '').toLowerCase();
-                  const matchUnit = !u1 || !u2 || u1.includes(u2) || u2.includes(u1);
+                  const u1raw = (c.unit ?? c.ruang ?? c.unit_name ?? '');
+                  const u1 = String(u1raw).toLowerCase();
+                  const u2 = String(selectedUnit ?? '').toLowerCase();
+                  // If unit column exists and populated, require exact match; otherwise relax (legacy data has unit empty)
+                  const hasUnitCol = u1raw !== '' && u1raw !== null && u1raw !== undefined;
+                  const matchUnit = !hasUnitCol ? true : (!u2 || u1.includes(u2) || u2.includes(u1));
                   
                   const g1 = (c.tingkat_kelas ?? '').toLowerCase();
                   const g2 = (grade ?? '').toLowerCase();
@@ -854,7 +862,7 @@ export default function ModulPenawaranBimbel() {
 
       </main>
       </div>
-      <TambahSiswaModal open={siswaModalOpen} onClose={() => setSiswaModalOpen(false)} onSuccess={() => setSiswaModalOpen(false)} kelasOptions={kelasNames} />
+      <TambahSiswaModal open={siswaModalOpen} onClose={() => setSiswaModalOpen(false)} onSuccess={() => setSiswaModalOpen(false)} kelasOptions={kelasForModal} />
     </div>
   );
 }

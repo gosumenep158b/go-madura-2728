@@ -1,3 +1,6 @@
+export const SEMADURA_UNITS = ["Unit Agus Salim","Unit Jokotole","Unit Parteker","Unit Imam Bonjol","Unit Cempaka"] as const;
+export type UnitName = typeof SEMADURA_UNITS[number];
+
 export const PROGRAM_BY_TINGKAT: Record<string, string[]> = {
   "4 SD": ["TWT 4 SD KMERDEKA 4P TA. 2728", "TWT 4 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
   "5 SD": ["TWT 5 SD KMERDEKA 4P TA. 2728", "TWT 5 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],

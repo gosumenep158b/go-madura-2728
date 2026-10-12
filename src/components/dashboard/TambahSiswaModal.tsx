@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS } from '@/lib/program';
+import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS, SEMADURA_UNITS } from '@/lib/program';
 
+interface KelasOpt { id?: any; nama_kelompok: string; tingkat_kelas?: string; unit?: string; ruang?: string; hari_jam?: string; }
 interface TambahSiswaModalProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  kelasOptions: string[];
+  kelasOptions: (string | KelasOpt)[];
 }
 
 function fmtRp(n: number) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -18,6 +19,7 @@ const inputCls =
   'w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 outline-none placeholder:text-gray-400 focus:border-red-500 focus:ring-1 focus:ring-red-200';
 
 export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOptions }: TambahSiswaModalProps) {
+  const [filterUnit, setFilterUnit] = useState<string>('');
   const [form, setForm] = useState({
     no_reg: '',
     nama_siswa: '',
@@ -42,6 +44,13 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   const bayarSekarangNum = parseRp((form as any).pembayaran_sekarang || '');
   const sisaNum = Math.max(0, (hargaSetelahDiskonNum || hargaNormal) - bayarSekarangNum);
   const programOptions = form.tingkat_kelas ? getProgramOptions(form.tingkat_kelas) : [];
+  // Normalisasi kelasOptions (string legacy vs object)
+  const kelasList: KelasOpt[] = (kelasOptions || []).map((k:any)=> typeof k==='string' ? { nama_kelompok:k } : { nama_kelompok: k.nama_kelompok || k.class_name || '', tingkat_kelas: k.tingkat_kelas, unit: k.unit, ruang: k.ruang || k.unit_name, hari_jam: k.hari_jam || k.schedule });
+  const kelasFiltered = kelasList.filter(c=>{
+    if(filterUnit && (c.unit||'').toLowerCase() !== filterUnit.toLowerCase()) return false;
+    return true;
+  });
+  const hasAnyKelas = kelasList.length>0;
 
   useEffect(() => {
     if (!form.tingkat_kelas) return;
@@ -228,18 +237,31 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
                   <option key={p} value={p}>{p}</option>
                 ))}
               </select>
-              <p className="mt-1 text-[11px] text-gray-600">{form.tingkat_kelas === '12 SMA' ? '3 pilihan (khusus 12 SMA ada Eksekutif Silver)' : programOptions.length ? '2 pilihan' : ''}</p>
+              <p className="mt-1 text-[11px] text-gray-600">{form.tingkat_kelas === '12 SMA' ? '4 pilihan (12 SMA: + Silver & Medical 6P)' : programOptions.length ? '2 pilihan' : ''}</p>
             </div>
           </div>
 
-          <div>
-            <label className="mb-1 block text-xs font-semibold text-gray-800">Kelas GO</label>
-            <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" list="kelas-go-list" className={`${inputCls} font-mono text-xs`} />
-            <datalist id="kelas-go-list">
-              {kelasOptions.map((k) => (
-                <option key={k} value={k} />
-              ))}
-            </datalist>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Filter Unit (Kelas GO)</label>
+              <select value={filterUnit} onChange={e=>setFilterUnit(e.target.value)} className={inputCls}>
+                <option value="">— Semua Unit —</option>
+                {SEMADURA_UNITS.map((u:any)=>(<option key={u} value={u}>{u}</option>))}
+              </select>
+              <p className="mt-1 text-[11px] text-gray-600">{hasAnyKelas ? `${kelasFiltered.length} kelas di ${filterUnit||'semua unit'}` : 'Belum ada kelas — buat di Pengaturan'}</p>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Kelas GO {form.tingkat_kelas ? `(${form.tingkat_kelas})` : ''}</label>
+              {hasAnyKelas ? (
+                <select value={form.kelas_go} onChange={set('kelas_go')} className={`${inputCls} font-mono text-xs`}>
+                  <option value="">— Pilih Kelas —</option>
+                  {kelasFiltered.map((c)=>(<option key={c.nama_kelompok} value={c.nama_kelompok}>{c.nama_kelompok}{c.hari_jam?` — ${c.hari_jam}`:''}{c.ruang?` (${c.ruang})`:''}{c.unit?` · ${c.unit}`:''}</option>))}
+                </select>
+              ) : (
+                <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" className={`${inputCls} font-mono text-xs`} />
+              )}
+              {hasAnyKelas && kelasFiltered.length===0 ? <p className="mt-1 text-[11px] font-medium text-amber-700">Tidak ada kelas untuk filter ini — pilih Semua Unit atau buat kelas baru di Pengaturan.</p> : null}
+            </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
