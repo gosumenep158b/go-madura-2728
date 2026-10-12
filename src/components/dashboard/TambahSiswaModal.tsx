@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS } from '@/lib/program';
 
 interface TambahSiswaModalProps {
   open: boolean;
@@ -10,41 +11,6 @@ interface TambahSiswaModalProps {
   kelasOptions: string[];
 }
 
-const TINGKAT_OPTIONS = [
-  '4 SD DASAR',
-  '5 SD DASAR',
-  '6 SD DASAR',
-  '7 SMP UMUM',
-  '8 SMP UMUM',
-  '9 SMP UMUM',
-  '10 SMA UMUM',
-  '11 SMA UMUM',
-  '12 SMA UMUM',
-  '12 SMA SNBT',
-  '13 ALUMNI UMUM',
-];
-
-const DEFAULT_HARGA: Record<string, number> = {
-  '13 ALUMNI UMUM': 11500000, '12 SMA SNBT': 11500000, '12 SMA UMUM': 11500000,
-  '11 SMA UMUM': 10200000, '10 SMA UMUM': 10200000,
-  '9 SMP UMUM': 8900000, '8 SMP UMUM': 8900000, '7 SMP UMUM': 8900000,
-  '6 SD DASAR': 7500000, '5 SD DASAR': 7500000, '4 SD DASAR': 7500000,
-};
-function mapTingkatToHargaKey(t: string): string {
-  const u = (t || '').toUpperCase().trim();
-  if (u.startsWith('13')) return '13 ALUMNI UMUM';
-  if (u.includes('12') && u.includes('SNBT')) return '12 SMA SNBT';
-  if (u.startsWith('12')) return '12 SMA UMUM';
-  if (u.startsWith('11')) return '11 SMA UMUM';
-  if (u.startsWith('10')) return '10 SMA UMUM';
-  if (u.startsWith('9')) return '9 SMP UMUM';
-  if (u.startsWith('8')) return '8 SMP UMUM';
-  if (u.startsWith('7')) return '7 SMP UMUM';
-  if (u.startsWith('6')) return '6 SD DASAR';
-  if (u.startsWith('5')) return '5 SD DASAR';
-  if (u.startsWith('4')) return '4 SD DASAR';
-  return t;
-}
 function fmtRp(n: number) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
 function parseRp(v: string) { const n = Number(String(v).replace(/\D/g, '')); return isNaN(n) ? 0 : n; }
 
@@ -61,6 +27,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     no_hp_ortu: '',
     kelas_go: '',
     tingkat_kelas: '',
+    program: '',
     asal_sekolah: '',
     tgl_daftar: new Date().toISOString().slice(0, 10),
     tahun_ajaran: '2027/2028',
@@ -70,18 +37,24 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-  const hargaNormal = form.tingkat_kelas ? (DEFAULT_HARGA[mapTingkatToHargaKey(form.tingkat_kelas)] ?? 0) : 0;
+  const hargaNormal = form.tingkat_kelas ? hargaForTingkat(form.tingkat_kelas) : 0;
   const hargaSetelahDiskonNum = parseRp(form.total_tagihan);
-  const bayarSekarangNum = parseRp((form as unknown as { pembayaran_sekarang: string }).pembayaran_sekarang || '');
+  const bayarSekarangNum = parseRp((form as any).pembayaran_sekarang || '');
   const sisaNum = Math.max(0, (hargaSetelahDiskonNum || hargaNormal) - bayarSekarangNum);
+  const programOptions = form.tingkat_kelas ? getProgramOptions(form.tingkat_kelas) : [];
 
   useEffect(() => {
     if (!form.tingkat_kelas) return;
-    const normal = DEFAULT_HARGA[mapTingkatToHargaKey(form.tingkat_kelas)] ?? 0;
-    if (!normal) return;
-    // Selalu sinkron Harga Setelah Diskon = Harga Normal saat tingkat dipilih/diubah
-    // (siswa tanpa surat penawaran tetap dapat harga otomatis per jenjang; diskon bisa diedit manual setelahnya)
-    setForm(f => ({ ...f, total_tagihan: String(normal) }));
+    const normal = hargaForTingkat(form.tingkat_kelas);
+    const opts = getProgramOptions(form.tingkat_kelas);
+    setForm(f => {
+      const needProgram = !f.program || !opts.includes(f.program);
+      return {
+        ...f,
+        total_tagihan: normal ? String(normal) : f.total_tagihan,
+        program: needProgram ? (opts[0] || '') : f.program,
+      };
+    });
   }, [form.tingkat_kelas]);
 
   if (!open) return null;
@@ -100,11 +73,19 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     setError('');
 
     if (!/^\d{12}$/.test(form.no_reg.trim())) {
-      setError('No. Registrasi harus 12 digit angka.');
+      setError('No. Registrasi harus 12 digit angka (input manual dari sistem resmi GO).');
       return;
     }
     if (!form.nama_siswa.trim()) {
       setError('Nama siswa wajib diisi.');
+      return;
+    }
+    if (!form.tingkat_kelas) {
+      setError('Tingkat kelas wajib dipilih.');
+      return;
+    }
+    if (!form.program) {
+      setError('Program wajib dipilih.');
       return;
     }
 
@@ -132,6 +113,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           nama_siswa: form.nama_siswa.trim(),
           no_hp: fixPhone(form.no_hp),
           no_hp_ortu: fixPhone(form.no_hp_ortu),
+          program: form.program,
         }),
       });
       const j = await res.json();
@@ -150,6 +132,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         no_hp_ortu: '',
         kelas_go: '',
         tingkat_kelas: '',
+        program: '',
         asal_sekolah: '',
         tgl_daftar: new Date().toISOString().slice(0, 10),
         tahun_ajaran: '2027/2028',
@@ -173,7 +156,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         <div className="flex items-center justify-between border-b border-red-100 bg-red-600 px-5 py-4 text-white">
           <div>
             <h2 className="text-sm font-bold">Tambah Siswa Baru</h2>
-            <p className="text-xs text-red-100">Lengkapi data di bawah ini</p>
+            <p className="text-xs text-red-100">No. Registrasi input manual (sistem resmi GO)</p>
           </div>
           <button onClick={onClose} className="rounded-full p-1 hover:bg-red-500">
             <X size={18} />
@@ -191,6 +174,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">No. Registrasi (12 digit) *</label>
               <input value={form.no_reg} onChange={set('no_reg')} placeholder="cth: 101109123001" className={`${inputCls} font-mono`} maxLength={12} />
+              <p className="mt-1 text-[11px] text-gray-400">Manual dari aplikasi resmi GO</p>
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">Tanggal Daftar</label>
@@ -227,36 +211,48 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Tingkat Kelas</label>
+              <label className="mb-1 block text-xs font-medium text-gray-600">Tingkat Kelas *</label>
               <select value={form.tingkat_kelas} onChange={set('tingkat_kelas')} className={inputCls}>
                 <option value="">— Pilih —</option>
-                {TINGKAT_OPTIONS.map((t) => (
+                {TINGKATS_9.map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
+              <p className="mt-1 text-[11px] text-gray-500">Harga Normal otomatis mengikuti tingkat</p>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Kelas GO</label>
-              <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 10-UMUM-R-N-231" list="kelas-go-list" className={`${inputCls} font-mono text-xs`} />
-              <datalist id="kelas-go-list">
-                {kelasOptions.map((k) => (
-                  <option key={k} value={k} />
+              <label className="mb-1 block text-xs font-medium text-gray-600">Program *</label>
+              <select value={form.program} onChange={set('program')} className={inputCls} disabled={!form.tingkat_kelas}>
+                <option value="">{form.tingkat_kelas ? '— Pilih Program —' : '— Pilih tingkat dulu —'}</option>
+                {programOptions.map((p) => (
+                  <option key={p} value={p}>{p}</option>
                 ))}
-              </datalist>
+              </select>
+              <p className="mt-1 text-[11px] text-gray-500">{form.tingkat_kelas === '12 SMA' ? '3 pilihan (khusus 12 SMA ada Eksekutif Silver)' : programOptions.length ? '2 pilihan' : ''}</p>
             </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-600">Kelas GO</label>
+            <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" list="kelas-go-list" className={`${inputCls} font-mono text-xs`} />
+            <datalist id="kelas-go-list">
+              {kelasOptions.map((k) => (
+                <option key={k} value={k} />
+              ))}
+            </datalist>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">Tahun Ajaran *</label>
-              <select value={(form as unknown as { tahun_ajaran: string }).tahun_ajaran} onChange={set('tahun_ajaran' as unknown as keyof typeof form)} className={inputCls}>
+              <select value={form.tahun_ajaran} onChange={set('tahun_ajaran' as any)} className={inputCls}>
                 <option value="2027/2028">2027/2028 (Aktif)</option>
                 <option value="2026/2027">2026/2027 (Arsip)</option>
               </select>
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-600">Metode</label>
-              <select value={(form as unknown as { metode_bayar: string }).metode_bayar} onChange={set('metode_bayar' as unknown as keyof typeof form)} className={inputCls}>
+              <select value={form.metode_bayar} onChange={set('metode_bayar' as any)} className={inputCls}>
                 <option value="">— Pilih —</option>
                 <option value="lunas">Lunas</option>
                 <option value="cicilan">Cicilan</option>
@@ -265,21 +261,21 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3 space-y-3">
-            <p className="text-xs font-bold text-amber-800">Rincian Biaya</p>
+            <p className="text-xs font-bold text-amber-800">Rincian Biaya (otomatis dari Tingkat Kelas)</p>
             <div className="grid gap-3 sm:grid-cols-3">
               <div>
                 <label className="mb-1 block text-xs font-medium text-gray-600">Harga Normal</label>
                 <div className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm font-mono text-gray-700">{hargaNormal ? fmtRp(hargaNormal) : '— pilih tingkat kelas'}</div>
-                <p className="mt-1 text-[11px] text-gray-500">Otomatis dari tingkat kelas</p>
+                <p className="mt-1 text-[11px] text-gray-500">Otomatis</p>
               </div>
               <div>
                 <label className="mb-1 block text-xs font-medium text-gray-600">Harga Setelah Diskon (Rp)</label>
                 <input value={form.total_tagihan} onChange={set('total_tagihan')} placeholder={hargaNormal ? String(hargaNormal) : 'cth: 5000000'} className={`${inputCls} font-mono`} inputMode="numeric" />
-                <p className="mt-1 text-[11px] text-gray-500">Isi manual / pakai Modul Penawaran</p>
+                <p className="mt-1 text-[11px] text-gray-500">Bisa diedit (diskon)</p>
               </div>
               <div>
                 <label className="mb-1 block text-xs font-medium text-gray-600">Pembayaran Sekarang (Rp)</label>
-                <input value={(form as unknown as { pembayaran_sekarang: string }).pembayaran_sekarang} onChange={set('pembayaran_sekarang' as unknown as keyof typeof form)} placeholder="cth: 1000000" className={`${inputCls} font-mono`} inputMode="numeric" />
+                <input value={(form as any).pembayaran_sekarang} onChange={set('pembayaran_sekarang' as any)} placeholder="cth: 1000000" className={`${inputCls} font-mono`} inputMode="numeric" />
                 <p className="mt-1 text-[11px] text-gray-500">Sisa: <b className={sisaNum > 0 ? 'text-amber-700' : 'text-emerald-600'}>{fmtRp(sisaNum)}</b> {sisaNum <= 0 && (hargaSetelahDiskonNum || hargaNormal) > 0 ? '— Lunas' : ''}</p>
               </div>
             </div>

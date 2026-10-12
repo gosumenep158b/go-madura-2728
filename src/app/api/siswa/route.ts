@@ -11,6 +11,7 @@ export interface Siswa {
   no_hp_ortu: string;
   kelas_go: string;
   tingkat_kelas: string;
+  program?: string;
   asal_sekolah: string;
   tgl_daftar: string;
   tahun_ajaran: string;
@@ -27,6 +28,7 @@ function readSiswa(): Siswa[] {
     const raw = JSON.parse(readFileSync(dataPath, 'utf-8')) as Siswa[]
     return raw.map((s) => ({
       ...s,
+      program: (s as any).program || '',
       tahun_ajaran: (s as unknown as Siswa).tahun_ajaran || '2026/2027',
       status_bayar: (s as unknown as Siswa).status_bayar || 'belum_lunas',
       total_tagihan: (s as unknown as Siswa).total_tagihan ?? 0,
@@ -83,7 +85,7 @@ export async function POST(req: Request) {
     const sisa = body.sisa_tagihan!=null ? Number(body.sisa_tagihan) : total
     const newSiswa: Siswa = {
       no_reg: body.no_reg, tgl_lahir: body.tgl_lahir||'', nama_siswa: body.nama_siswa, no_hp: body.no_hp||'', nama_ortu: body.nama_ortu||'', no_hp_ortu: body.no_hp_ortu||'',
-      kelas_go: body.kelas_go||'', tingkat_kelas: body.tingkat_kelas||'', asal_sekolah: body.asal_sekolah||'', tgl_daftar: body.tgl_daftar||new Date().toISOString().slice(0,10),
+      kelas_go: body.kelas_go||'', tingkat_kelas: body.tingkat_kelas||'', program: (body as any).program||'', asal_sekolah: body.asal_sekolah||'', tgl_daftar: body.tgl_daftar||new Date().toISOString().slice(0,10),
       tahun_ajaran: body.tahun_ajaran||'2027/2028', status_bayar: (body.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: total, sisa_tagihan: sisa, metode_bayar: body.metode_bayar as Siswa['metode_bayar']||undefined,
     }
     if(newSiswa.sisa_tagihan<=0 && newSiswa.total_tagihan>0) newSiswa.status_bayar='lunas'
@@ -104,6 +106,7 @@ export async function PATCH(req: Request) {
     if(body.sisa_tagihan!=null) s.sisa_tagihan=Number(body.sisa_tagihan)
     if(body.status_bayar) s.status_bayar=body.status_bayar as Siswa['status_bayar']
     if(body.metode_bayar!==undefined) s.metode_bayar=body.metode_bayar as Siswa['metode_bayar']
+    if((body as any).program!==undefined) (s as any).program=(body as any).program
     if(body.tahun_ajaran) s.tahun_ajaran=body.tahun_ajaran
     if(s.sisa_tagihan<=0 && s.total_tagihan>0) s.status_bayar='lunas'
     else if(s.sisa_tagihan>0 && s.sisa_tagihan < s.total_tagihan) s.status_bayar='cicilan'

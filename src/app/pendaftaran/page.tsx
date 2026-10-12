@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 import TambahSiswaModal from '@/components/dashboard/TambahSiswaModal';
+import { TINGKATS_9, DEFAULT_HARGA, getProgramOptions, hargaForTingkat, PROGRAMS } from '@/lib/program';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qyjtbddnjvqhvukgubwb.supabase.co';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh';
@@ -137,11 +138,7 @@ const FACILITIES: Record<string, string[]> = {
   ]
 };
 
-const DEFAULT_HARGA: Record<string, number> = {
-  "13 ALUMNI UMUM":11500000,"12 SMA SNBT":11500000,"12 SMA":11500000,"11 SMA":10200000,"10 SMA":10200000,
-  "9 SMP":8900000,"8 SMP":8900000,"7 SMP":8900000,
-  "6 SD":7500000,"5 SD":7500000,"4 SD":7500000,
-};
+// DEFAULT_HARGA imported from @/lib/program
 
 const SLP_DISCOUNT_BY_MONTH: Record<string, number> = {
   'November': 250000,
@@ -177,6 +174,7 @@ export default function ModulPenawaranBimbel() {
   const [selectedUnit, setSelectedUnit] = useState<string>('Unit Agus Salim');
   const [studentType, setStudentType] = useState<'fresh' | 'slp'>('fresh');
   const [grade, setGrade] = useState<string>('12 SMA');
+  const [program, setProgram] = useState<string>(() => getProgramOptions('12 SMA')[0] || PROGRAMS[0]);
   const [basePrice, setBasePrice] = useState<number>(11500000);
   const [bulanDaftar, setBulanDaftar] = useState<string>('November');
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'installment'>('cash');
@@ -263,8 +261,14 @@ export default function ModulPenawaranBimbel() {
     const key = selectedUnit+"|"+grade;
     const hit = hargaMap[key];
     if(hit) setBasePrice(hit.harga);
-    else setBasePrice(DEFAULT_HARGA[grade] ?? 7500000);
+    else setBasePrice(hargaForTingkat(grade));
   },[selectedUnit, grade, hargaLoaded, hargaMap]);
+
+  // Sync program when grade changes: keep valid option, default to first
+  useEffect(()=>{
+    const opts = getProgramOptions(grade);
+    if(!opts.includes(program)) setProgram(opts[0] || PROGRAMS[0]);
+  },[grade]);
 
   
 
@@ -348,6 +352,7 @@ export default function ModulPenawaranBimbel() {
         no_hp_siswa: noHp,
         no_hp_ortu: noHpOrtu,
         jenjang: grade,
+        program: program,
         unit: selectedUnit,
         kelas_id: selectedKelasId || null,
         nama_kelas: k ? k.nama_kelompok : null,
@@ -385,9 +390,7 @@ export default function ModulPenawaranBimbel() {
       alert('Mohon lengkapi Nama Siswa, No. WhatsApp, dan Asal Sekolah.');
       return;
     }
-    const hargaKey = selectedUnit+"|"+grade;
-    const hitProgram = hargaMap[hargaKey]?.program_name;
-    const programName = hitProgram || 'TWT Eksekutif Silver';
+    const programName = program || getProgramOptions(grade)[0] || PROGRAMS[0];
     const kelasTerpilih = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null;
 
     const facilitiesListStr = currentGradeFacilities.map((f) => `  - ${f}`).join('\n');
@@ -451,6 +454,12 @@ export default function ModulPenawaranBimbel() {
             </div>
           </div>
           <div className="mt-2 md:mt-0 flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+            <a
+              href="/api/siswa/export"
+              className="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+            >
+              <span>⬇️ Export</span>
+            </a>
             <button
               onClick={fetchHistory}
               className="shrink-0 bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
@@ -599,25 +608,32 @@ export default function ModulPenawaranBimbel() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-700">Tingkat Kelas &amp; Paket</label>
-              <select
-                value={grade}
-                onChange={(e) => setGrade(e.target.value)}
-                className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold"
-              >
-                <option value="13 ALUMNI UMUM">13 ALUMNI UMUM (TWT Eksekutif Silver) - Rp 11.5 Juta</option>
-                <option value="12 SMA SNBT">12 SMA SNBT (TWT Eksekutif Silver) - Rp 11.5 Juta</option>
-                <option value="12 SMA">12 SMA Umum (TWT Eksekutif Silver) - Rp 11.5 Juta</option>
-                <option value="11 SMA">11 SMA Umum (TWT 1 Tahun) - Rp 10.2 Juta</option>
-                <option value="10 SMA">10 SMA Umum (TWT 1 Tahun) - Rp 10.2 Juta</option>
-                <option value="9 SMP">9 SMP Umum (TWT 1 Tahun) - Rp 8.9 Juta</option>
-                <option value="8 SMP">8 SMP Umum (TWT 1 Tahun) - Rp 8.9 Juta</option>
-                <option value="7 SMP">7 SMP Umum (TWT 1 Tahun) - Rp 8.9 Juta</option>
-                <option value="6 SD">6 SD Dasar (TWT 1 Tahun) - Rp 7.5 Juta</option>
-                <option value="5 SD">5 SD Dasar (TWT 1 Tahun) - Rp 7.5 Juta</option>
-                <option value="4 SD">4 SD Dasar (TWT 1 Tahun) - Rp 7.5 Juta</option>
-              </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700">Tingkat Kelas</label>
+                <select
+                  value={grade}
+                  onChange={(e) => setGrade(e.target.value)}
+                  className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold"
+                >
+                  {TINGKATS_9.map((t)=> (
+                    <option key={t} value={t}>{t} - Rp {hargaForTingkat(t).toLocaleString('id-ID')}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700">Program / Paket</label>
+                <select
+                  value={program}
+                  onChange={(e) => setProgram(e.target.value)}
+                  className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white"
+                >
+                  {getProgramOptions(grade).map((opt)=> (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-gray-400 mt-1">{grade === '12 SMA' ? '12 SMA: 3 pilihan program' : 'Non-12 SMA: 2 pilihan program'}</p>
+              </div>
             </div>
 
             <div>

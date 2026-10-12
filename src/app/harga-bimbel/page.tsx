@@ -3,26 +3,16 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
+import { PROGRAMS, TINGKATS_9, DEFAULT_HARGA, getProgramOptions } from "@/lib/program";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://qyjtbddnjvqhvukgubwb.supabase.co";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const SEMADURA_UNITS = ["Unit Agus Salim","Unit Jokotole","Unit Parteker","Unit Imam Bonjol","Unit Cempaka"];
-const JENJANGS = ["13 ALUMNI UMUM","12 SMA SNBT","12 SMA","11 SMA","10 SMA","9 SMP","8 SMP","7 SMP","6 SD","5 SD","4 SD"];
-const DEFAULT_PROGRAM: Record<string,string> = {
-  "13 ALUMNI UMUM":"TWT 1 Tahun Eksekutif Silver",
-  "12 SMA SNBT":"TWT 1 Tahun Eksekutif Silver",
-  "12 SMA":"TWT 1 Tahun Eksekutif Silver",
-  "11 SMA":"TWT 1 Tahun","10 SMA":"TWT 1 Tahun",
-  "9 SMP":"TWT 1 Tahun","8 SMP":"TWT 1 Tahun","7 SMP":"TWT 1 Tahun",
-  "6 SD":"TWT 1 Tahun","5 SD":"TWT 1 Tahun","4 SD":"TWT 1 Tahun",
-};
-const DEFAULT_HARGA: Record<string,number> = {
-  "13 ALUMNI UMUM":11500000,"12 SMA SNBT":11500000,"12 SMA":11500000,"11 SMA":10200000,"10 SMA":10200000,
-  "9 SMP":8900000,"8 SMP":8900000,"7 SMP":8900000,
-  "6 SD":7500000,"5 SD":7500000,"4 SD":7500000,
-};
+const DEFAULT_PROGRAM: Record<string,string> = Object.fromEntries(
+  (TINGKATS_9 as readonly string[]).map(j => [j, j === "12 SMA" ? PROGRAMS[2] : PROGRAMS[0]])
+) as Record<string,string>;
 
 type Row = { unit:string; tingkat_kelas:string; program_name:string; harga:number; medical_addon:number };
 
@@ -48,7 +38,6 @@ export default function HargaBimbelPage(){
       if(isMissing){
         setTableMissing(true);
         setMsg({type:"info", text:"Tabel admin_unit_program_prices belum ada di Supabase (schema cache). Modul tetap bisa dipakai — harga ditampilkan dari default Juklak. Untuk mengaktifkan simpan permanen, jalankan SQL di database/harga_bimbel_schema.sql via Supabase Dashboard > SQL Editor, lalu klik Muat Ulang."});
-        // coba load dari localStorage jika pernah disimpan lokal
         try{
           const cached = localStorage.getItem("harga_bimbel_rows");
           if(cached){ const parsed = JSON.parse(cached); if(Array.isArray(parsed) && parsed.length) { setRows(parsed); setLoading(false); return; } }
@@ -65,13 +54,12 @@ export default function HargaBimbelPage(){
       buildDefault();
       setMsg({type:"info", text:"Belum ada data harga di Supabase — menampilkan harga default Juklak. Edit lalu Simpan untuk mengisi database."});
     } else {
-      // map ke rows, pastikan semua kombinasi ada
       const map = new Map<string, Row>();
       (data as any[]).forEach(r=> map.set(r.unit+"|"+r.tingkat_kelas, {unit:r.unit, tingkat_kelas:r.tingkat_kelas, program_name:r.program_name, harga:Number(r.harga), medical_addon:Number(r.medical_addon||0)}));
       const full: Row[]=[];
-      for(const j of JENJANGS) for(const u of SEMADURA_UNITS){
+      for(const j of TINGKATS_9) for(const u of SEMADURA_UNITS){
         const k=u+"|"+j; const ex=map.get(k);
-        if(ex) full.push(ex); else full.push({unit:u, tingkat_kelas:j, program_name:DEFAULT_PROGRAM[j]||"TWT 1 Tahun", harga:DEFAULT_HARGA[j]||0, medical_addon: 0});
+        if(ex) full.push(ex); else full.push({unit:u, tingkat_kelas:j, program_name:DEFAULT_PROGRAM[j]||PROGRAMS[0], harga:DEFAULT_HARGA[j]||0, medical_addon: 0});
       }
       setRows(full);
     }
@@ -80,8 +68,8 @@ export default function HargaBimbelPage(){
 
   function buildDefault(){
     const full: Row[]=[];
-    for(const j of JENJANGS) for(const u of SEMADURA_UNITS){
-      full.push({unit:u, tingkat_kelas:j, program_name:DEFAULT_PROGRAM[j]||"TWT 1 Tahun", harga:DEFAULT_HARGA[j]||0, medical_addon: 0});
+    for(const j of TINGKATS_9) for(const u of SEMADURA_UNITS){
+      full.push({unit:u, tingkat_kelas:j, program_name:DEFAULT_PROGRAM[j]||PROGRAMS[0], harga:DEFAULT_HARGA[j]||0, medical_addon: 0});
     }
     setRows(full);
   }
@@ -107,7 +95,6 @@ export default function HargaBimbelPage(){
       const isMissing = m.includes("does not exist") || m.includes("relation") || m.includes("could not find the table") || m.includes("schema cache") || (error as any).code==="42P01" || (error as any).code==="PGRST205";
       if(isMissing){
         setTableMissing(true);
-        // fallback: simpan lokal agar tidak blokir kerja
         try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows)); }catch{}
         setMsg({type:"err", text:"Tabel Supabase belum ada — harga disimpan LOKAL di browser ini dulu. Agar tersinkron ke semua device & portal pendaftaran, jalankan SQL di database/harga_bimbel_schema.sql via Supabase Dashboard > SQL Editor, lalu klik Simpan lagi. (Error: "+error.message+")"});
       } else {
@@ -115,7 +102,7 @@ export default function HargaBimbelPage(){
       }
     } else {
       try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows)); }catch{}
-      setMsg({type:"ok", text:`Berhasil menyimpan ${payload.length} harga (5 unit × ${JENJANGS.length} jenjang) ke Supabase. Portal pendaftaran akan otomatis memakai harga terbaru.`});
+      setMsg({type:"ok", text:`Berhasil menyimpan ${payload.length} harga (5 unit × ${TINGKATS_9.length} jenjang) ke Supabase. Portal pendaftaran akan otomatis memakai harga terbaru.`});
       setTableMissing(false);
     }
     setSaving(false);
@@ -125,7 +112,7 @@ export default function HargaBimbelPage(){
     setRows(prev=> prev.map(r=> r.tingkat_kelas===jenjang ? {...r, harga: val} : r));
   }
 
-  const filteredJenjangs = JENJANGS.filter(j=> !filter || j.toLowerCase().includes(filter.toLowerCase()) || DEFAULT_PROGRAM[j].toLowerCase().includes(filter.toLowerCase()));
+  const filteredJenjangs = (TINGKATS_9 as readonly string[]).filter(j=> !filter || j.toLowerCase().includes(filter.toLowerCase()) || (DEFAULT_PROGRAM[j]||"").toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
@@ -199,9 +186,13 @@ export default function HargaBimbelPage(){
                     <tr key={j} className="border-b hover:bg-gray-50/60">
                       <td className="p-3 sticky left-0 bg-white border-r">
                         <div className="font-bold text-sm text-[#b70011]">{j}</div>
-                        <input value={getCell(SEMADURA_UNITS[0], j)?.program_name||""} onChange={e=>{
+                        <select value={getCell(SEMADURA_UNITS[0], j)?.program_name||DEFAULT_PROGRAM[j]||PROGRAMS[0]} onChange={e=>{
                           const v=e.target.value; SEMADURA_UNITS.forEach(u=> setProgram(u,j,v));
-                        }} className="mt-1 w-full px-2 py-1 border rounded-lg text-xs" placeholder="Nama program" />
+                        }} className="mt-1 w-full px-2 py-1.5 border rounded-lg text-xs bg-white">
+                          {getProgramOptions(j).map(opt=>(
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
                         <div className="text-[11px] text-gray-400 mt-1">Default: {fmt(DEFAULT_HARGA[j]||0)}</div>
                       </td>
                       {SEMADURA_UNITS.map(u=>{
@@ -247,15 +238,15 @@ export default function HargaBimbelPage(){
           )}
 
           <div className="p-4 bg-gray-50 border-t text-xs text-gray-600 leading-relaxed">
-            <b>Cara pakai:</b> Edit harga per sel (kolom = unit, baris = jenjang). Untuk ganti nama program, edit sekali di baris — otomatis tersalin ke 5 unit. Klik <b>Simpan Semua</b> — portal <a href="/pendaftaran" className="text-[#b70011] font-bold underline">/pendaftaran</a> akan otomatis membaca harga terbaru (fallback ke default Juklak jika belum disimpan).
+            <b>Cara pakai:</b> Edit harga per sel (kolom = unit, baris = jenjang). Untuk ganti nama program, pilih via dropdown di baris — otomatis tersalin ke 5 unit. Klik <b>Simpan Semua</b> — portal <a href="/pendaftaran" className="text-[#b70011] font-bold underline">/pendaftaran</a> akan otomatis membaca harga terbaru (fallback ke default Juklak jika belum disimpan).
           </div>
         </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="bg-white p-4 rounded-2xl border text-center"><div className="text-xs text-gray-500">Total Kombinasi</div><div className="text-xl font-black">5 × {JENJANGS.length} = {5*JENJANGS.length}</div></div>
+          <div className="bg-white p-4 rounded-2xl border text-center"><div className="text-xs text-gray-500">Total Kombinasi</div><div className="text-xl font-black">5 × {TINGKATS_9.length} = {5*TINGKATS_9.length}</div></div>
           <div className="bg-white p-4 rounded-2xl border text-center"><div className="text-xs text-gray-500">Rentang Harga</div><div className="text-sm font-bold">{fmt(Math.min(...rows.map(r=>r.harga)))} — {fmt(Math.max(...rows.map(r=>r.harga)))}</div></div>
-          <div className="bg-white p-4 rounded-2xl border text-center"><div className="text-xs text-gray-500">Jenjang Terlengkap</div><div className="text-sm font-bold">{JENJANGS.length} jenjang · harga per unit bisa beda</div></div>
+          <div className="bg-white p-4 rounded-2xl border text-center"><div className="text-xs text-gray-500">Jenjang Terlengkap</div><div className="text-sm font-bold">{TINGKATS_9.length} jenjang · harga per unit bisa beda</div></div>
           <div className="bg-amber-50 p-4 rounded-2xl border border-amber-200 text-center"><div className="text-xs text-amber-800">Sumber Portal</div><div className="text-xs font-bold text-amber-900">admin_unit_program_prices</div></div>
         </div>
       </main>
