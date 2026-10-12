@@ -17,7 +17,7 @@ interface SessionUser {
 
 const NAV = [
   { href: '/', label: 'Dashboard Siswa', icon: LayoutDashboard },
-  { href: '/pendaftaran', label: 'Portal Pendaftaran', icon: UserPlus },
+  { href: '/pendaftaran', label: 'Modul Penawaran', icon: UserPlus },
   { href: '/harga-bimbel', label: 'Harga Bimbel', icon: Wallet },
   { href: '/pembayaran', label: 'Pembayaran & Cicilan', icon: Wallet },
   { href: '/grup-belajar', label: 'Grup Belajar', icon: Users },
@@ -77,13 +77,13 @@ export default function Sidebar({ onTambah }: SidebarProps) {
           );
         })}
 
-        <Link
-          href="/pendaftaran"
+        <button
+          onClick={onTambah}
           className="mt-2 flex w-full items-center gap-3 rounded-xl border border-dashed border-red-300 bg-red-50/60 px-3 py-2.5 text-sm font-medium text-red-700 transition-colors hover:border-red-400 hover:bg-red-50"
         >
           <UserPlus size={18} />
           Tambah Siswa
-        </Link>
+        </button>
       </nav>
 
       <div className="border-t border-red-100 p-4 space-y-3">
@@ -162,13 +162,13 @@ export function MobileNav({ onTambah }: SidebarProps) {
               </Link>
             );
           })}
-          <Link
-            href="/pendaftaran"
+          <button
+            onClick={onTambah}
             className="flex shrink-0 items-center gap-2 rounded-full border border-dashed border-red-300 px-4 py-1.5 text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100"
           >
             <UserPlus size={15} />
             Tambah Siswa
-          </Link>
+          </button>
         </div>
         {user && (
           <button

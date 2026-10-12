@@ -319,7 +319,7 @@ export default function PengaturanAdminPage() {
           </div>
           <div className="flex gap-2">
             <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl hover:bg-red-100 transition">
-              ← Kembali ke Portal Pendaftaran
+              ← Kembali ke Modul Penawaran
             </a>
           </div>
         </div>

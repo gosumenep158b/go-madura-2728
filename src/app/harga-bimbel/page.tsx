@@ -143,7 +143,7 @@ export default function HargaBimbelPage(){
           </div>
           <div className="flex items-center gap-2">
             <a href="/pengaturan" className="text-xs font-bold text-gray-600 bg-white border px-3 py-2 rounded-xl hover:bg-gray-50">← Pengaturan</a>
-            <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl hover:bg-red-100">Portal Pendaftaran →</a>
+            <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl hover:bg-red-100">Modul Penawaran →</a>
           </div>
         </div>
       </header>
