@@ -1,20 +1,24 @@
-export const PROGRAMS = [
-  "TWT 4 SD KMERDEKA 4P TA2728",
-  "TWT 4 SD TRISEMESTER KELAS LANJUTAN KMERDEKA 4P TA 2627 2728",
-  "TWT 12 SMA EKSEKUTIF SILVER KMERDEKA 4P TA 2728",
-] as const;
+export const PROGRAM_BY_TINGKAT: Record<string, string[]> = {
+  "4 SD": ["TWT 4 SD KMERDEKA 4P TA. 2728", "TWT 4 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "5 SD": ["TWT 5 SD KMERDEKA 4P TA. 2728", "TWT 5 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "6 SD": ["TWT 6 SD KMERDEKA 4P TA. 2728", "TWT 6 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "7 SMP": ["TWT 7 SMP KMERDEKA 4P TA. 2728", "TWT 7 SMP TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "8 SMP": ["TWT 8 SMP KMERDEKA 4P TA. 2728", "TWT 8 SMP TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "9 SMP": ["TWT 9 SMP KMERDEKA 4P TA. 2728", "TWT 9 SMP TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "10 SMA": ["TWT 10 SMA KMERDEKA 4P TA. 2728", "TWT 10 SMA TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "11 SMA": ["TWT 11 SMA KMERDEKA 4P TA. 2728", "TWT 11 SMA TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
+  "12 SMA": ["TWT 12 SMA KMERDEKA 4P TA. 2728", "TWT 12 SMA TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728", "TWT 12 SMA SILVER KMERDEKA 4P TA. 2728", "TWT 12 SMA MEDICAL KMERDEKA 6P TA.2728"],
+};
+
+// Flat list for backward compat (harga-bimbel, pendaftaran fallback)
+export const PROGRAMS = Array.from(new Set(Object.values(PROGRAM_BY_TINGKAT).flat())) as unknown as readonly string[];
 export type ProgramName = typeof PROGRAMS[number];
 
 export const TINGKATS_9 = ["4 SD","5 SD","6 SD","7 SMP","8 SMP","9 SMP","10 SMA","11 SMA","12 SMA"] as const;
 
 export function getProgramOptions(tingkat: string): string[] {
-  const t = (tingkat||"").toUpperCase().trim();
-  const is12 = t.startsWith("12");
-  const is12Umum = t === "12 SMA" || t === "12 SMA UMUM" || t.includes("12 SMA UMUM") || (t.startsWith("12") && !t.includes("SNBT") && !t.includes("ALUMNI"));
-  // Spec: program 3 khusus 12 SMA UMUM. Allow only if tingkat is 12 SMA (umum)
-  if (is12Umum && is12) return [...PROGRAMS];
-  if (is12) return PROGRAMS.slice(0,2); // SNBT/ALUMNI tidak dapat eksekutif silver
-  return PROGRAMS.slice(0,2);
+  const key = normalizeTingkat(tingkat);
+  return PROGRAM_BY_TINGKAT[key] ? [...PROGRAM_BY_TINGKAT[key]] : [...(PROGRAMS as unknown as string[])].slice(0, 2);
 }
 
 export const DEFAULT_HARGA: Record<string, number> = {

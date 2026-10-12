@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
-import { PROGRAMS, TINGKATS_9, DEFAULT_HARGA, getProgramOptions } from "@/lib/program";
+import { PROGRAMS, PROGRAM_BY_TINGKAT, TINGKATS_9, DEFAULT_HARGA, getProgramOptions } from "@/lib/program";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://qyjtbddnjvqhvukgubwb.supabase.co";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh";
