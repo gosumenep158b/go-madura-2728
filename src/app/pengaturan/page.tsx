@@ -202,6 +202,11 @@ export default function PengaturanAdminPage() {
   const [cHari2S1Akhir, setcHari2S1Akhir] = useState('17.30');
   const [cHari2S2Awal, setcHari2S2Awal] = useState('18.00');
   const [cHari2S2Akhir, setcHari2S2Akhir] = useState('19.30');
+  const [cHari3, setCHari3] = useState('Sabtu');
+  const [cHari3S1Awal, setcHari3S1Awal] = useState('08.00');
+  const [cHari3S1Akhir, setcHari3S1Akhir] = useState('09.30');
+  const [cHari3S2Awal, setcHari3S2Awal] = useState('10.00');
+  const [cHari3S2Akhir, setcHari3S2Akhir] = useState('11.30');
 
   async function handleDeleteClass(id: number, nama: string) {
     if (!window.confirm(`Yakin ingin menghapus kelas ${nama} (ID: ${id})?`)) return;
@@ -247,35 +252,39 @@ export default function PengaturanAdminPage() {
 
   async function handleAddClass(e: React.FormEvent) {
     e.preventDefault();
+    const isMedical = cProgram === 'Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL');
+    const isSilver = cProgram === 'Eksekutif Silver' || String(cProgram).toUpperCase().includes('SILVER');
     let codeLetter = 'R';
-    if (cProgram === 'Eksekutif Silver') codeLetter = 'S';
-    else if (cProgram === 'Eksekutif Medical Class') codeLetter = 'M';
+    // Spec 12 SMA: R = KMERDEKA/TRISEMESTER, S = SILVER, G = MEDICAL 6P
+    if (isMedical) codeLetter = 'G';
+    else if (isSilver) codeLetter = 'S';
     
     let tingkatNum = cTingkat.replace(/[^0-9]/g, '');
     if (!tingkatNum) tingkatNum = '12';
     
-    let jenjangLabel = 'UMUM';
+    let jenjangLabel = 'SMA';
     if (cTingkat.includes('SD')) jenjangLabel = 'SD';
     else if (cTingkat.includes('SMP')) jenjangLabel = 'SMP';
-    else if (cTingkat.includes(' SMA ')) jenjangLabel = 'UMUM';
-    else if (cTingkat.includes('Silver')) jenjangLabel = 'Silver';
-    else if (cTingkat.includes('Med')) jenjangLabel = 'Med';
-    else if (cTingkat.includes('SMA')) jenjangLabel = 'UMUM';
+    else jenjangLabel = 'SMA';
     
-    const generatedName = `${tingkatNum}-${jenjangLabel}-${codeLetter}-N-${cNumber}`;
+    const variant = isMedical ? 'G' : isSilver ? 'S' : 'N';
+    const generatedName = `${tingkatNum}-${jenjangLabel}-R-${variant}-${cNumber}`;
     
     let capacity = 25;
     if (cProgram === 'Reguler SD') capacity = 20;
     else if (cProgram === 'Reguler Non SD') capacity = 25;
-    else if (cProgram === 'Eksekutif Silver') capacity = 20;
-    else if (cProgram === 'Eksekutif Medical Class') capacity = 15;
+    else if (isSilver) capacity = 20;
+    else if (isMedical) capacity = 15;
     
-    const scheduleStr = `${cHari1}: S1(${cHari1S1Awal}-${cHari1S1Akhir}) S2(${cHari1S2Awal}-${cHari1S2Akhir}) | ${cHari2}: S1(${cHari2S1Awal}-${cHari2S1Akhir}) S2(${cHari2S2Awal}-${cHari2S2Akhir})`;
+    const scheduleStr = isMedical
+      ? `${cHari1}: S1(${cHari1S1Awal}-${cHari1S1Akhir}) S2(${cHari1S2Awal}-${cHari1S2Akhir}) | ${cHari2}: S1(${cHari2S1Awal}-${cHari2S1Akhir}) S2(${cHari2S2Awal}-${cHari2S2Akhir}) | ${cHari3}: S1(${cHari3S1Awal}-${cHari3S1Akhir}) S2(${cHari3S2Awal}-${cHari3S2Akhir})`
+      : `${cHari1}: S1(${cHari1S1Awal}-${cHari1S1Akhir}) S2(${cHari1S2Awal}-${cHari1S2Akhir}) | ${cHari2}: S1(${cHari2S1Awal}-${cHari2S1Akhir}) S2(${cHari2S2Awal}-${cHari2S2Akhir})`;
 
     for (const existing of classes) {
       if ((existing.ruang ?? existing.unit_name) === cRuang) {
         const existingSchedule = String(existing.hari_jam ?? existing.schedule ?? '');
-        if (existingSchedule.includes(cHari1) || existingSchedule.includes(cHari2)) {
+        const clashDays = isMedical ? [cHari1, cHari2, cHari3] : [cHari1, cHari2];
+        if (clashDays.some(d=> existingSchedule.includes(d))) {
           if (!window.confirm(`⚠️ Perhatian: Ruangan ${cRuang} sudah digunakan pada jadwal terkait (${existingSchedule}) oleh kelas ${existing.nama_kelompok ?? existing.class_name}. Tetap lanjutkan?`)) {
             return;
           }
@@ -497,11 +506,25 @@ export default function PengaturanAdminPage() {
                     <label className="block text-xs font-semibold text-gray-700 mb-1">Nomor / Suffix Nama Kelas</label>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-500 bg-white px-2 py-2 border rounded-xl">
-                        {`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'UMUM'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-N-`}
+                        {(() => {
+                          const tn = cTingkat.replace(/[^0-9]/g,'') || '12';
+                          const jen = cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'SMA';
+                          const isMed = cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL');
+                          const isSil = cProgram==='Eksekutif Silver' || String(cProgram).toUpperCase().includes('SILVER');
+                          const suffix = isMed ? 'R-G-' : isSil ? 'R-S-' : 'R-N-';
+                          return `${tn}-${jen}-${suffix}`;
+                        })()}
                       </span>
                       <input type="text" value={cNumber} onChange={e=>setCNumber(e.target.value)} className="w-20 p-2 border rounded-xl text-sm font-bold text-center" placeholder="230" />
                     </div>
-                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{`${cTingkat.replace(/[^0-9]/g,'') || '12'}-${cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'UMUM'}-${cProgram==='Reguler SD'||cProgram==='Reguler Non SD'?'R':cProgram==='Eksekutif Silver'?'S':'M'}-N-${cNumber}`}</b></p>
+                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{(() => {
+                      const tn = cTingkat.replace(/[^0-9]/g,'') || '12';
+                      const jen = cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'SMA';
+                      const isMed = cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL');
+                      const isSil = cProgram==='Eksekutif Silver' || String(cProgram).toUpperCase().includes('SILVER');
+                      const suffix = isMed ? 'R-G-' : isSil ? 'R-S-' : 'R-N-';
+                      return `${tn}-${jen}-${suffix}${cNumber}`;
+                    })()}</b> {cProgram==='Eksekutif Medical Class' ? <span className="text-amber-700 font-bold">· 3 hari × 2 sesi = 6 KBM/minggu</span> : null}</p>
                   </div>
 
                   <div>
@@ -521,7 +544,12 @@ export default function PengaturanAdminPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
+                {/* Jadwal: 2 hari normal (4 KBM), 3 hari khusus Medical 6P (6 KBM) */}
+                {(cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL')) && (
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">🩺 Program Medical 6P: <b>3 hari × 2 sesi = 6 KBM/minggu</b> — atur Hari 1, 2, dan 3 di bawah.</div>
+                )}
+                <div className={`grid grid-cols-1 gap-4 pt-2 border-t ${cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL') ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
+
                   <div className="p-4 rounded-xl border bg-white space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-black uppercase tracking-wider text-red-700">Pertemuan Hari 1</span>
@@ -567,6 +595,30 @@ export default function PengaturanAdminPage() {
                       </div>
                     </div>
                   </div>
+                  {(cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL')) && (
+                    <div className="p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black uppercase tracking-wider text-amber-700">Pertemuan Hari 3 <span className="font-normal normal-case">(Medical 6P)</span></span>
+                        <select value={cHari3} onChange={e=>setCHari3(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-amber-100 text-amber-800">
+                          {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
+                        </select>
+                      </div>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                          <input type="text" value={cHari3S1Awal} onChange={e=>setcHari3S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="08.00" />
+                          <span>s.d.</span>
+                          <input type="text" value={cHari3S1Akhir} onChange={e=>setcHari3S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="09.30" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                          <input type="text" value={cHari3S2Awal} onChange={e=>setcHari3S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="10.00" />
+                          <span>s.d.</span>
+                          <input type="text" value={cHari3S2Akhir} onChange={e=>setcHari3S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="11.30" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </form>
             </div>
