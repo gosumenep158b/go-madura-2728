@@ -15,7 +15,7 @@ function fmtRp(n: number) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'
 function parseRp(v: string) { const n = Number(String(v).replace(/\D/g, '')); return isNaN(n) ? 0 : n; }
 
 const inputCls =
-  'w-full rounded-xl border border-red-200 bg-white px-3 py-2 text-sm outline-none placeholder:text-gray-400 focus:border-red-400';
+  'w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 outline-none placeholder:text-gray-400 focus:border-red-500 focus:ring-1 focus:ring-red-200';
 
 export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOptions }: TambahSiswaModalProps) {
   const [form, setForm] = useState({
@@ -172,68 +172,68 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">No. Registrasi (12 digit) *</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">No. Registrasi (12 digit) *</label>
               <input value={form.no_reg} onChange={set('no_reg')} placeholder="cth: 101109123001" className={`${inputCls} font-mono`} maxLength={12} />
-              <p className="mt-1 text-[11px] text-gray-400">Manual dari aplikasi resmi GO</p>
+              <p className="mt-1 text-[11px] font-medium text-gray-600">Manual dari aplikasi resmi GO</p>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Tanggal Daftar</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Tanggal Daftar</label>
               <input type="date" value={form.tgl_daftar} onChange={set('tgl_daftar')} className={inputCls} />
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-gray-600">Nama Siswa *</label>
+            <label className="mb-1 block text-xs font-semibold text-gray-800">Nama Siswa *</label>
             <input value={form.nama_siswa} onChange={set('nama_siswa')} placeholder="Nama lengkap siswa" className={inputCls} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Tanggal Lahir</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Tanggal Lahir</label>
               <input type="date" value={form.tgl_lahir} onChange={set('tgl_lahir')} className={inputCls} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">No. HP Siswa</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">No. HP Siswa</label>
               <input value={form.no_hp} onChange={set('no_hp')} placeholder="08xxxxxxxxxx" className={`${inputCls} font-mono`} />
             </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Nama Orang Tua</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Nama Orang Tua</label>
               <input value={form.nama_ortu} onChange={set('nama_ortu')} placeholder="Nama ortu/wali" className={inputCls} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">No. HP Ortu</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">No. HP Ortu</label>
               <input value={form.no_hp_ortu} onChange={set('no_hp_ortu')} placeholder="08xxxxxxxxxx" className={`${inputCls} font-mono`} />
             </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Tingkat Kelas *</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Tingkat Kelas *</label>
               <select value={form.tingkat_kelas} onChange={set('tingkat_kelas')} className={inputCls}>
                 <option value="">— Pilih —</option>
                 {TINGKATS_9.map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
-              <p className="mt-1 text-[11px] text-gray-500">Harga Normal otomatis mengikuti tingkat</p>
+              <p className="mt-1 text-[11px] text-gray-600">Harga Normal otomatis mengikuti tingkat</p>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Program *</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Program *</label>
               <select value={form.program} onChange={set('program')} className={inputCls} disabled={!form.tingkat_kelas}>
                 <option value="">{form.tingkat_kelas ? '— Pilih Program —' : '— Pilih tingkat dulu —'}</option>
                 {programOptions.map((p) => (
                   <option key={p} value={p}>{p}</option>
                 ))}
               </select>
-              <p className="mt-1 text-[11px] text-gray-500">{form.tingkat_kelas === '12 SMA' ? '3 pilihan (khusus 12 SMA ada Eksekutif Silver)' : programOptions.length ? '2 pilihan' : ''}</p>
+              <p className="mt-1 text-[11px] text-gray-600">{form.tingkat_kelas === '12 SMA' ? '3 pilihan (khusus 12 SMA ada Eksekutif Silver)' : programOptions.length ? '2 pilihan' : ''}</p>
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-gray-600">Kelas GO</label>
+            <label className="mb-1 block text-xs font-semibold text-gray-800">Kelas GO</label>
             <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" list="kelas-go-list" className={`${inputCls} font-mono text-xs`} />
             <datalist id="kelas-go-list">
               {kelasOptions.map((k) => (
@@ -244,14 +244,14 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Tahun Ajaran *</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Tahun Ajaran *</label>
               <select value={form.tahun_ajaran} onChange={set('tahun_ajaran' as any)} className={inputCls}>
                 <option value="2027/2028">2027/2028 (Aktif)</option>
                 <option value="2026/2027">2026/2027 (Arsip)</option>
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-600">Metode</label>
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Metode</label>
               <select value={form.metode_bayar} onChange={set('metode_bayar' as any)} className={inputCls}>
                 <option value="">— Pilih —</option>
                 <option value="lunas">Lunas</option>
@@ -264,25 +264,25 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             <p className="text-xs font-bold text-amber-800">Rincian Biaya (otomatis dari Tingkat Kelas)</p>
             <div className="grid gap-3 sm:grid-cols-3">
               <div>
-                <label className="mb-1 block text-xs font-medium text-gray-600">Harga Normal</label>
-                <div className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm font-mono text-gray-700">{hargaNormal ? fmtRp(hargaNormal) : '— pilih tingkat kelas'}</div>
-                <p className="mt-1 text-[11px] text-gray-500">Otomatis</p>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">Harga Normal</label>
+                <div className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm font-bold text-gray-900">{hargaNormal ? fmtRp(hargaNormal) : '— pilih tingkat kelas'}</div>
+                <p className="mt-1 text-[11px] text-gray-600">Otomatis</p>
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-gray-600">Harga Setelah Diskon (Rp)</label>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">Harga Setelah Diskon (Rp)</label>
                 <input value={form.total_tagihan} onChange={set('total_tagihan')} placeholder={hargaNormal ? String(hargaNormal) : 'cth: 5000000'} className={`${inputCls} font-mono`} inputMode="numeric" />
-                <p className="mt-1 text-[11px] text-gray-500">Bisa diedit (diskon)</p>
+                <p className="mt-1 text-[11px] text-gray-600">Bisa diedit (diskon)</p>
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-gray-600">Pembayaran Sekarang (Rp)</label>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">Pembayaran Sekarang (Rp)</label>
                 <input value={(form as any).pembayaran_sekarang} onChange={set('pembayaran_sekarang' as any)} placeholder="cth: 1000000" className={`${inputCls} font-mono`} inputMode="numeric" />
-                <p className="mt-1 text-[11px] text-gray-500">Sisa: <b className={sisaNum > 0 ? 'text-amber-700' : 'text-emerald-600'}>{fmtRp(sisaNum)}</b> {sisaNum <= 0 && (hargaSetelahDiskonNum || hargaNormal) > 0 ? '— Lunas' : ''}</p>
+                <p className="mt-1 text-[11px] text-gray-600">Sisa: <b className={sisaNum > 0 ? 'text-amber-700' : 'text-emerald-600'}>{fmtRp(sisaNum)}</b> {sisaNum <= 0 && (hargaSetelahDiskonNum || hargaNormal) > 0 ? '— Lunas' : ''}</p>
               </div>
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-gray-600">Asal Sekolah</label>
+            <label className="mb-1 block text-xs font-semibold text-gray-800">Asal Sekolah</label>
             <input value={form.asal_sekolah} onChange={set('asal_sekolah')} placeholder="cth: SMAN 1 SUMENEP" className={inputCls} />
           </div>
 
