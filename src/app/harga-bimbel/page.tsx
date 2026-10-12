@@ -115,11 +115,11 @@ export default function HargaBimbelPage(){
   const filteredJenjangs = (TINGKATS_9 as readonly string[]).filter(j=> !filter || j.toLowerCase().includes(filter.toLowerCase()) || (DEFAULT_PROGRAM[j]||"").toLowerCase().includes(filter.toLowerCase()));
 
   return (
-    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
+    <div className="flex min-h-screen bg-slate-50 text-slate-900 pb-20">
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-      <header className="sticky top-0 z-40 bg-[#faf8ff]/90 backdrop-blur-xl border-b border-gray-200">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
         <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain bg-white rounded-xl p-1 shadow-sm border border-red-100" />
@@ -137,7 +137,7 @@ export default function HargaBimbelPage(){
 
       <main className="max-w-7xl mx-auto p-4 md:p-6 space-y-5">
         {/* Info banner */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-wrap gap-4 items-center justify-between">
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap gap-4 items-center justify-between shadow-sm">
           <div className="flex flex-wrap gap-2">
             {SEMADURA_UNITS.map(u=>(
               <span key={u} className="px-3 py-1.5 rounded-full text-xs font-bold border bg-gray-50 border-gray-200 text-gray-700">{u}</span>
@@ -157,7 +157,7 @@ export default function HargaBimbelPage(){
         )}
 
         {/* Matrix table */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="p-4 border-b flex flex-wrap gap-3 items-center justify-between">
             <h2 className="font-bold text-sm">Matriks Harga — baris = Jenjang, kolom = Unit</h2>
             <div className="flex gap-2">
@@ -173,7 +173,7 @@ export default function HargaBimbelPage(){
             <div className="overflow-x-auto">
               <table className="w-full text-xs border-collapse min-w-[900px]">
                 <thead>
-                  <tr className="bg-gray-50 text-gray-700 border-b">
+                  <tr className="bg-slate-50 text-slate-700 border-b">
                     <th className="p-3 text-left sticky left-0 bg-gray-50 z-10 border-r min-w-[160px]">Jenjang / Program</th>
                     {SEMADURA_UNITS.map(u=>(
                       <th key={u} className="p-3 text-center min-w-[170px]">{u}</th>

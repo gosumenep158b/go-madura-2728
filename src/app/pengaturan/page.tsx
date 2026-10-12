@@ -314,17 +314,17 @@ export default function PengaturanAdminPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-20">
+    <div className="flex min-h-screen bg-slate-50 text-slate-900 pb-20">
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-      <header className="sticky top-0 z-50 bg-[#faf8ff]/85 backdrop-blur-xl border-b border-gray-200">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
         <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-[#b70011] text-white p-2 rounded-xl font-black text-lg shadow-sm">GO</div>
+            <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><img src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>
             <div>
               <h1 className="font-bold text-lg leading-tight">Pengaturan Admin &amp; Master Data</h1>
-              <span className="text-xs text-gray-500">Ganesha Operation Semadura</span>
+              <span className="text-[11px] font-semibold tracking-wide text-slate-500">Ganesha Operation Semadura</span>
             </div>
           </div>
           <div className="flex gap-2">
@@ -367,7 +367,7 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'upload' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
               <h2 className="text-lg font-bold text-gray-900">Upload Database Siswa (Excel / CSV)</h2>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Unggah file Excel (`.xlsx`, `.xls`) atau CSV untuk memperbarui atau memasukkan data siswa SLP ke database Supabase secara massal. Sistem akan otomatis mendeteksi dan memperbarui data berdasarkan nomor registrasi (`no_reg`).
@@ -421,7 +421,7 @@ export default function PengaturanAdminPage() {
             </div>
 
             {previewData.length > 0 && (
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
                 <h3 className="font-bold text-sm text-gray-800">Pratinjau 10 Data Teratas yang Diunggah:</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs text-left border-collapse">
@@ -458,7 +458,7 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'classes' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
               <div>
                 <h2 className="text-lg font-bold text-gray-900">🏫 Kelola Jadwal &amp; Kelas</h2>
                 <p className="text-xs text-gray-500">Buat jadwal kelas baru dengan format nama otomatis sesuai jenjang (SD/SMP/SMA) dan anti-bentrok ruangan.</p>
@@ -623,7 +623,7 @@ export default function PengaturanAdminPage() {
               </form>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-gray-900">Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
                 <span className="text-xs text-gray-500">Muncul otomatis di modul Pendaftaran</span>
@@ -681,7 +681,7 @@ export default function PengaturanAdminPage() {
         )}
 
 {activeTab === 'prices' && (
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
             <h2 className="text-lg font-bold text-gray-900">Pengaturan Harga &amp; Bundling per Jenjang</h2>
             <p className="text-xs text-gray-600">Harga dasar program bimbingan belajar TA 2027/2028 per jenjang kelas.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -716,7 +716,7 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'discounts' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <h2 className="text-lg font-bold text-gray-900">Diskon per Bulan — Modul (Promo %) &amp; SLP (Rp)</h2>
@@ -783,7 +783,7 @@ export default function PengaturanAdminPage() {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
               <h3 className="font-bold text-sm text-gray-900">Urutan Penerapan Diskon (Successive Discount)</h3>
               <p className="text-xs text-gray-600">Sistem menerapkan diskon berurutan — nilai <b>Promo %</b> dan <b>SLP Rp</b> di atas diambil per <b>bulan daftar</b>:</p>
               <ol className="list-decimal list-inside text-xs space-y-2 text-gray-700 font-medium">

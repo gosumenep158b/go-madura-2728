@@ -157,17 +157,17 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4" onClick={onClose}>
       <div
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl border border-slate-200"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-red-100 bg-red-600 px-5 py-4 text-white">
+        <div className="flex items-center justify-between border-b border-slate-200 bg-slate-900 px-5 py-4 text-white">
           <div>
             <h2 className="text-sm font-bold">Tambah Siswa Baru</h2>
-            <p className="text-xs text-red-100">No. Registrasi input manual (sistem resmi GO)</p>
+            <p className="text-xs font-medium text-slate-400">No. Registrasi input manual (sistem resmi GO)</p>
           </div>
-          <button onClick={onClose} className="rounded-full p-1 hover:bg-red-500">
+          <button onClick={onClose} className="rounded-full p-1 hover:bg-white/10">
             <X size={18} />
           </button>
         </div>

@@ -7,18 +7,14 @@ interface CardSummaryProps {
 
 export default function CardSummary({ title, value, description, icon }: CardSummaryProps) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white border border-rose-200/60 shadow-sm">
-      <div className="flex items-center justify-between px-6 py-5">
-        <div>
-          <p className="text-sm font-medium text-rose-800">{title}</p>
-          <p className="mt-1 text-3xl font-semibold text-rose-600">{value}</p>
-          {description && (
-            <p className="mt-1 text-sm text-rose-500/80">{description}</p>
-          )}
+    <div className="overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between gap-4 px-6 py-5">
+        <div className="min-w-0 flex-1">
+          <p className="text-[11px] font-bold tracking-widest uppercase text-slate-500">{title}</p>
+          <p className="mt-1.5 text-3xl font-black tracking-tight text-slate-900 leading-none">{value}</p>
+          {description && <p className="mt-2 text-[12px] font-medium leading-relaxed text-slate-600">{description}</p>}
         </div>
-        <div className="rounded-full bg-rose-50 p-3 text-rose-600">
-          {icon}
-        </div>
+        <div className="shrink-0 rounded-2xl bg-slate-900 p-3.5 text-white shadow-sm">{icon}</div>
       </div>
     </div>
   );

@@ -433,7 +433,7 @@ export default function ModulPenawaranBimbel() {
   const kelasForModal: any[] = (kelasOptions as any[]).map((c: any) => ({ id: c.id, nama_kelompok: c.nama_kelompok, tingkat_kelas: c.tingkat_kelas, unit: (c as any).unit, ruang: c.ruang, hari_jam: c.hari_jam }));
 
   return (
-    <div className="flex min-h-screen bg-[#faf8ff] text-[#131b2e] pb-24 print:bg-white print:pb-0">
+    <div className="flex min-h-screen bg-slate-50 text-slate-900 pb-24 print:bg-white print:pb-0">
       <Sidebar onTambah={() => setSiswaModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setSiswaModalOpen(true)} />
@@ -450,7 +450,7 @@ export default function ModulPenawaranBimbel() {
         }
       ` }} />
 
-      <header className="sticky top-0 z-50 bg-[#faf8ff]/85 backdrop-blur-xl border-b border-gray-200 print:hidden">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 print:hidden">
         {/* Desktop: satu baris. Mobile: dua baris (judul di atas, tombol di bawah) */}
         <div className="max-w-5xl mx-auto px-4 py-2 md:h-16 md:py-0 md:flex md:items-center md:justify-between">
           <div className="flex items-center gap-3">
@@ -485,17 +485,17 @@ export default function ModulPenawaranBimbel() {
       <main className="max-w-5xl mx-auto p-4 md:p-6 space-y-6 print:p-0 print:max-w-none">
         
         {/* Banner */}
-        <div className="bg-[#dc2626] text-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col gap-2 print:hidden">
+        <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-sm border border-slate-800 flex flex-col gap-3 print:hidden">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-[#fea619] text-[#684000] text-[11px] md:text-xs font-bold uppercase tracking-wider leading-snug">
+            <span className="px-3 py-1 rounded-full bg-amber-400 text-amber-900 text-[11px] font-bold uppercase tracking-widest">
               📄 Surat Penawaran Resmi & Kalkulator Diskon
             </span>
-            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full shrink-0">{selectedUnit}</span>
+            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full font-medium shrink-0 border border-white/20">{selectedUnit}</span>
           </div>
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-1">
             Modul Penawaran Bimbel Ganesha Operation Semadura
           </h2>
-          <p className="text-red-100 text-sm">
+          <p className="text-sm font-medium leading-relaxed text-slate-300">
             Pilih unit, atur diskon fleksibel, diskon SLP otomatis sesuai bulan mendaftar, serta cetak surat penawaran 1 halaman penuh.
           </p>
         </div>
@@ -504,7 +504,7 @@ export default function ModulPenawaranBimbel() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:block print:space-y-0">
           
           {/* Kolom Kiri: Form & Diskon Dinamis (Hidden on Print) */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5 print:hidden">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 print:hidden">
             <h3 className="text-lg font-bold text-gray-800 border-b pb-2 flex items-center justify-between">
               <span>Data &amp; Konfigurasi Penawaran</span>
             </h3>
@@ -645,7 +645,7 @@ export default function ModulPenawaranBimbel() {
             <div>
               <label className="block text-xs font-semibold text-gray-700">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
               {(() => {
-                console.log("DEBUG KELAS:", { kelasOptions, grade, selectedUnit });
+                // removed debug
                 const filtered = kelasOptions.filter((c:any) => {
                   const u1raw = (c.unit ?? c.ruang ?? c.unit_name ?? '');
                   const u1 = String(u1raw).toLowerCase();

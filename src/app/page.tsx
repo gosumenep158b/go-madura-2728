@@ -159,16 +159,16 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-red-50 via-white to-white">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar onTambah={() => setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setModalOpen(true)} />
         <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
           {/* Header */}
-          <div className="flex flex-col gap-3 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 p-6 text-white shadow-lg sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 rounded-2xl bg-slate-900 p-6 text-white shadow-sm sm:flex-row sm:items-center sm:justify-between border border-slate-800">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-red-200">Ganesha Operation Sumenep</p>
-              <h1 className="text-xl font-black tracking-tight sm:text-2xl">Monitoring Penerimaan Siswa Baru TA 2027–2028</h1>
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Ganesha Operation Sumenep</p>
+              <h1 className="text-xl font-black tracking-tight leading-tight sm:text-2xl">Monitoring Penerimaan Siswa Baru TA 2027–2028</h1>
               <p className="mt-1 text-xs text-red-100">Data arsip TA 2026/2027 tersimpan — dashboard kini menampilkan TA 2027/2028.</p>
             </div>
             <div className="flex items-center gap-2">

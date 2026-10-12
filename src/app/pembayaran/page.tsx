@@ -84,13 +84,13 @@ export default function PembayaranPage(){
   const totalSisa = filtered.reduce((a,c)=>a+Number(c.sisa_tagihan||0),0);
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-red-50 via-white to-white">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar onTambah={()=> setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={()=> setModalOpen(true)} />
         <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
-          <div className="rounded-2xl bg-gradient-to-r from-red-600 to-red-700 p-6 text-white shadow-lg">
-            <p className="text-xs font-semibold uppercase tracking-wider text-red-200">Ganesha Operation Sumenep</p>
+          <div className="rounded-2xl bg-slate-900 p-6 text-white shadow-sm border border-slate-800">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Ganesha Operation Sumenep</p>
             <h1 className="text-xl font-black tracking-tight sm:text-2xl">Histori Pembayaran & Penagihan</h1>
             <p className="mt-1 text-xs text-red-100">Nomor WhatsApp yang dipakai adalah <b>No. HP Ortu</b> untuk pengingat cicilan.</p>
           </div>
@@ -116,10 +116,10 @@ export default function PembayaranPage(){
             <div className="rounded-2xl bg-amber-50 p-4 border border-amber-200 shadow-sm"><p className="text-xs text-amber-700">Total Sisa (Belum Dibayar)</p><p className="text-lg font-black text-amber-700">{fmtRp(totalSisa)}</p></div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-red-100 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[900px] text-left text-sm">
-                <thead><tr className="bg-red-700 text-xs uppercase tracking-wide text-white">
+                <thead><tr className="bg-slate-900 text-[11px] uppercase tracking-widest text-white">
                   <th className="px-4 py-3">No Reg</th><th className="px-4 py-3">Nama Siswa</th><th className="px-4 py-3">TA</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Tagihan</th><th className="px-4 py-3">Sisa</th><th className="px-4 py-3">WA Ortu</th><th className="px-4 py-3">Aksi</th>
                 </tr></thead>
                 <tbody>

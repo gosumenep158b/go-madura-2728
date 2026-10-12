@@ -98,16 +98,16 @@ export default function GrupBelajarPage() {
   );
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-red-50 via-white to-white">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
         <main className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6">
           
           {/* Header Banner */}
-          <div className="flex flex-col gap-3 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 p-6 text-white shadow-lg sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 rounded-2xl bg-slate-900 p-6 text-white shadow-sm sm:flex-row sm:items-center sm:justify-between border border-slate-800">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-red-200">Ganesha Operation Sumenep</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Ganesha Operation Sumenep</p>
               <h1 className="text-xl font-black tracking-tight sm:text-2xl">Manajemen Grup Belajar &amp; Teman Kelas</h1>
             </div>
             <div className="rounded-xl bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur-xs">
@@ -119,7 +119,7 @@ export default function GrupBelajarPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Daftar Kelas GO */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm border border-red-100 space-y-3">
+            <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
               <h2 className="font-bold text-gray-800 text-sm px-2 uppercase tracking-wider">Pilih Grup Kelas GO</h2>
               {adminClasses.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 p-4 text-xs leading-relaxed text-amber-800">
@@ -167,7 +167,7 @@ export default function GrupBelajarPage() {
             </div>
 
             {/* Detail Roster */}
-            <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-red-100 flex flex-col justify-between">
+            <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
               {!activeKelasInfo ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <div className="rounded-full bg-amber-100 p-4 text-2xl">📚</div>
@@ -178,7 +178,7 @@ export default function GrupBelajarPage() {
               ) : (
                 <>
                   <div className="space-y-4">
-                    <div className="bg-red-50 p-4 rounded-2xl border border-red-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                       <div>
                         <div className="flex items-center gap-2">
                           <h3 className="font-extrabold text-lg text-red-900 font-mono">{activeKelasInfo.kelas}</h3>
@@ -222,7 +222,7 @@ export default function GrupBelajarPage() {
                 <div className="overflow-x-auto border rounded-xl">
                   <table className="w-full text-left text-sm">
                     <thead>
-                      <tr className="bg-red-700 text-white text-xs uppercase">
+                      <tr className="bg-slate-900 text-white text-[11px] uppercase tracking-widest">
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">No. Reg</th>
                         <th className="px-4 py-3">Nama Siswa</th>

@@ -75,13 +75,13 @@ export default function StatistikPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-red-50 via-white to-white">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar onTambah={() => setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setModalOpen(true)} />
         <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
           <div>
-            <h1 className="text-lg font-bold text-red-800">Data Statistik — Kapasitas Kelas</h1>
+            <h1 className="text-lg font-black tracking-tight text-slate-900">Data Statistik — Kapasitas Kelas</h1>
             <p className="text-xs text-gray-500">
               SD (4, 5, 6) maks 20 siswa · SMP (7, 8, 9) &amp; SMA (10, 11, 12) maks 25 siswa
             </p>
@@ -114,7 +114,7 @@ export default function StatistikPage() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-red-100 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="flex flex-col gap-3 border-b border-red-100 p-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-sm font-bold text-red-800">Rincian Kapasitas per Kelas</h2>
@@ -133,7 +133,7 @@ export default function StatistikPage() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-sm">
                 <thead>
-                  <tr className="bg-red-700 text-xs uppercase tracking-wide text-white">
+                  <tr className="bg-slate-900 text-[11px] uppercase tracking-widest text-white">
                     <th className="px-4 py-3">Kelas GO</th>
                     <th className="px-4 py-3">Tingkat</th>
                     <th className="px-4 py-3">Terisi</th>
