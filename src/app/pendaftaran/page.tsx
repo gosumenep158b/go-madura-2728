@@ -204,14 +204,15 @@ export default function ModulPenawaranBimbel() {
     { id: '1', type: 'Diskon Promo Bulanan', nominal: 0, isPercent: true, percent: 20 }
   ]);
 
-  useEffect(()=>{
-    (async()=>{
+  const fetchHargaMap = React.useCallback(async ()=>{
       try{
         const { data, error } = await supabase.from("admin_unit_program_prices").select("unit,tingkat_kelas,program_name,harga,medical_addon");
         if(!error && data && data.length){
           const m: Record<string,{harga:number; program_name:string; medical_addon:number}> = {};
           (data as any[]).forEach(r=>{ m[r.unit+"|"+r.tingkat_kelas]={harga:Number(r.harga), program_name:r.program_name, medical_addon:Number(r.medical_addon||0)}; });
           setHargaMap(m);
+          // mirror to local cache so offline/fallback stays fresh
+          try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(data)); }catch{}
         } else {
           try{
             const cached = typeof window!=='undefined' ? localStorage.getItem("harga_bimbel_rows") : null;
@@ -227,7 +228,12 @@ export default function ModulPenawaranBimbel() {
         }
       }catch{}
       setHargaLoaded(true);
-    })();
+    },[]);
+
+  useEffect(()=>{
+    fetchHargaMap();
+    // monthly discounts + kelas master still on mount
+    // (hargaMap refresh listeners below handle staleness)
     // monthly discounts: try Supabase admin_monthly_discounts, fallback localStorage
     (async()=>{
       const apply = (rows:any[])=>{
@@ -259,7 +265,27 @@ export default function ModulPenawaranBimbel() {
         if(data) setKelasOptions(data as any[]);
       }catch{}
     })();
-  },[]);
+  },[fetchHargaMap]);
+
+  // Keep penawaran price fresh: refetch when tab gains focus, becomes visible, or harga-bimbel notifies via storage/custom event
+  useEffect(()=>{
+    const onFocus = () => fetchHargaMap();
+    const onVisible = () => { if(document.visibilityState==='visible') fetchHargaMap(); };
+    const onStorage = (e: StorageEvent) => {
+      if(e.key==='harga_bimbel_rows' || e.key==='harga_bimbel_updated_at') fetchHargaMap();
+    };
+    const onCustom = () => fetchHargaMap();
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('harga-bimbel-updated' as any, onCustom);
+    document.addEventListener('visibilitychange', onVisible);
+    return ()=> {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('harga-bimbel-updated' as any, onCustom);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  },[fetchHargaMap]);
 
   useEffect(()=>{
     if(!hargaLoaded) return;
@@ -269,11 +295,19 @@ export default function ModulPenawaranBimbel() {
     else setBasePrice(hargaForTingkat(grade));
   },[selectedUnit, grade, hargaLoaded, hargaMap]);
 
-  // Sync program when grade changes: keep valid option, default to first
+  // Sync program when grade changes: prefer program from hargaMap, else valid option
   useEffect(()=>{
+    const hit = hargaMap[selectedUnit+"|"+grade];
+    if(hit && hit.program_name){
+      const opts = getProgramOptions(grade);
+      // if saved program matches available options, use it; otherwise use saved as-is
+      if(opts.includes(hit.program_name)) setProgram(hit.program_name);
+      else if(hit.program_name) setProgram(hit.program_name);
+      return;
+    }
     const opts = getProgramOptions(grade);
     if(!opts.includes(program)) setProgram(opts[0] || PROGRAMS[0]);
-  },[grade]);
+  },[grade, selectedUnit, hargaMap]);
 
   
 
@@ -622,9 +656,12 @@ export default function ModulPenawaranBimbel() {
                   onChange={(e) => setGrade(e.target.value)}
                   className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold"
                 >
-                  {TINGKATS_9.map((t)=> (
-                    <option key={t} value={t}>{t} - Rp {hargaForTingkat(t).toLocaleString('id-ID')}</option>
-                  ))}
+                  {TINGKATS_9.map((t)=> {
+                    const key = selectedUnit+"|"+t;
+                    const hit = hargaMap[key];
+                    const h = hit ? hit.harga : hargaForTingkat(t);
+                    return (<option key={t} value={t}>{t} - Rp {h.toLocaleString('id-ID')}{hit ? '' : ' (default)'}</option>);
+                  })}
                 </select>
               </div>
               <div>

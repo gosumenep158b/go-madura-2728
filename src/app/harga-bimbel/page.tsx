@@ -95,13 +95,20 @@ export default function HargaBimbelPage(){
       const isMissing = m.includes("does not exist") || m.includes("relation") || m.includes("could not find the table") || m.includes("schema cache") || (error as any).code==="42P01" || (error as any).code==="PGRST205";
       if(isMissing){
         setTableMissing(true);
-        try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows)); }catch{}
+        try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows)); localStorage.setItem("harga_bimbel_updated_at", String(Date.now())); }catch{}
+        try{ window.dispatchEvent(new CustomEvent("harga-bimbel-updated")); }catch{}
         setMsg({type:"err", text:"Tabel Supabase belum ada — harga disimpan LOKAL di browser ini dulu. Agar tersinkron ke semua device & portal pendaftaran, jalankan SQL di database/harga_bimbel_schema.sql via Supabase Dashboard > SQL Editor, lalu klik Simpan lagi. (Error: "+error.message+")"});
       } else {
         setMsg({type:"err", text:"Gagal menyimpan: "+error.message});
       }
     } else {
-      try{ localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows)); }catch{}
+      try{
+        localStorage.setItem("harga_bimbel_rows", JSON.stringify(rows));
+        localStorage.setItem("harga_bimbel_updated_at", String(Date.now()));
+      }catch{}
+      // notify open pendaftaran tabs (same-tab + cross-tab)
+      try{ window.dispatchEvent(new CustomEvent("harga-bimbel-updated")); }catch{}
+      try{ window.dispatchEvent(new Event("storage")); }catch{}
       setMsg({type:"ok", text:`Berhasil menyimpan ${payload.length} harga (5 unit × ${TINGKATS_9.length} jenjang) ke Supabase. Portal pendaftaran akan otomatis memakai harga terbaru.`});
       setTableMissing(false);
     }
