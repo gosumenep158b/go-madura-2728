@@ -77,13 +77,13 @@ export default function Sidebar({ onTambah }: SidebarProps) {
           );
         })}
 
-        <button
-          onClick={onTambah}
+        <Link
+          href="/pendaftaran"
           className="mt-2 flex w-full items-center gap-3 rounded-xl border border-dashed border-red-300 bg-red-50/60 px-3 py-2.5 text-sm font-medium text-red-700 transition-colors hover:border-red-400 hover:bg-red-50"
         >
           <UserPlus size={18} />
           Tambah Siswa
-        </button>
+        </Link>
       </nav>
 
       <div className="border-t border-red-100 p-4 space-y-3">
@@ -162,13 +162,13 @@ export function MobileNav({ onTambah }: SidebarProps) {
               </Link>
             );
           })}
-          <button
-            onClick={onTambah}
-            className="flex shrink-0 items-center gap-2 rounded-full border border-dashed border-red-300 px-4 py-1.5 text-xs font-medium text-red-700"
+          <Link
+            href="/pendaftaran"
+            className="flex shrink-0 items-center gap-2 rounded-full border border-dashed border-red-300 px-4 py-1.5 text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100"
           >
             <UserPlus size={15} />
             Tambah Siswa
-          </button>
+          </Link>
         </div>
         {user && (
           <button
