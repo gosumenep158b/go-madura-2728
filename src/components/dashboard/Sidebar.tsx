@@ -2,8 +2,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Settings, BarChart3, UserPlus, GraduationCap, LogOut, User, ShieldCheck, Users, Wallet } from 'lucide-react';
+import { LayoutDashboard, Settings, BarChart3, UserPlus, GraduationCap, LogOut, User, ShieldCheck, Users, Wallet, UserCog } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface SidebarProps { onTambah: () => void; }
 interface SessionUser { nama: string; jabatan: string; role: string; }
@@ -16,6 +17,7 @@ const NAV = [
   { href: '/grup-belajar', label: 'Grup Belajar', icon: Users },
   { href: '/pengaturan', label: 'Pengaturan Admin', icon: Settings },
   { href: '/statistik', label: 'Data Statistik', icon: BarChart3 },
+  { href: '/akun', label: 'Akun Saya', icon: UserCog },
 ];
 
 function useSession() {
@@ -33,15 +35,15 @@ export default function Sidebar({ onTambah }: SidebarProps) {
   const logout = async () => { await fetch('/api/auth/logout', { method: 'POST' }); router.push('/login'); router.refresh(); };
 
   return (
-    <aside className="hidden w-[272px] shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
+    <aside className="hidden w-[272px] shrink-0 flex-col border-r border-slate-200 bg-white lg:flex dark:border-slate-800 dark:bg-slate-900">
       {/* Brand */}
-      <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-5">
-        <div className="shrink-0 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm">
+      <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-5 dark:border-slate-800">
+        <div className="shrink-0 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm dark:border-slate-700">
           <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-9 w-9 object-contain" />
         </div>
         <div className="min-w-0">
-          <p className="text-[13px] font-black leading-none tracking-tight text-slate-900">Ganesha Operation</p>
-          <p className="mt-1 text-[11px] font-semibold tracking-wide text-slate-500">Sumenep · TA 2027/2028</p>
+          <p className="text-[13px] font-black leading-none tracking-tight text-slate-900 dark:text-slate-100">Ganesha Operation</p>
+          <p className="mt-1 text-[11px] font-semibold tracking-wide text-slate-500 dark:text-slate-400">Sumenep · TA 2027/2028</p>
         </div>
       </div>
 
@@ -54,10 +56,10 @@ export default function Sidebar({ onTambah }: SidebarProps) {
               key={n.href}
               href={n.href}
               className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-semibold leading-none transition-all ${
-                active ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                active ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
               }`}
             >
-              <Icon size={18} className={active ? 'text-white' : 'text-slate-400'} />
+              <Icon size={18} className={active ? 'text-white dark:text-slate-900' : 'text-slate-400 dark:text-slate-500'} />
               <span className="truncate">{n.label}</span>
             </Link>
           );
@@ -70,29 +72,30 @@ export default function Sidebar({ onTambah }: SidebarProps) {
         </button>
       </nav>
 
-      <div className="border-t border-slate-200 p-3 space-y-3">
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5">
-          <p className="text-[11px] font-bold tracking-wide text-amber-800">Batas Kapasitas</p>
-          <div className="mt-1.5 space-y-0.5 text-[11px] font-medium leading-relaxed text-amber-800/80">
+      <div className="border-t border-slate-200 p-3 space-y-3 dark:border-slate-800">
+        <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5 dark:border-amber-900 dark:bg-amber-950">
+          <p className="text-[11px] font-bold tracking-wide text-amber-800 dark:text-amber-300">Batas Kapasitas</p>
+          <div className="mt-1.5 space-y-0.5 text-[11px] font-medium leading-relaxed text-amber-800/80 dark:text-amber-300/80">
             <p>SD (4–6) — maks 20 siswa</p>
             <p>SMP & SMA — maks 25 siswa</p>
             <p>Medical — maks 15 siswa</p>
           </div>
         </div>
         {user && (
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white"><User size={14} /></div>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-slate-600"><User size={14} /></div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-bold text-slate-900">{user.nama}</p>
-                <p className="truncate text-[11px] font-medium text-slate-500">{user.jabatan}</p>
+                <p className="truncate text-xs font-bold text-slate-900 dark:text-slate-100">{user.nama}</p>
+                <p className="truncate text-[11px] font-medium text-slate-500 dark:text-slate-400">{user.jabatan}</p>
               </div>
+              <ThemeToggle className="h-7 w-7" />
             </div>
             <div className="mt-2.5 flex items-center justify-between">
-              <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide ${user.role === 'super admin' ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600'}`}>
+              <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide ${user.role === 'super admin' ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900' : 'bg-white border border-slate-200 text-slate-600 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200'}`}>
                 <ShieldCheck size={11} />{user.role}
               </span>
-              <button onClick={logout} className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold text-slate-500 hover:bg-white hover:text-slate-900 border border-transparent hover:border-slate-200">
+              <button onClick={logout} className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold text-slate-500 hover:bg-white hover:text-slate-900 border border-transparent hover:border-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white">
                 <LogOut size={12} /> Keluar
               </button>
             </div>
@@ -110,7 +113,7 @@ export function MobileNav({ onTambah }: SidebarProps) {
   const user = useSession();
   const logout = async () => { await fetch('/api/auth/logout', { method: 'POST' }); router.push('/login'); router.refresh(); };
   return (
-    <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:hidden">
+    <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:hidden dark:border-slate-800 dark:bg-slate-900/95">
       <div className="flex items-center gap-2 px-3 py-2.5 overflow-x-auto scrollbar-none">
         <div className="shrink-0 rounded-lg border border-slate-200 bg-white p-1">
           <Image src="/images/logo_go_standar.png" alt="GO" width={28} height={28} className="h-7 w-7 object-contain" />

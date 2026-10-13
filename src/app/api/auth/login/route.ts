@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findUser, encodeSession, SESSION_COOKIE } from '@/lib/auth';
+import { findUserAsync, encodeSession, SESSION_COOKIE } from '@/lib/auth';
 
 export async function POST(req: Request) {
   try {
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Username dan password wajib diisi.' }, { status: 400 });
     }
 
-    const user = findUser(username.trim(), password.trim());
+    const user = await findUserAsync(username.trim(), password.trim());
     if (!user) {
       return NextResponse.json({ error: 'Username atau password salah.' }, { status: 401 });
     }

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { createClient } from '@supabase/supabase-js'
+import { getSessionFromRequest, canEditSiswa } from '@/lib/auth'
 
 export interface Siswa {
   no_reg: string;
@@ -172,6 +173,12 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
+    // Edit data siswa khusus super admin & CS
+    const session = getSessionFromRequest(req);
+    if (!session) return NextResponse.json({ error: 'Belum login.' }, { status: 401 });
+    if (!canEditSiswa(session.role)) {
+      return NextResponse.json({ error: 'Hanya super admin & CS yang boleh mengedit data siswa.' }, { status: 403 });
+    }
     const body = (await req.json()) as Partial<Siswa> & { no_reg: string }
     if(!body.no_reg) return NextResponse.json({ error: 'no_reg wajib' }, { status: 400 })
     try {
@@ -184,7 +191,8 @@ export async function PATCH(req: Request) {
       if((body as any).unit!==undefined) patch.unit=(body as any).unit
       if((body as any).program!==undefined) patch.program=(body as any).program
       if(body.tahun_ajaran) patch.tahun_ajaran=body.tahun_ajaran
-      for (const k of ['nama_ayah','no_hp_ayah','nama_ibu','no_hp_ibu','cabang','kota','keterangan','nama_ortu','no_hp_ortu'] as const) {
+      // Field profil (edit data siswa)
+      for (const k of ['nama_siswa','tgl_lahir','no_hp','nama_ortu','no_hp_ortu','nama_ayah','no_hp_ayah','nama_ibu','no_hp_ibu','cabang','kota','keterangan','kelas_go','tingkat_kelas','asal_sekolah','tgl_daftar'] as const) {
         if ((body as any)[k] !== undefined) patch[k] = (body as any)[k]
       }
       const { data: cur } = await supabase.from('siswa').select('total_tagihan,sisa_tagihan').eq('no_reg', body.no_reg).single()
@@ -221,6 +229,9 @@ export async function PATCH(req: Request) {
     if((body as any).unit!==undefined) (s as any).unit=(body as any).unit
     if((body as any).program!==undefined) (s as any).program=(body as any).program
     if(body.tahun_ajaran) s.tahun_ajaran=body.tahun_ajaran
+    for (const k of ['nama_siswa','tgl_lahir','no_hp','nama_ortu','no_hp_ortu','nama_ayah','no_hp_ayah','nama_ibu','no_hp_ibu','cabang','kota','keterangan','kelas_go','tingkat_kelas','asal_sekolah','tgl_daftar'] as const) {
+      if ((body as any)[k] !== undefined) (s as any)[k]=(body as any)[k]
+    }
     if(s.sisa_tagihan<=0 && s.total_tagihan>0) s.status_bayar='lunas'
     else if(s.sisa_tagihan>0 && s.sisa_tagihan < s.total_tagihan) s.status_bayar='cicilan'
     else if(s.total_tagihan>0 && s.sisa_tagihan===s.total_tagihan) s.status_bayar='belum_lunas'

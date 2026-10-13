@@ -215,14 +215,14 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-red-50/50">
-        <p className="animate-pulse text-sm font-medium text-red-700">Memuat data siswa…</p>
+      <div className="flex min-h-screen items-center justify-center bg-red-50/50 dark:bg-slate-950">
+        <p className="animate-pulse text-sm font-medium text-red-700 dark:text-red-300">Memuat data siswa…</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
       <Sidebar onTambah={() => setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setModalOpen(true)} />
@@ -251,16 +251,16 @@ export default function Home() {
           )}
 
           {/* Filter Nama Unit — semua grafik & ringkasan mengikuti pilihan ini */}
-          <div className="flex flex-col gap-3 rounded-2xl border border-red-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 rounded-2xl border border-red-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-slate-900">
             <div>
-              <h2 className="text-sm font-bold text-red-800">Filter Nama Unit</h2>
-              <p className="text-xs text-gray-500">{bayarStats.total} dari {data.length} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} · TA {ta}</p>
+              <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Filter Nama Unit</h2>
+              <p className="text-xs text-gray-500 dark:text-slate-400">{bayarStats.total} dari {data.length} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} · TA {ta}</p>
             </div>
             <select
               value={filterUnit}
               onChange={(e) => setFilterUnit(e.target.value)}
               title="Filter nama unit"
-              className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 outline-none focus:border-red-400"
+              className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 outline-none focus:border-red-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
             >
               {unitOptions.map((u) => (
                 <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
@@ -276,38 +276,38 @@ export default function Home() {
           </div>
 
           {bayarStats.tagihan>0 && (
-            <div className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
-              <h3 className="text-sm font-bold text-red-800">Ringkasan Pembayaran TA {ta}</h3>
+            <div className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h3 className="text-sm font-bold text-red-800 dark:text-red-300">Ringkasan Pembayaran TA {ta}</h3>
               <div className="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
-                <div className="rounded-xl bg-gray-50 p-3 border"><p className="text-xs text-gray-500">Total Tagihan</p><p className="font-bold">{fmtRp(bayarStats.tagihan)}</p></div>
-                <div className="rounded-xl bg-emerald-50 p-3 border border-emerald-200"><p className="text-xs text-emerald-700">Sudah Dibayar</p><p className="font-bold text-emerald-700">{fmtRp(bayarStats.tagihan - bayarStats.sisa)}</p></div>
-                <div className="rounded-xl bg-amber-50 p-3 border border-amber-200"><p className="text-xs text-amber-700">Sisa</p><p className="font-bold text-amber-700">{fmtRp(bayarStats.sisa)}</p></div>
+                <div className="rounded-xl bg-gray-50 p-3 border dark:border-slate-700 dark:bg-slate-800"><p className="text-xs text-gray-500 dark:text-slate-400">Total Tagihan</p><p className="font-bold dark:text-slate-100">{fmtRp(bayarStats.tagihan)}</p></div>
+                <div className="rounded-xl bg-emerald-50 p-3 border border-emerald-200 dark:bg-emerald-950 dark:border-emerald-900"><p className="text-xs text-emerald-700 dark:text-emerald-300">Sudah Dibayar</p><p className="font-bold text-emerald-700 dark:text-emerald-300">{fmtRp(bayarStats.tagihan - bayarStats.sisa)}</p></div>
+                <div className="rounded-xl bg-amber-50 p-3 border border-amber-200 dark:bg-amber-950 dark:border-amber-900"><p className="text-xs text-amber-700 dark:text-amber-300">Sisa</p><p className="font-bold text-amber-700 dark:text-amber-300">{fmtRp(bayarStats.sisa)}</p></div>
               </div>
-              <p className="mt-2 text-xs text-gray-500"><a href="/pembayaran" className="text-red-600 underline">Kelola di Pembayaran & Cicilan</a> — WhatsApp pengingat pakai No. HP Ortu.</p>
+              <p className="mt-2 text-xs text-gray-500 dark:text-slate-400"><a href="/pembayaran" className="text-red-600 underline dark:text-red-400">Kelola di Pembayaran & Cicilan</a> — WhatsApp pengingat pakai No. HP Ortu.</p>
             </div>
           )}
 
           {/* Trend pendaftar per bulan */}
-          <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-red-800">Pendaftar per Bulan — {filterUnit === 'Semua' ? 'Semua Unit' : filterUnit} · TA {ta}</h2>
-            <p className="mb-4 text-xs text-gray-500">Tren pendaftaran berdasarkan tanggal daftar</p>
+          <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Pendaftar per Bulan — {filterUnit === 'Semua' ? 'Semua Unit' : filterUnit} · TA {ta}</h2>
+            <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Tren pendaftaran berdasarkan tanggal daftar</p>
             <div className="h-64">
               <TrendChart data={trendBulan} />
             </div>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
-              <h2 className="text-sm font-bold text-red-800">Siswa per Tingkat Kelas</h2>
-              <p className="mb-4 text-xs text-gray-500">Distribusi jenjang {filterUnit === 'Semua' ? 'semua unit' : filterUnit} · TA {ta}</p>
+            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Siswa per Tingkat Kelas</h2>
+              <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Distribusi jenjang {filterUnit === 'Semua' ? 'semua unit' : filterUnit} · TA {ta}</p>
               <div className="h-72">
                 <TingkatChart data={tingkatChart} />
               </div>
             </div>
 
-            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
-              <h2 className="text-sm font-bold text-red-800">Top 8 Asal Sekolah</h2>
-              <p className="mb-4 text-xs text-gray-500">Sekolah dengan siswa terbanyak {filterUnit === 'Semua' ? '' : `di ${filterUnit}`}</p>
+            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Top 8 Asal Sekolah</h2>
+              <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Sekolah dengan siswa terbanyak {filterUnit === 'Semua' ? '' : `di ${filterUnit}`}</p>
               <div className="h-72">
                 <SekolahChart data={topSekolah} />
               </div>
@@ -315,11 +315,11 @@ export default function Home() {
           </div>
 
           {/* Menu Export Spreadsheet */}
-          <div className="rounded-2xl border border-emerald-200 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-emerald-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-sm font-bold text-emerald-800">Export ke Spreadsheet</h2>
-                <p className="mt-1 text-xs text-gray-500">
+                <h2 className="text-sm font-bold text-emerald-800 dark:text-emerald-300">Export ke Spreadsheet</h2>
+                <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                   Unduh data {bayarStats.total} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} TA {ta} sebagai file .xlsx,
                   atau simpan langsung ke Google Sheet rekap.
                 </p>

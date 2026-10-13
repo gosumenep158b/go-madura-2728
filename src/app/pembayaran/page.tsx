@@ -2,10 +2,14 @@
 import { useCallback, useEffect, useState } from "react";
 import Sidebar, { MobileNav } from "@/components/dashboard/Sidebar";
 import TambahSiswaModal from "@/components/dashboard/TambahSiswaModal";
+import EditSiswaModal, { EditSiswaData } from "@/components/dashboard/EditSiswaModal";
 
 interface Siswa {
-  no_reg: string; nama_siswa: string; no_hp_ortu: string; nama_ortu: string;
+  no_reg: string; nama_siswa: string; no_hp: string; tgl_lahir: string;
+  no_hp_ortu: string; nama_ortu: string;
   nama_ayah?: string; no_hp_ayah?: string; nama_ibu?: string; no_hp_ibu?: string;
+  cabang?: string; kota?: string; keterangan?: string; unit?: string; kelas_go: string;
+  program?: string; tgl_daftar: string;
   tingkat_kelas: string; asal_sekolah: string; tahun_ajaran: string;
   status_bayar: string; total_tagihan: number; sisa_tagihan: number;
 }
@@ -46,6 +50,9 @@ export default function PembayaranPage(){
   const [ket, setKet] = useState("");
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
+  const [editTarget, setEditTarget] = useState<EditSiswaData | null>(null);
+  const [myRole, setMyRole] = useState("");
+  const canEdit = myRole.toLowerCase() === "super admin" || myRole.toLowerCase() === "cs";
 
   const load = useCallback(()=>{
     setLoading(true);
@@ -53,6 +60,9 @@ export default function PembayaranPage(){
     fetch(`/api/siswa${qs}`).then(r=>r.json()).then(j=> setSiswa(j.data??[])).finally(()=> setLoading(false));
   },[ta]);
   useEffect(()=>{ load() },[load]);
+  useEffect(()=>{
+    fetch("/api/auth/me").then(r=> r.ok ? r.json() : null).then(j=> setMyRole(j?.user?.role ?? "")).catch(()=>{});
+  },[]);
 
   const openDetail = async (s: Siswa)=>{
     setSelected(s); setHist([]); setJml(""); setKet(""); setMsg("");
@@ -87,7 +97,7 @@ export default function PembayaranPage(){
   const totalSisa = filtered.reduce((a,c)=>a+Number(c.sisa_tagihan||0),0);
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
       <Sidebar onTambah={()=> setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={()=> setModalOpen(true)} />
@@ -99,27 +109,27 @@ export default function PembayaranPage(){
           </div>
 
           <div className="flex flex-wrap gap-2 items-center">
-            <select value={ta} onChange={e=> setTa(e.target.value)} className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm">
+            <select value={ta} onChange={e=> setTa(e.target.value)} className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               <option value="2027/2028">TA 2027/2028 (Aktif)</option>
               <option value="2026/2027">TA 2026/2027 (Arsip)</option>
               <option value="Semua">Semua TA</option>
             </select>
-            <select value={filterStatus} onChange={e=> setFilterStatus(e.target.value)} className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm">
+            <select value={filterStatus} onChange={e=> setFilterStatus(e.target.value)} className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               <option value="Semua">Semua Status</option>
               <option value="belum_lunas">Belum Lunas</option>
               <option value="cicilan">Cicilan</option>
               <option value="lunas">Lunas</option>
             </select>
-            <input value={q} onChange={e=> setQ(e.target.value)} placeholder="Cari nama / no_reg / sekolah..." className="flex-1 min-w-[200px] rounded-full border border-red-200 bg-white px-4 py-2 text-sm outline-none focus:border-red-400" />
+            <input value={q} onChange={e=> setQ(e.target.value)} placeholder="Cari nama / no_reg / sekolah..." className="flex-1 min-w-[200px] rounded-full border border-red-200 bg-white px-4 py-2 text-sm outline-none focus:border-red-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200" />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl bg-white p-4 border border-red-100 shadow-sm"><p className="text-xs text-gray-500">Siswa (filter)</p><p className="text-2xl font-black text-gray-800">{filtered.length}</p></div>
-            <div className="rounded-2xl bg-white p-4 border border-red-100 shadow-sm"><p className="text-xs text-gray-500">Total Tagihan</p><p className="text-lg font-bold text-gray-800">{fmtRp(totalTagihan)}</p></div>
-            <div className="rounded-2xl bg-amber-50 p-4 border border-amber-200 shadow-sm"><p className="text-xs text-amber-700">Total Sisa (Belum Dibayar)</p><p className="text-lg font-black text-amber-700">{fmtRp(totalSisa)}</p></div>
+            <div className="rounded-2xl bg-white p-4 border border-red-100 shadow-sm dark:border-slate-800 dark:bg-slate-900"><p className="text-xs text-gray-500 dark:text-slate-400">Siswa (filter)</p><p className="text-2xl font-black text-gray-800 dark:text-slate-100">{filtered.length}</p></div>
+            <div className="rounded-2xl bg-white p-4 border border-red-100 shadow-sm dark:border-slate-800 dark:bg-slate-900"><p className="text-xs text-gray-500 dark:text-slate-400">Total Tagihan</p><p className="text-lg font-bold text-gray-800 dark:text-slate-100">{fmtRp(totalTagihan)}</p></div>
+            <div className="rounded-2xl bg-amber-50 p-4 border border-amber-200 shadow-sm dark:bg-amber-950 dark:border-amber-900"><p className="text-xs text-amber-700 dark:text-amber-300">Total Sisa (Belum Dibayar)</p><p className="text-lg font-black text-amber-700 dark:text-amber-300">{fmtRp(totalSisa)}</p></div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[900px] text-left text-sm">
                 <thead><tr className="bg-slate-900 text-[11px] uppercase tracking-widest text-white">
@@ -132,9 +142,9 @@ export default function PembayaranPage(){
                     const wa = waReminderLink(s, Number(s.total_tagihan||0), Number(s.sisa_tagihan||0));
                     const st = s.status_bayar;
                     return (
-                    <tr key={s.no_reg} className={i%2?'bg-red-50/40':'bg-white'}>
-                      <td className="px-4 py-2.5 font-mono text-xs text-red-700">{s.no_reg}</td>
-                      <td className="px-4 py-2.5 font-medium text-gray-800">{s.nama_siswa}<div className="text-[11px] text-gray-500">{s.tingkat_kelas} • {s.asal_sekolah}</div></td>
+                    <tr key={s.no_reg} className={i%2?'bg-red-50/40 dark:bg-slate-800/60':'bg-white dark:bg-slate-900'}>
+                      <td className="px-4 py-2.5 font-mono text-xs text-red-700 dark:text-red-300">{s.no_reg}</td>
+                      <td className="px-4 py-2.5 font-medium text-gray-800 dark:text-slate-100">{s.nama_siswa}<div className="text-[11px] text-gray-500 dark:text-slate-400">{s.tingkat_kelas} • {s.asal_sekolah}</div></td>
                       <td className="px-4 py-2.5"><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${s.tahun_ajaran==='2027/2028'?'bg-emerald-100 text-emerald-700':'bg-gray-100 text-gray-600'}`}>{s.tahun_ajaran}</span></td>
                       <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${st==='lunas'?'bg-green-100 text-green-700':st==='cicilan'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>{st==='lunas'?'Lunas':st==='cicilan'?'Cicilan':'Belum Lunas'}</span></td>
                       <td className="px-4 py-2.5 text-xs">{fmtRp(Number(s.total_tagihan||0))}</td>
@@ -143,6 +153,7 @@ export default function PembayaranPage(){
                       <td className="px-4 py-2.5">
                         <div className="flex gap-1.5">
                           <button onClick={()=> openDetail(s)} className="rounded-full bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700">Kelola</button>
+                          {canEdit && <button onClick={()=> setEditTarget(s)} title="Edit data siswa (super admin & CS)" className="rounded-full bg-amber-500 px-3 py-1 text-xs font-medium text-white hover:bg-amber-600">Edit</button>}
                           {wa && Number(s.sisa_tagihan)>0 && <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700">WA Ortu</a>}
                         </div>
                       </td>
@@ -155,7 +166,7 @@ export default function PembayaranPage(){
 
           {selected && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={()=> setSelected(null)}>
-              <div onClick={e=> e.stopPropagation()} className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-xl">
+              <div onClick={e=> e.stopPropagation()} className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-xl dark:bg-slate-900">
                 <div className="sticky top-0 flex items-center justify-between bg-red-600 px-5 py-4 text-white">
                   <div>
                     <h2 className="text-sm font-bold">{selected.nama_siswa} — {selected.no_reg}</h2>
@@ -209,6 +220,7 @@ export default function PembayaranPage(){
         </main>
       </div>
       <TambahSiswaModal open={modalOpen} onClose={()=> setModalOpen(false)} onSuccess={load} kelasOptions={[]} />
+      <EditSiswaModal open={!!editTarget} siswa={editTarget} onClose={()=> setEditTarget(null)} onSuccess={()=>{ setEditTarget(null); load(); }} />
     </div>
   );
 }
