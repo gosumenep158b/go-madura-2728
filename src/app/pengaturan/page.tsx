@@ -30,6 +30,27 @@ export default function PengaturanAdminPage() {
   const [uploading, setUploading] = useState(false);
   const [uploadStats, setUploadStats] = useState<{ total: number; success: number; message: string } | null>(null);
   const [previewData, setPreviewData] = useState<any[]>([]);
+  // Migrasi arsip
+  const [migrating, setMigrating] = useState(false);
+  const [migrateMsg, setMigrateMsg] = useState<{ type: 'ok' | 'err' | 'info'; text: string } | null>(null);
+
+  async function handleMigrate() {
+    if (!window.confirm('Migrasi arsip siswa dari file ke Supabase? Baris yang sudah ada dilewati (tidak duplikat).')) return;
+    setMigrating(true); setMigrateMsg(null);
+    try {
+      const r = await fetch('/api/siswa/migrate', { method: 'POST' });
+      const j = await r.json();
+      if (!r.ok) {
+        setMigrateMsg({ type: 'err', text: j.error || 'Gagal migrasi arsip.' });
+        return;
+      }
+      setMigrateMsg({ type: 'ok', text: `✓ Migrasi selesai: ${j.inserted} baru dimasukkan, ${j.skipped} sudah ada (total arsip ${j.total}). Dashboard & tambah siswa kini membaca dari Supabase.` });
+    } catch {
+      setMigrateMsg({ type: 'err', text: 'Gagal terhubung ke server.' });
+    } finally {
+      setMigrating(false);
+    }
+  }
 
   const TINGKAT_OPTIONS = ['12 SMA','12 SMA SNBT','13 ALUMNI UMUM','11 SMA','10 SMA','9 SMP','8 SMP','7 SMP','6 SD','5 SD','4 SD'] as const;
   // Classes state
@@ -420,6 +441,22 @@ export default function PengaturanAdminPage() {
                   ✅ {uploadStats.message} (Total diproses: {uploadStats.total} data)
                 </div>
               )}
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+              <h2 className="text-lg font-bold text-gray-900">Migrasi Arsip ke Supabase</h2>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Pindahkan arsip siswa dari file (<code>src/data/siswa.json</code>) ke tabel Supabase agar bisa ditambah/diubah/hapus dari Vercel.
+                Baris yang no. reg-nya sudah ada dilewati otomatis. Lakukan sekali saja (atau setelah arsip file bertambah).
+              </p>
+              {migrateMsg && (
+                <div className={`p-4 rounded-xl text-sm font-semibold border ${migrateMsg.type === 'ok' ? 'bg-green-50 border-green-200 text-green-800' : migrateMsg.type === 'err' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+                  {migrateMsg.text}
+                </div>
+              )}
+              <button onClick={handleMigrate} disabled={migrating} className="bg-slate-900 hover:bg-slate-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm disabled:opacity-50 shadow-sm">
+                {migrating ? 'Memigrasi…' : '⬆️ Migrasi Arsip Sekarang'}
+              </button>
             </div>
 
             {previewData.length > 0 && (

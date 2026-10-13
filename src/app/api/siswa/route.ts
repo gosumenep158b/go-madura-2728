@@ -192,6 +192,12 @@ export async function POST(req: Request) {
     if (dup) {
       const up = await updateSiswaSupabase(newSiswa.no_reg, newSiswa)
       if (up.ok) return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran })
+      if (up.error === 'NOT_FOUND') {
+        // Baris hanya ada di arsip file (belum migrasi) -> insert ke Supabase agar bisa dikelola di Vercel
+        const ins = await writeSiswaSupabase(newSiswa)
+        if (ins.ok) return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran })
+        if (ins.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
+      }
       if (up.error === 'SCHEMA_OUTDATED' || up.error === 'TABLE_MISSING' || up.error === 'NOT_FOUND') {
         try {
           const fileData = readSiswaFile()
