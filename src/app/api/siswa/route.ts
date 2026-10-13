@@ -56,21 +56,29 @@ function readSiswaFile(): Siswa[] {
 function writeSiswaFile(data: Siswa[]) { writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf-8') }
 
 async function readSiswa(): Promise<Siswa[]> {
+  let fromDb: Siswa[] = [];
+  let dbOk = false;
   try {
     const supabase = getSupabase()
     const { data, error } = await supabase.from('siswa').select('*').order('created_at', { ascending: false }).limit(2000)
     if (!error && data) {
-      return (data as any[]).map((s) => ({
+      fromDb = (data as any[]).map((s) => ({
         no_reg: s.no_reg, tgl_lahir: s.tgl_lahir || '', nama_siswa: s.nama_siswa, no_hp: s.no_hp || '', nama_ortu: s.nama_ortu || s.nama_ayah || '', no_hp_ortu: s.no_hp_ortu || s.no_hp_ayah || '',
         nama_ayah: s.nama_ayah || '', no_hp_ayah: s.no_hp_ayah || '', nama_ibu: s.nama_ibu || '', no_hp_ibu: s.no_hp_ibu || '',
         cabang: s.cabang || '', kota: s.kota || '', keterangan: s.keterangan || '',
         unit: s.unit || '', kelas_go: s.kelas_go || '', tingkat_kelas: s.tingkat_kelas || '', program: s.program || '', asal_sekolah: s.asal_sekolah || '', tgl_daftar: s.tgl_daftar || '', tahun_ajaran: s.tahun_ajaran || '2027/2028',
         status_bayar: (s.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: Number(s.total_tagihan ?? 0), sisa_tagihan: Number(s.sisa_tagihan ?? 0), metode_bayar: s.metode_bayar || undefined,
       }))
+      dbOk = true
+    } else if (error && (error as any).code !== 'PGRST205') {
+      console.warn('[api/siswa] supabase read error, fallback file:', (error as any).message)
     }
-    if (error && (error as any).code !== 'PGRST205') console.warn('[api/siswa] supabase read error, fallback file:', (error as any).message)
   } catch (e) { console.warn('[api/siswa] supabase unavailable, fallback file', e) }
-  return readSiswaFile()
+  const file = readSiswaFile()
+  if (!dbOk || fromDb.length === 0) return file
+  // Gabung: Supabase menang bila no_reg sama (arsip file tetap tampil selama belum migrasi)
+  const seen = new Set(fromDb.map((s) => s.no_reg))
+  return [...fromDb, ...file.filter((s) => !seen.has(s.no_reg))]
 }
 
 async function writeSiswaSupabase(s: Siswa): Promise<{ ok: boolean; error?: string }> {
@@ -87,6 +95,7 @@ async function writeSiswaSupabase(s: Siswa): Promise<{ ok: boolean; error?: stri
     if (!error) return { ok: true }
     if ((error as any).code === 'PGRST205') return { ok: false, error: 'TABLE_MISSING' }
     if ((error as any).code === '23505') return { ok: false, error: 'DUPLICATE' }
+    if ((error as any).code === '42703') return { ok: false, error: 'SCHEMA_OUTDATED' }
     console.error('[api/siswa] supabase insert error', error)
     return { ok: false, error: error.message }
   } catch (e: any) { return { ok: false, error: e?.message || 'supabase error' } }
@@ -149,14 +158,17 @@ export async function POST(req: Request) {
     const sb = await writeSiswaSupabase(newSiswa)
     if (sb.ok) return NextResponse.json({ success: true, data: newSiswa })
     if (sb.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
-    if (sb.error === 'TABLE_MISSING') {
+    if (sb.error === 'SCHEMA_OUTDATED' || sb.error === 'TABLE_MISSING') {
+      const schemaMsg = sb.error === 'SCHEMA_OUTDATED'
+        ? 'Kolom Supabase belum update (nama_ayah/cabang/kota/dll) — jalankan ulang database/siswa_schema.sql di Supabase Dashboard > SQL Editor, lalu coba lagi.'
+        : 'Tabel Supabase siswa belum ada — disimpan ke file lokal. Jalankan database/siswa_schema.sql di Supabase agar persisten di Vercel.';
       try {
         const fileData = readSiswaFile()
         fileData.unshift(newSiswa); writeSiswaFile(fileData)
-        return NextResponse.json({ success: true, data: newSiswa, warning: 'Tabel Supabase siswa belum ada — disimpan ke file lokal. Jalankan database/siswa_schema.sql di Supabase agar persisten di Vercel.' })
+        return NextResponse.json({ success: true, data: newSiswa, warning: schemaMsg })
       } catch (e: any) {
         const msg = e?.code === 'EROFS' || String(e?.message||'').includes('read-only')
-          ? 'Gagal menyimpan: filesystem Vercel read-only. Buat tabel Supabase dulu: jalankan database/siswa_schema.sql di Supabase Dashboard > SQL Editor, lalu coba lagi.'
+          ? 'Gagal menyimpan: ' + schemaMsg
           : 'Gagal menambah siswa (fallback file error)'
         console.error('[api/siswa] fallback file write failed', e)
         return NextResponse.json({ error: msg }, { status: 500 })
@@ -214,6 +226,9 @@ export async function PATCH(req: Request) {
         }})
       }
       if (error && (error as any).code === 'PGRST205') throw new Error('TABLE_MISSING')
+      if (error && (error as any).code === '42703') {
+        return NextResponse.json({ error: 'Kolom Supabase belum update — jalankan ulang database/siswa_schema.sql di SQL Editor, lalu coba lagi.' }, { status: 500 })
+      }
       if (error) console.warn('[api/siswa PATCH] supabase error', (error as any).message)
     } catch (e: any) {
       if (!String(e?.message).includes('TABLE_MISSING')) console.warn('[api/siswa PATCH] fallback to file', e?.message)
