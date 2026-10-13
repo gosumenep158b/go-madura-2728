@@ -2,15 +2,35 @@ import { NextResponse } from 'next/server';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import * as XLSX from 'xlsx';
+import { createClient } from '@supabase/supabase-js';
 import { EXPORT_HEADERS, hargaForTingkat, HARGA_PENDAFTARAN } from '@/lib/program';
-
 const siswaPath = join(process.cwd(), 'src/data/siswa.json');
 const pembayaranPath = join(process.cwd(), 'src/data/pembayaran.json');
 
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qyjtbddnjvqhvukgubwb.supabase.co';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh';
+  return createClient(url, key);
+}
+
+async function readSiswaAll(): Promise<any[]> {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.from('siswa').select('*').order('created_at', { ascending: false }).limit(2000);
+    if (!error && data && data.length > 0) return data;
+    if (error && (error as any).code !== 'PGRST205') console.warn('[export] supabase read error', (error as any).message);
+    // if table missing or empty -> fallback file (seed data)
+    if (!error && data && data.length === 0) {
+      try { const f = JSON.parse(readFileSync(siswaPath, 'utf-8')); if (Array.isArray(f) && f.length) return f; } catch {}
+      return [];
+    }
+  } catch (e) { console.warn('[export] supabase unavailable', e); }
+  try { return JSON.parse(readFileSync(siswaPath, 'utf-8')); } catch { return []; }
+}
+
 export async function GET() {
   try {
-    let siswa: any[] = [];
-    try { siswa = JSON.parse(readFileSync(siswaPath, 'utf-8')); } catch { siswa = []; }
+    let siswa: any[] = await readSiswaAll();
     let pembayaran: any[] = [];
     try { pembayaran = JSON.parse(readFileSync(pembayaranPath, 'utf-8')); } catch { pembayaran = []; }
 

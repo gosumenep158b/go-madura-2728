@@ -111,8 +111,15 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
       return;
     }
     if (!form.program) {
-      setError('Program wajib dipilih.');
-      return;
+      // auto-fill dari tingkat jika user belum pilih (race effect belum jalan)
+      const opts = form.tingkat_kelas ? getProgramOptions(form.tingkat_kelas) : [];
+      if (opts.length) {
+        // set & lanjut, jangan block — pakai opts[0] untuk submit ini
+        form.program = opts[0];
+      } else {
+        setError('Program wajib dipilih.');
+        return;
+      }
     }
 
     setSaving(true);
@@ -140,13 +147,24 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           no_hp: fixPhone(form.no_hp),
           no_hp_ortu: fixPhone(form.no_hp_ortu),
           program: form.program,
-          unit: form.unit || filterUnit || '',
+          unit: form.unit || filterUnit || SEMADURA_UNITS[0],
         }),
       });
-      const j = await res.json();
+      const j = await res.json().catch(()=> ({} as any));
       if (!res.ok) {
-        setError(j.error || 'Gagal menambah siswa.');
+        const msg = (j as any).error || (j as any).message || 'Gagal menambah siswa.';
+        const hint = (j as any).warning ? ' ' + (j as any).warning : '';
+        // hint khusus read-only / table missing
+        if (msg.includes('read-only') || msg.includes('Supabase')) {
+          setError(msg + hint + ' — Jalankan database/siswa_schema.sql di Supabase Dashboard > SQL Editor.');
+        } else {
+          setError(msg + hint);
+        }
         return;
+      }
+      if ((j as any).warning) {
+        // surface warning tapi tetap sukses (mis. fallback file saat tabel belum ada)
+        console.warn((j as any).warning);
       }
       onSuccess();
       onClose();
