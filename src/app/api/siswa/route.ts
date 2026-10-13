@@ -178,9 +178,15 @@ export async function POST(req: Request) {
       const fileData = readSiswaFile()
       if (!fileData.some(s=>s.no_reg===newSiswa.no_reg)) { fileData.unshift(newSiswa); writeSiswaFile(fileData) }
       return NextResponse.json({ success: true, data: newSiswa, warning: 'Supabase error (' + sb.error + ') — fallback file' })
-    } catch {}
+    } catch (e2: any) {
+      console.error('[api/siswa POST] file fallback failed', e2)
+    }
     return NextResponse.json({ error: sb.error || 'Gagal menambah siswa' }, { status: 500 })
-  } catch(e){ console.error(e); return NextResponse.json({ error: 'Gagal menambah siswa' }, { status: 500 }) }
+  } catch(e: any) {
+    const detail = String(e?.message || e || '').slice(0, 300)
+    console.error('[api/siswa POST] fatal', detail)
+    return NextResponse.json({ error: 'Gagal menambah siswa.' + (detail ? ' Detail: ' + detail : '') }, { status: 500 })
+  }
 }
 
 export async function PATCH(req: Request) {
