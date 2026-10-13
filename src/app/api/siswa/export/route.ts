@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import * as XLSX from 'xlsx';
 import { createClient } from '@supabase/supabase-js';
-import { EXPORT_HEADERS, hargaForTingkat, HARGA_PENDAFTARAN } from '@/lib/program';
+import { buildExportTable } from '@/lib/exportSiswa';
 const siswaPath = join(process.cwd(), 'src/data/siswa.json');
 const pembayaranPath = join(process.cwd(), 'src/data/pembayaran.json');
 
@@ -46,60 +46,7 @@ export async function GET(req: Request) {
       try { pembayaran = JSON.parse(readFileSync(pembayaranPath, 'utf-8')); } catch { pembayaran = []; }
     }
 
-    // Group pembayaran by no_reg sorted by tanggal
-    const payByReg: Record<string, any[]> = {};
-    pembayaran.forEach((p:any)=> {
-      if(!payByReg[p.no_reg]) payByReg[p.no_reg]=[];
-      payByReg[p.no_reg].push(p);
-    });
-    Object.values(payByReg).forEach(arr=> arr.sort((a:any,b:any)=> String(a.tanggal).localeCompare(String(b.tanggal))));
-
-    const headers = [...EXPORT_HEADERS] as string[];
-
-    const rows: any[][] = siswa.map((s: any) => {
-      const total = Number(s.total_tagihan ?? 0);
-      const sisa = Number(s.sisa_tagihan ?? total);
-      const hargaNormal = s.tingkat_kelas ? hargaForTingkat(s.tingkat_kelas) : 0;
-      const hargaHarusBayar = total;
-      const diskon = Math.max(0, hargaNormal - hargaHarusBayar);
-      const pays = (payByReg[s.no_reg] || []).slice(0,6);
-      const totalBayar = pays.reduce((a:any,c:any)=> a + Number(c.jumlah||0), 0) || Math.max(0, total - sisa);
-      // Build 12 slots: JUMLAH BAYAR 1, TGL 1 ... JUMLAH BAYAR 6, TGL 6
-      const bayarSlots: any[] = [];
-      for(let k=0;k<6;k++){
-        const p = pays[k];
-        bayarSlots.push(p ? Number(p.jumlah) : '');
-        bayarSlots.push(p ? String(p.tanggal||'') : '');
-      }
-      const namaAyah = s.nama_ayah || s.nama_ortu || '';
-      const namaIbu = s.nama_ibu || '';
-      const hpAyah = s.no_hp_ayah || s.no_hp_ortu || '';
-      const hpIbu = s.no_hp_ibu || '';
-      return [
-        s.no_reg || '',                 // NO REGISTRASI
-        s.cabang || '',                 // CABANG
-        s.kota || '',                   // KOTA
-        s.unit || '',                   // UNIT
-        s.tgl_lahir || '',              // TGL LAHIR
-        s.program || '',                // PROGRAM
-        s.status_bayar || '',           // STATUS BAYAR
-        s.nama_siswa || '',             // NAMA
-        ...bayarSlots,                  // JUMLAH/TGL BAYAR 1-6 (12 cols)
-        totalBayar,                     // TOTAL BAYAR
-        HARGA_PENDAFTARAN,              // HARGA PENDAFTARAN
-        hargaNormal,                    // HARGA NORMAL
-        diskon,                         // JUMLAH DISKON
-        s.keterangan || '',             // KETERANGAN
-        hargaHarusBayar,                // HARGA YANG HARUS DIBAYAR
-        sisa,                           // SISA HARGA YANG MASIH HARUS DIBAYAR
-        s.asal_sekolah || '',           // ASAL SEKOLAH
-        s.no_hp || '',                  // NOMOR HP SISWA
-        namaAyah,                       // NAMA ORANGTUA AYAH
-        namaIbu,                        // NAMA ORANGTUA IBU
-        hpAyah,                         // NO HP ORTU AYAH
-        hpIbu,                          // NO HP ORTU IBU
-      ];
-    });
+    const { headers, rows } = buildExportTable(siswa, pembayaran);
 
     const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
     ws['!cols'] = headers.map(() => ({ wch: 16 }));

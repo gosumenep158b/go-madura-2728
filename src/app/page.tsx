@@ -86,6 +86,8 @@ export default function Home() {
   const [ta, setTa] = useState('2027/2028');
   const [modalOpen, setModalOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [savingSheet, setSavingSheet] = useState(false);
+  const [sheetMsg, setSheetMsg] = useState('');
 
   const exportToSheet = useCallback(async () => {
     setExporting(true);
@@ -109,6 +111,25 @@ export default function Home() {
       alert('Gagal export spreadsheet. Coba lagi.');
     } finally {
       setExporting(false);
+    }
+  }, [ta, filterUnit]);
+
+  const saveToGoogleSheet = useCallback(async () => {
+    setSavingSheet(true);
+    setSheetMsg('');
+    try {
+      const res = await fetch('/api/siswa/google-sheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ta, unit: filterUnit }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error || 'Gagal simpan ke Google Sheet');
+      setSheetMsg(`✓ Tersimpan ${j.siswa} siswa ke Google Sheet (${j.sheet}).`);
+    } catch (e: any) {
+      setSheetMsg(e?.message || 'Gagal simpan ke Google Sheet.');
+    } finally {
+      setSavingSheet(false);
     }
   }, [ta, filterUnit]);
 
@@ -299,11 +320,12 @@ export default function Home() {
               <div>
                 <h2 className="text-sm font-bold text-emerald-800">Export ke Spreadsheet</h2>
                 <p className="mt-1 text-xs text-gray-500">
-                  Unduh data {bayarStats.total} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} TA {ta} sebagai file .xlsx (33 kolom),
-                  lalu impor ke Google Sheet via menu <b>File → Impor</b>.
+                  Unduh data {bayarStats.total} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} TA {ta} sebagai file .xlsx,
+                  atau simpan langsung ke Google Sheet rekap.
                 </p>
+                {sheetMsg && <p className="mt-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs font-medium text-emerald-800 ring-1 ring-inset ring-emerald-200">{sheetMsg}</p>}
               </div>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 <button
                   onClick={exportToSheet}
                   disabled={exporting || unitData.length === 0}
@@ -311,7 +333,16 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50"
                 >
                   <Download size={16} />
-                  {exporting ? 'Mengexport…' : `Export Spreadsheet (${unitData.length})`}
+                  {exporting ? 'Mengexport…' : `Export .xlsx (${unitData.length})`}
+                </button>
+                <button
+                  onClick={saveToGoogleSheet}
+                  disabled={savingSheet || unitData.length === 0}
+                  title="Tulis ulang Google Sheet dengan data filter aktif"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+                >
+                  <Download size={16} />
+                  {savingSheet ? 'Menyimpan…' : 'Simpan ke Google Sheet'}
                 </button>
                 <a
                   href={GOOGLE_SHEET_URL}
