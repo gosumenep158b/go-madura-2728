@@ -50,7 +50,11 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-  const hargaNormal = form.tingkat_kelas ? hargaForTingkat(form.tingkat_kelas) : 0;
+  // Harga master dari modul Harga Bimbel (per kota/unit/tingkat/program)
+  const [hargaMaster, setHargaMaster] = useState<number | null>(null);
+  const [hargaManual, setHargaManual] = useState(false);
+  const hargaDefault = form.tingkat_kelas ? hargaForTingkat(form.tingkat_kelas) : 0;
+  const hargaNormal = hargaMaster ?? hargaDefault;
   const hargaSetelahDiskonNum = parseRp(form.total_tagihan);
   const bayarSekarangNum = parseRp((form as any).pembayaran_sekarang || '');
   const sisaNum = Math.max(0, (hargaSetelahDiskonNum || hargaNormal) - bayarSekarangNum);
@@ -114,19 +118,40 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     }
   }, [form.kelas_go, kelasList]);
 
+  // Harga otomatis dari master Harga Bimbel setiap filter kota/unit/tingkat/program berubah.
+  // Jika user mengetik harga manual, tidak ditimpa sampai salah satu filter berubah lagi.
   useEffect(() => {
-    if (!form.tingkat_kelas) return;
-    const normal = hargaForTingkat(form.tingkat_kelas);
+    if (!form.tingkat_kelas) { setHargaMaster(null); return; }
     const opts = getProgramOptions(form.tingkat_kelas);
-    setForm(f => {
+    setForm((f) => {
       const needProgram = !f.program || !opts.includes(f.program);
-      return {
-        ...f,
-        total_tagihan: normal ? String(normal) : f.total_tagihan,
-        program: needProgram ? (opts[0] || '') : f.program,
-      };
+      if (!needProgram) return f;
+      return { ...f, program: opts[0] || '' };
     });
-  }, [form.tingkat_kelas]);
+    const program = form.program && opts.includes(form.program) ? form.program : opts[0] || '';
+    if (!program) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const qs = new URLSearchParams({ kota: form.kota, unit: form.unit, tingkat: form.tingkat_kelas, program });
+        const res = await fetch(`/api/harga?${qs.toString()}`);
+        const j = await res.json().catch(() => null);
+        if (cancelled || !j) return;
+        const master = Number(j.harga || 0);
+        setHargaMaster(j.source === 'master' && master > 0 ? master : null);
+        setHargaManual(false);
+        setForm((f) => ({ ...f, program, total_tagihan: master ? String(master) : f.total_tagihan }));
+      } catch {
+        if (!cancelled) {
+          const normal = hargaForTingkat(form.tingkat_kelas);
+          setHargaMaster(null);
+          setForm((f) => ({ ...f, program, total_tagihan: normal ? String(normal) : f.total_tagihan }));
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.kota, form.unit, form.tingkat_kelas, form.program]);
 
   if (!open) return null;
 
@@ -236,6 +261,8 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
       }
       onSuccess();
       onClose();
+      setHargaMaster(null);
+      setHargaManual(false);
       setForm({
         no_reg: '',
         nama_siswa: '',
@@ -429,17 +456,17 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3 space-y-3">
-            <p className="text-xs font-bold text-amber-800">Rincian Biaya (otomatis dari Tingkat Kelas)</p>
+            <p className="text-xs font-bold text-amber-800">Rincian Biaya (otomatis dari Harga Bimbel)</p>
             <div className="grid gap-3 sm:grid-cols-3">
               <div>
                 <label className="mb-1 block text-xs font-semibold text-gray-800">Harga Normal</label>
                 <div className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm font-bold text-gray-900">{hargaNormal ? fmtRp(hargaNormal) : '— pilih tingkat kelas'}</div>
-                <p className="mt-1 text-[11px] text-gray-600">Otomatis</p>
+                <p className="mt-1 text-[11px] text-gray-600">{hargaMaster ? `Master ${form.kota} · ${form.unit}` : 'Default Juklak'}</p>
               </div>
               <div>
                 <label className="mb-1 block text-xs font-semibold text-gray-800">Harga Setelah Diskon (Rp)</label>
-                <input value={form.total_tagihan} onChange={set('total_tagihan')} placeholder={hargaNormal ? String(hargaNormal) : 'cth: 5000000'} className={`${inputCls} font-mono`} inputMode="numeric" />
-                <p className="mt-1 text-[11px] text-gray-600">Bisa diedit (diskon)</p>
+                <input value={form.total_tagihan} onChange={(e) => { setHargaManual(true); setForm((f) => ({ ...f, total_tagihan: e.target.value })); }} placeholder={hargaNormal ? String(hargaNormal) : 'cth: 5000000'} className={`${inputCls} font-mono`} inputMode="numeric" />
+                <p className="mt-1 text-[11px] text-gray-600">{hargaManual ? 'Manual (ketikan Anda)' : 'Bisa diedit (diskon)'}</p>
               </div>
               <div>
                 <label className="mb-1 block text-xs font-semibold text-gray-800">Pembayaran Sekarang (Rp)</label>

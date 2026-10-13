@@ -180,6 +180,8 @@ export default function ModulPenawaranBimbel() {
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'installment'>('cash');
 
   const [hargaMap, setHargaMap] = useState<Record<string,{harga:number; program_name:string; medical_addon:number}>>({});
+  // Master baru: harga_bimbel per kota/unit/tingkat/program (prioritas utama)
+  const [hargaBaru, setHargaBaru] = useState<Record<string, number>>({});
   const [hargaLoaded, setHargaLoaded] = useState(false);
   const [slpByMonth, setSlpByMonth] = useState<Record<string,number>>(SLP_DISCOUNT_BY_MONTH);
   const [promoByMonth, setPromoByMonth] = useState<Record<string,number>>(PROMO_RATE_BY_MONTH);
@@ -206,6 +208,15 @@ export default function ModulPenawaranBimbel() {
 
   const fetchHargaMap = React.useCallback(async ()=>{
       try{
+        // 1) Master baru harga_bimbel (kota/unit/tingkat/program) — prioritas utama
+        try{
+          const nb = await supabase.from("harga_bimbel").select("unit,tingkat_kelas,program,harga").eq("is_active", true).limit(2000);
+          if(!nb.error && nb.data && nb.data.length){
+            const m: Record<string, number> = {};
+            (nb.data as any[]).forEach(r=>{ m[r.unit+"|"+r.tingkat_kelas+"|"+r.program]=Number(r.harga||0); });
+            setHargaBaru(m);
+          }
+        }catch{}
         const { data, error } = await supabase.from("admin_unit_program_prices").select("unit,tingkat_kelas,program_name,harga,medical_addon");
         if(!error && data && data.length){
           const m: Record<string,{harga:number; program_name:string; medical_addon:number}> = {};
@@ -289,25 +300,28 @@ export default function ModulPenawaranBimbel() {
 
   useEffect(()=>{
     if(!hargaLoaded) return;
+    const baru = hargaBaru[selectedUnit+"|"+grade+"|"+program];
+    if(baru) { setBasePrice(baru); return; }
     const key = selectedUnit+"|"+grade;
     const hit = hargaMap[key];
     if(hit) setBasePrice(hit.harga);
     else setBasePrice(hargaForTingkat(grade));
-  },[selectedUnit, grade, hargaLoaded, hargaMap]);
+  },[selectedUnit, grade, program, hargaLoaded, hargaMap, hargaBaru]);
 
   // Sync program when grade changes: prefer program from hargaMap, else valid option
   useEffect(()=>{
+    const opts = getProgramOptions(grade);
+    // Jika master baru punya harga untuk program saat ini di unit ini, pertahankan
+    if(program && opts.includes(program) && hargaBaru[selectedUnit+"|"+grade+"|"+program]) return;
     const hit = hargaMap[selectedUnit+"|"+grade];
     if(hit && hit.program_name){
-      const opts = getProgramOptions(grade);
       // if saved program matches available options, use it; otherwise use saved as-is
       if(opts.includes(hit.program_name)) setProgram(hit.program_name);
       else if(hit.program_name) setProgram(hit.program_name);
       return;
     }
-    const opts = getProgramOptions(grade);
     if(!opts.includes(program)) setProgram(opts[0] || PROGRAMS[0]);
-  },[grade, selectedUnit, hargaMap]);
+  },[grade, selectedUnit, hargaMap, hargaBaru, program]);
 
   
 
@@ -658,9 +672,10 @@ export default function ModulPenawaranBimbel() {
                 >
                   {TINGKATS_9.map((t)=> {
                     const key = selectedUnit+"|"+t;
+                    const baru = hargaBaru[key+"|"+program];
                     const hit = hargaMap[key];
-                    const h = hit ? hit.harga : hargaForTingkat(t);
-                    return (<option key={t} value={t}>{t} - Rp {h.toLocaleString('id-ID')}{hit ? '' : ' (default)'}</option>);
+                    const h = baru || (hit ? hit.harga : hargaForTingkat(t));
+                    return (<option key={t} value={t}>{t} - Rp {h.toLocaleString('id-ID')}{(baru || hit) ? '' : ' (default)'}</option>);
                   })}
                 </select>
               </div>
