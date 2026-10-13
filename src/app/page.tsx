@@ -28,6 +28,13 @@ interface Siswa {
   no_hp: string;
   nama_ortu: string;
   no_hp_ortu: string;
+  nama_ayah?: string;
+  no_hp_ayah?: string;
+  nama_ibu?: string;
+  no_hp_ibu?: string;
+  cabang?: string;
+  kota?: string;
+  keterangan?: string;
   unit?: string;
   kelas_go: string;
   tingkat_kelas: string;
@@ -69,12 +76,15 @@ function labelBulan(ym: string) {
 }
 function fmtRp(n:number){ return 'Rp ' + Number(n||0).toLocaleString('id-ID') }
 function waOrtuLink(s: Siswa){
-  const d=(s.no_hp_ortu||'').replace(/\D/g,''); let no='';
+  const hp = s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '';
+  const nama = s.nama_ayah || s.nama_ortu || s.nama_ibu || '-';
+  const d=(hp||'').replace(/\D/g,''); let no='';
   if(d.startsWith('62')) no=d; else if(d.startsWith('0')) no='62'+d.slice(1); else if(d.startsWith('8')) no='62'+d; else no=d;
   if(!no) return null;
-  const msg=encodeURIComponent(`Yth. Ortu/Wali ${s.nama_ortu||'-'} — siswa ${s.nama_siswa} (${s.no_reg})\nPengingat sisa tagihan bimbel GO: ${fmtRp(Number(s.sisa_tagihan||0))} dari total ${fmtRp(Number(s.total_tagihan||0))}. Mohon segera dilunasi. Terima kasih — Ganesha Operation Sumenep.`);
+  const msg=encodeURIComponent(`Yth. Ortu/Wali ${nama} — siswa ${s.nama_siswa} (${s.no_reg})\nPengingat sisa tagihan bimbel GO: ${fmtRp(Number(s.sisa_tagihan||0))} dari total ${fmtRp(Number(s.total_tagihan||0))}. Mohon segera dilunasi. Terima kasih — Ganesha Operation Sumenep.`);
   return `https://wa.me/${no}?text=${msg}`;
 }
+function waDisplay(s: Siswa){ return s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'; }
 
 export default function Home() {
   const [data, setData] = useState<Siswa[]>([]);
@@ -85,6 +95,32 @@ export default function Home() {
   const [filterUnit, setFilterUnit] = useState('Semua');
   const [ta, setTa] = useState('2027/2028');
   const [modalOpen, setModalOpen] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  const exportToSheet = useCallback(async () => {
+    setExporting(true);
+    try {
+      const params = new URLSearchParams();
+      if (ta !== 'Semua') params.set('ta', ta);
+      if (filterUnit !== 'Semua') params.set('unit', filterUnit);
+      const qs = params.toString() ? `?${params.toString()}` : '';
+      const res = await fetch(`/api/siswa/export${qs}`);
+      if (!res.ok) throw new Error('Export gagal');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `siswa_export_${ta.replace('/', '-')}_${filterUnit === 'Semua' ? 'semua-unit' : filterUnit.replace(/\s+/g, '-')}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      alert('Gagal export spreadsheet. Coba lagi.');
+    } finally {
+      setExporting(false);
+    }
+  }, [ta, filterUnit]);
 
   const load = useCallback(() => {
     setLoading(true);
@@ -125,7 +161,9 @@ export default function Home() {
         d.nama_siswa.toLowerCase().includes(q) ||
         d.no_reg.includes(q) ||
         d.asal_sekolah.toLowerCase().includes(q) ||
-        (d.unit || '').toLowerCase().includes(q);
+        (d.unit || '').toLowerCase().includes(q) ||
+        (d.nama_ayah || '').toLowerCase().includes(q) ||
+        (d.nama_ibu || '').toLowerCase().includes(q);
       const matchT = filterTingkat === 'Semua' || d.tingkat_kelas === filterTingkat;
       const matchUnit = filterUnit === 'Semua' || (d.unit || '').trim() === filterUnit;
       return matchQ && matchT && matchUnit;
@@ -258,13 +296,13 @@ export default function Home() {
                 <h2 className="text-sm font-bold text-red-800">Data Siswa — TA {ta}</h2>
                 <p className="text-xs text-gray-500">{filtered.length} dari {data.length} siswa</p>
               </div>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
                 <label className="relative">
                   <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Cari nama / no. registrasi / sekolah…"
+                    placeholder="Cari nama / no. registrasi / sekolah / ortu…"
                     className="w-full rounded-full border border-red-200 bg-red-50/50 py-2 pl-9 pr-4 text-sm outline-none placeholder:text-gray-400 focus:border-red-400 focus:bg-white sm:w-72"
                   />
                 </label>
@@ -280,12 +318,21 @@ export default function Home() {
                 <select
                   value={filterUnit}
                   onChange={(e) => setFilterUnit(e.target.value)}
+                  title="Filter nama unit"
                   className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-red-400"
                 >
                   {unitOptions.map((u) => (
                     <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
                   ))}
                 </select>
+                <button
+                  onClick={exportToSheet}
+                  disabled={exporting || filtered.length === 0}
+                  title="Export hasil filter ke spreadsheet (.xlsx)"
+                  className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50"
+                >
+                  {exporting ? 'Mengexport…' : `Export Spreadsheet (${filtered.length})`}
+                </button>
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -325,7 +372,7 @@ export default function Home() {
                       </td>
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-xs text-gray-600">{s.no_hp_ortu || '—'}</span>
+                          <span className="font-mono text-xs text-gray-600">{waDisplay(s)}</span>
                           {wa && <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-green-600 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-green-700">WA</a>}
                         </div>
                       </td>

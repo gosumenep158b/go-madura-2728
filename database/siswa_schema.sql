@@ -8,6 +8,13 @@ create table if not exists public.siswa (
   no_hp text,
   nama_ortu text,
   no_hp_ortu text,
+  nama_ayah text,
+  no_hp_ayah text,
+  nama_ibu text,
+  no_hp_ibu text,
+  cabang text,
+  kota text,
+  keterangan text,
   unit text,
   kelas_go text,
   tingkat_kelas text,
@@ -22,6 +29,15 @@ create table if not exists public.siswa (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Migrasi untuk tabel yang sudah ada (jalankan ulang file ini dengan aman):
+alter table public.siswa add column if not exists nama_ayah text;
+alter table public.siswa add column if not exists no_hp_ayah text;
+alter table public.siswa add column if not exists nama_ibu text;
+alter table public.siswa add column if not exists no_hp_ibu text;
+alter table public.siswa add column if not exists cabang text;
+alter table public.siswa add column if not exists kota text;
+alter table public.siswa add column if not exists keterangan text;
 
 -- RLS: buka untuk anon (dashboard pakai anon key, auth via cookie aplikasi)
 alter table public.siswa enable row level security;

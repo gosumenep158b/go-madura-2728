@@ -5,6 +5,7 @@ import TambahSiswaModal from "@/components/dashboard/TambahSiswaModal";
 
 interface Siswa {
   no_reg: string; nama_siswa: string; no_hp_ortu: string; nama_ortu: string;
+  nama_ayah?: string; no_hp_ayah?: string; nama_ibu?: string; no_hp_ibu?: string;
   tingkat_kelas: string; asal_sekolah: string; tahun_ajaran: string;
   status_bayar: string; total_tagihan: number; sisa_tagihan: number;
 }
@@ -15,10 +16,12 @@ function waNormalize(no: string){
 }
 function fmtRp(n:number){ return 'Rp ' + Number(n||0).toLocaleString('id-ID') }
 function waReminderLink(s: Siswa, tb: number, sisa: number, nextJml?: number){
-  const no = waNormalize(s.no_hp_ortu);
+  const hp = s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '';
+  const ortu = s.nama_ayah || s.nama_ortu || s.nama_ibu || '—';
+  const no = waNormalize(hp);
   if(!no) return null;
   const msg = encodeURIComponent(
-    `Yth. Orang Tua/Wali *${s.nama_ortu || '—'}* — siswa *${s.nama_siswa}* (${s.no_reg}, ${s.tingkat_kelas}, TA ${s.tahun_ajaran})\n\n`+
+    `Yth. Orang Tua/Wali *${ortu}* — siswa *${s.nama_siswa}* (${s.no_reg}, ${s.tingkat_kelas}, TA ${s.tahun_ajaran})\n\n`+
     `Pengingat pembayaran bimbel GO:\n`+
     `Total tagihan: ${fmtRp(tb)}\n`+
     `Sudah bayar: ${fmtRp(tb - sisa)}\n`+
@@ -136,7 +139,7 @@ export default function PembayaranPage(){
                       <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${st==='lunas'?'bg-green-100 text-green-700':st==='cicilan'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>{st==='lunas'?'Lunas':st==='cicilan'?'Cicilan':'Belum Lunas'}</span></td>
                       <td className="px-4 py-2.5 text-xs">{fmtRp(Number(s.total_tagihan||0))}</td>
                       <td className="px-4 py-2.5 text-xs font-bold text-amber-700">{fmtRp(Number(s.sisa_tagihan||0))}</td>
-                      <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{s.no_hp_ortu||'—'}</td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'}</td>
                       <td className="px-4 py-2.5">
                         <div className="flex gap-1.5">
                           <button onClick={()=> openDetail(s)} className="rounded-full bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700">Kelola</button>
@@ -162,8 +165,8 @@ export default function PembayaranPage(){
                 </div>
                 <div className="space-y-4 p-5">
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl bg-gray-50 p-3 border"><p className="text-xs text-gray-500">Nama Ortu</p><p className="text-sm font-semibold">{selected.nama_ortu||'—'}</p></div>
-                    <div className="rounded-xl bg-green-50 p-3 border border-green-200"><p className="text-xs text-green-700">No. WA Ortu (pengingat)</p><p className="font-mono text-sm font-bold">{selected.no_hp_ortu||'—'}</p>
+                    <div className="rounded-xl bg-gray-50 p-3 border"><p className="text-xs text-gray-500">Nama Ortu</p><p className="text-sm font-semibold">{selected.nama_ayah || selected.nama_ortu || selected.nama_ibu || '—'}</p></div>
+                    <div className="rounded-xl bg-green-50 p-3 border border-green-200"><p className="text-xs text-green-700">No. WA Ortu (pengingat)</p><p className="font-mono text-sm font-bold">{selected.no_hp_ayah || selected.no_hp_ortu || selected.no_hp_ibu || '—'}</p>
                       {waReminderLink(selected, Number(selected.total_tagihan||0), Number(selected.sisa_tagihan||0)) && Number(selected.sisa_tagihan)>0 && (
                         <a href={waReminderLink(selected, Number(selected.total_tagihan||0), Number(selected.sisa_tagihan||0))!} target="_blank" rel="noreferrer" className="mt-2 inline-flex rounded-full bg-green-600 px-4 py-2 text-xs font-bold text-white">Kirim Pengingat via WA Ortu</a>
                       )}

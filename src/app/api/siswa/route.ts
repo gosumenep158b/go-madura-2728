@@ -10,6 +10,13 @@ export interface Siswa {
   no_hp: string;
   nama_ortu: string;
   no_hp_ortu: string;
+  nama_ayah?: string;
+  no_hp_ayah?: string;
+  nama_ibu?: string;
+  no_hp_ibu?: string;
+  cabang?: string;
+  kota?: string;
+  keterangan?: string;
   unit?: string;
   kelas_go: string;
   tingkat_kelas: string;
@@ -53,7 +60,9 @@ async function readSiswa(): Promise<Siswa[]> {
     const { data, error } = await supabase.from('siswa').select('*').order('created_at', { ascending: false }).limit(2000)
     if (!error && data) {
       return (data as any[]).map((s) => ({
-        no_reg: s.no_reg, tgl_lahir: s.tgl_lahir || '', nama_siswa: s.nama_siswa, no_hp: s.no_hp || '', nama_ortu: s.nama_ortu || '', no_hp_ortu: s.no_hp_ortu || '',
+        no_reg: s.no_reg, tgl_lahir: s.tgl_lahir || '', nama_siswa: s.nama_siswa, no_hp: s.no_hp || '', nama_ortu: s.nama_ortu || s.nama_ayah || '', no_hp_ortu: s.no_hp_ortu || s.no_hp_ayah || '',
+        nama_ayah: s.nama_ayah || '', no_hp_ayah: s.no_hp_ayah || '', nama_ibu: s.nama_ibu || '', no_hp_ibu: s.no_hp_ibu || '',
+        cabang: s.cabang || '', kota: s.kota || '', keterangan: s.keterangan || '',
         unit: s.unit || '', kelas_go: s.kelas_go || '', tingkat_kelas: s.tingkat_kelas || '', program: s.program || '', asal_sekolah: s.asal_sekolah || '', tgl_daftar: s.tgl_daftar || '', tahun_ajaran: s.tahun_ajaran || '2027/2028',
         status_bayar: (s.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: Number(s.total_tagihan ?? 0), sisa_tagihan: Number(s.sisa_tagihan ?? 0), metode_bayar: s.metode_bayar || undefined,
       }))
@@ -67,7 +76,9 @@ async function writeSiswaSupabase(s: Siswa): Promise<{ ok: boolean; error?: stri
   try {
     const supabase = getSupabase()
     const payload: any = {
-      no_reg: s.no_reg, tgl_lahir: s.tgl_lahir || null, nama_siswa: s.nama_siswa, no_hp: s.no_hp || null, nama_ortu: s.nama_ortu || null, no_hp_ortu: s.no_hp_ortu || null,
+      no_reg: s.no_reg, tgl_lahir: s.tgl_lahir || null, nama_siswa: s.nama_siswa, no_hp: s.no_hp || null, nama_ortu: s.nama_ortu || s.nama_ayah || null, no_hp_ortu: s.no_hp_ortu || s.no_hp_ayah || null,
+      nama_ayah: s.nama_ayah || null, no_hp_ayah: s.no_hp_ayah || null, nama_ibu: s.nama_ibu || null, no_hp_ibu: s.no_hp_ibu || null,
+      cabang: s.cabang || null, kota: s.kota || null, keterangan: s.keterangan || null,
       unit: s.unit || null, kelas_go: s.kelas_go || null, tingkat_kelas: s.tingkat_kelas || null, program: s.program || null, asal_sekolah: s.asal_sekolah || null, tgl_daftar: s.tgl_daftar || null,
       tahun_ajaran: s.tahun_ajaran || '2027/2028', status_bayar: s.status_bayar || 'belum_lunas', total_tagihan: Number(s.total_tagihan || 0), sisa_tagihan: Number(s.sisa_tagihan || 0), metode_bayar: s.metode_bayar || null,
     }
@@ -126,7 +137,10 @@ export async function POST(req: Request) {
     const total = Number(body.total_tagihan ?? 0)
     const sisa = body.sisa_tagihan!=null ? Number(body.sisa_tagihan) : total
     const newSiswa: Siswa = {
-      no_reg: body.no_reg, tgl_lahir: body.tgl_lahir||'', nama_siswa: body.nama_siswa, no_hp: body.no_hp||'', nama_ortu: body.nama_ortu||'', no_hp_ortu: body.no_hp_ortu||'',
+      no_reg: body.no_reg, tgl_lahir: body.tgl_lahir||'', nama_siswa: body.nama_siswa, no_hp: body.no_hp||'',
+      nama_ortu: body.nama_ortu||(body as any).nama_ayah||'', no_hp_ortu: body.no_hp_ortu||(body as any).no_hp_ayah||'',
+      nama_ayah: (body as any).nama_ayah||'', no_hp_ayah: (body as any).no_hp_ayah||'', nama_ibu: (body as any).nama_ibu||'', no_hp_ibu: (body as any).no_hp_ibu||'',
+      cabang: (body as any).cabang||'', kota: (body as any).kota||'', keterangan: (body as any).keterangan||'',
       unit: (body as any).unit||'', kelas_go: body.kelas_go||'', tingkat_kelas: body.tingkat_kelas||'', program: (body as any).program||'', asal_sekolah: body.asal_sekolah||'', tgl_daftar: body.tgl_daftar||new Date().toISOString().slice(0,10),
       tahun_ajaran: body.tahun_ajaran||'2027/2028', status_bayar: (body.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: total, sisa_tagihan: sisa, metode_bayar: body.metode_bayar as Siswa['metode_bayar']||undefined,
     }
@@ -170,6 +184,9 @@ export async function PATCH(req: Request) {
       if((body as any).unit!==undefined) patch.unit=(body as any).unit
       if((body as any).program!==undefined) patch.program=(body as any).program
       if(body.tahun_ajaran) patch.tahun_ajaran=body.tahun_ajaran
+      for (const k of ['nama_ayah','no_hp_ayah','nama_ibu','no_hp_ibu','cabang','kota','keterangan','nama_ortu','no_hp_ortu'] as const) {
+        if ((body as any)[k] !== undefined) patch[k] = (body as any)[k]
+      }
       const { data: cur } = await supabase.from('siswa').select('total_tagihan,sisa_tagihan').eq('no_reg', body.no_reg).single()
       if (cur) {
         const total = patch.total_tagihan ?? Number(cur.total_tagihan)
@@ -182,6 +199,8 @@ export async function PATCH(req: Request) {
       if (!error && data) {
         return NextResponse.json({ success: true, data: {
           no_reg: data.no_reg, tgl_lahir: data.tgl_lahir||'', nama_siswa: data.nama_siswa, no_hp: data.no_hp||'', nama_ortu: data.nama_ortu||'', no_hp_ortu: data.no_hp_ortu||'',
+          nama_ayah: data.nama_ayah||'', no_hp_ayah: data.no_hp_ayah||'', nama_ibu: data.nama_ibu||'', no_hp_ibu: data.no_hp_ibu||'',
+          cabang: data.cabang||'', kota: data.kota||'', keterangan: data.keterangan||'',
           unit: data.unit||'', kelas_go: data.kelas_go||'', tingkat_kelas: data.tingkat_kelas||'', program: data.program||'', asal_sekolah: data.asal_sekolah||'', tgl_daftar: data.tgl_daftar||'', tahun_ajaran: data.tahun_ajaran||'2027/2028',
           status_bayar: data.status_bayar, total_tagihan: Number(data.total_tagihan), sisa_tagihan: Number(data.sisa_tagihan), metode_bayar: data.metode_bayar||undefined,
         }})

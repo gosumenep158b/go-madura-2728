@@ -27,6 +27,13 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     no_hp: '',
     nama_ortu: '',
     no_hp_ortu: '',
+    nama_ayah: '',
+    no_hp_ayah: '',
+    nama_ibu: '',
+    no_hp_ibu: '',
+    cabang: 'Sumenep',
+    kota: 'Sumenep',
+    keterangan: '',
     unit: '',
     kelas_go: '',
     tingkat_kelas: '',
@@ -145,7 +152,16 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           no_reg: form.no_reg.trim(),
           nama_siswa: form.nama_siswa.trim(),
           no_hp: fixPhone(form.no_hp),
-          no_hp_ortu: fixPhone(form.no_hp_ortu),
+          nama_ayah: form.nama_ayah.trim(),
+          no_hp_ayah: fixPhone(form.no_hp_ayah),
+          nama_ibu: form.nama_ibu.trim(),
+          no_hp_ibu: fixPhone(form.no_hp_ibu),
+          // Kompatibilitas: kolom lama diisi dari data ayah (fallback)
+          nama_ortu: form.nama_ortu.trim() || form.nama_ayah.trim(),
+          no_hp_ortu: fixPhone(form.no_hp_ortu || form.no_hp_ayah),
+          cabang: form.cabang.trim(),
+          kota: form.kota.trim(),
+          keterangan: form.keterangan.trim(),
           program: form.program,
           unit: form.unit || filterUnit || SEMADURA_UNITS[0],
         }),
@@ -175,6 +191,13 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         no_hp: '',
         nama_ortu: '',
         no_hp_ortu: '',
+        nama_ayah: '',
+        no_hp_ayah: '',
+        nama_ibu: '',
+        no_hp_ibu: '',
+        cabang: 'Sumenep',
+        kota: 'Sumenep',
+        keterangan: '',
         unit: '',
         kelas_go: '',
         tingkat_kelas: '',
@@ -244,14 +267,38 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             </div>
           </div>
 
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3 space-y-3">
+            <p className="text-xs font-bold text-gray-800">Data Orang Tua</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">Nama Ayah</label>
+                <input value={form.nama_ayah} onChange={set('nama_ayah')} placeholder="Nama ayah" className={inputCls} />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">No. HP Ayah</label>
+                <input value={form.no_hp_ayah} onChange={set('no_hp_ayah')} placeholder="08xxxxxxxxxx" className={`${inputCls} font-mono`} />
+              </div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">Nama Ibu</label>
+                <input value={form.nama_ibu} onChange={set('nama_ibu')} placeholder="Nama ibu" className={inputCls} />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-gray-800">No. HP Ibu</label>
+                <input value={form.no_hp_ibu} onChange={set('no_hp_ibu')} placeholder="08xxxxxxxxxx" className={`${inputCls} font-mono`} />
+              </div>
+            </div>
+          </div>
+
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">Nama Orang Tua</label>
-              <input value={form.nama_ortu} onChange={set('nama_ortu')} placeholder="Nama ortu/wali" className={inputCls} />
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Cabang</label>
+              <input value={form.cabang} onChange={set('cabang')} placeholder="cth: Sumenep" className={inputCls} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">No. HP Ortu</label>
-              <input value={form.no_hp_ortu} onChange={set('no_hp_ortu')} placeholder="08xxxxxxxxxx" className={`${inputCls} font-mono`} />
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Kota</label>
+              <input value={form.kota} onChange={set('kota')} placeholder="cth: Sumenep" className={inputCls} />
             </div>
           </div>
 
@@ -343,6 +390,11 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           <div>
             <label className="mb-1 block text-xs font-semibold text-gray-800">Asal Sekolah</label>
             <input value={form.asal_sekolah} onChange={set('asal_sekolah')} placeholder="cth: SMAN 1 SUMENEP" className={inputCls} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-gray-800">Keterangan</label>
+            <input value={form.keterangan} onChange={set('keterangan')} placeholder="cth: Siswa baru / pindahan (opsional)" className={inputCls} />
           </div>
 
           <div className="flex justify-end gap-2 pt-2">

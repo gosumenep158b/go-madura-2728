@@ -28,9 +28,14 @@ async function readSiswaAll(): Promise<any[]> {
   try { return JSON.parse(readFileSync(siswaPath, 'utf-8')); } catch { return []; }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const url = new URL(req.url);
+    const ta = url.searchParams.get('ta');
+    const unit = url.searchParams.get('unit');
     let siswa: any[] = await readSiswaAll();
+    if (ta && ta !== 'Semua') siswa = siswa.filter((s: any) => (s.tahun_ajaran || '') === ta);
+    if (unit && unit !== 'Semua') siswa = siswa.filter((s: any) => (s.unit || '').trim() === unit);
     let pembayaran: any[] = [];
     try {
       const supabase = getSupabase();
@@ -51,7 +56,7 @@ export async function GET() {
 
     const headers = [...EXPORT_HEADERS] as string[];
 
-    const rows: any[][] = siswa.map((s: any, i: number) => {
+    const rows: any[][] = siswa.map((s: any) => {
       const total = Number(s.total_tagihan ?? 0);
       const sisa = Number(s.sisa_tagihan ?? total);
       const hargaNormal = s.tingkat_kelas ? hargaForTingkat(s.tingkat_kelas) : 0;
@@ -66,30 +71,33 @@ export async function GET() {
         bayarSlots.push(p ? Number(p.jumlah) : '');
         bayarSlots.push(p ? String(p.tanggal||'') : '');
       }
-      // Infer CABANG/KOTA/UNIT from kelas_go or kosong
-      // Kelas GO format 4-SD-R-N-230 -> tidak ada cabang. Pakai kelas_go untuk UNIT, CABANG/KOTA kosong.
+      const namaAyah = s.nama_ayah || s.nama_ortu || '';
+      const namaIbu = s.nama_ibu || '';
+      const hpAyah = s.no_hp_ayah || s.no_hp_ortu || '';
+      const hpIbu = s.no_hp_ibu || '';
       return [
-        i + 1,                          // NO
-        s.no_reg || '',                 // NO REGISTRASI (manual)
-        '',                             // CABANG
-        '',                             // KOTA
-        s.unit || s.kelas_go || '',     // UNIT (nama unit / fallback kelas GO)
+        s.no_reg || '',                 // NO REGISTRASI
+        s.cabang || '',                 // CABANG
+        s.kota || '',                   // KOTA
+        s.unit || '',                   // UNIT
         s.tgl_lahir || '',              // TGL LAHIR
         s.program || '',                // PROGRAM
         s.status_bayar || '',           // STATUS BAYAR
         s.nama_siswa || '',             // NAMA
-        ...bayarSlots,                  // 9..20 (12 cols)
-        totalBayar,                     // 21 TOTAL BAYAR
-        HARGA_PENDAFTARAN,              // 22 HARGA PENDAFTARAN
-        hargaNormal,                    // 23 HARGA NORMAL
-        diskon,                         // 24 JUMLAH DISKON
-        '',                             // 25 KETERANGAN
-        hargaHarusBayar,                // 26 HARGA YANG HARUS DIBAYAR
-        sisa,                           // 27 SISA HARGA YANG MASIH HARUS DIBAYAR
-        s.asal_sekolah || '',           // 28 ASAL SEKOLAH
-        s.no_hp || '',                  // 29 NOMOR HP SISWA
-        s.nama_ortu || '',              // 30 NAMA ORANGTUA
-        s.no_hp_ortu || '',             // 31 NO HP ORTU 1
+        ...bayarSlots,                  // JUMLAH/TGL BAYAR 1-6 (12 cols)
+        totalBayar,                     // TOTAL BAYAR
+        HARGA_PENDAFTARAN,              // HARGA PENDAFTARAN
+        hargaNormal,                    // HARGA NORMAL
+        diskon,                         // JUMLAH DISKON
+        s.keterangan || '',             // KETERANGAN
+        hargaHarusBayar,                // HARGA YANG HARUS DIBAYAR
+        sisa,                           // SISA HARGA YANG MASIH HARUS DIBAYAR
+        s.asal_sekolah || '',           // ASAL SEKOLAH
+        s.no_hp || '',                  // NOMOR HP SISWA
+        namaAyah,                       // NAMA ORANGTUA AYAH
+        namaIbu,                        // NAMA ORANGTUA IBU
+        hpAyah,                         // NO HP ORTU AYAH
+        hpIbu,                          // NO HP ORTU IBU
       ];
     });
 
@@ -104,7 +112,7 @@ export async function GET() {
     return new NextResponse(ab as any, {
       headers: {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition': 'attachment; filename="siswa_export.xlsx"',
+        'Content-Disposition': `attachment; filename="siswa_export_${(ta || 'semua').replace('/', '-')}_${(unit || 'semua-unit').replace(/\s+/g, '-')}.xlsx"`,
         'Content-Length': String(ab.length),
       },
     });
