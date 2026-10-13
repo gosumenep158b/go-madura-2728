@@ -50,8 +50,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-  const [success, setSuccess] = useState<{ nama: string; no_reg: string; warning?: string } | null>(null);
-  const [moveInfo, setMoveInfo] = useState<{ nama: string; taLama: string; tingkatLama: string; taBaru: string; canMove: boolean } | null>(null);
+  const [success, setSuccess] = useState<{ nama: string; no_reg: string; warning?: string; updated?: boolean; movedFrom?: string } | null>(null);
 
   const resetForm = () => {
     setHargaMaster(null);
@@ -250,35 +249,9 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     };
   };
 
-  // Pindahkan siswa lama ke TA baru (hanya super admin & CS — digate API PATCH)
-  const moveToTA = async () => {
-    if (!moveInfo) return;
-    setSaving(true);
-    setError('');
-    try {
-      const res = await fetch('/api/siswa', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildBody()),
-      });
-      const j = await res.json().catch(() => ({} as any));
-      if (!res.ok) {
-        setError((j as any).error || 'Gagal memindahkan siswa ke TA baru.');
-        return;
-      }
-      onSuccess();
-      setMoveInfo(null);
-      setSuccess({ nama: form.nama_siswa.trim(), no_reg: form.no_reg.trim() });
-    } catch {
-      setError('Gagal terhubung ke server.');
-    } finally {
-      setSaving(false);
-    }
-  };
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setMoveInfo(null);
 
     if (!/^\d{12}$/.test(form.no_reg.trim())) {
       setError('No. Registrasi harus 12 digit angka (input manual dari sistem resmi GO).');
@@ -313,18 +286,6 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
       });
       const j = await res.json().catch(()=> ({} as any));
       if (!res.ok) {
-        // Siswa lama daftar ulang ke TA baru -> tawarkan pindah TA
-        if (res.status === 409 && (j as any).existing && !(j as any).sameTA) {
-          const ex = (j as any).existing;
-          setMoveInfo({
-            nama: ex.nama_siswa || form.nama_siswa.trim(),
-            taLama: ex.tahun_ajaran || '?',
-            tingkatLama: ex.tingkat_kelas || '-',
-            taBaru: form.tahun_ajaran || '2027/2028',
-            canMove: !!(j as any).canMove,
-          });
-          return;
-        }
         const msg = (j as any).error || (j as any).message || 'Gagal menambah siswa.';
         const hint = (j as any).warning ? ' ' + (j as any).warning : '';
         // hint khusus read-only / table missing
@@ -340,6 +301,8 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         nama: form.nama_siswa.trim(),
         no_reg: form.no_reg.trim(),
         warning: (j as any).warning || undefined,
+        updated: !!(j as any).updated,
+        movedFrom: (j as any).movedFrom || undefined,
       });
     } catch {
       setError('Gagal terhubung ke server.');
@@ -350,7 +313,6 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
   const closeAll = () => {
     setSuccess(null);
-    setMoveInfo(null);
     resetForm();
     onClose();
   };
@@ -379,9 +341,12 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-black text-gray-900">Berhasil Tambah Siswa!</h3>
+              <h3 className="text-lg font-black text-gray-900">{success.updated ? 'Data Siswa Diperbarui!' : 'Berhasil Tambah Siswa!'}</h3>
               <p className="mt-1 text-sm text-gray-600">
-                <b>{success.nama}</b> <span className="font-mono text-xs text-red-700">({success.no_reg})</span> sudah tersimpan dan langsung tampil di dashboard.
+                <b>{success.nama}</b> <span className="font-mono text-xs text-red-700">({success.no_reg})</span>{' '}
+                {success.updated
+                  ? `diperbarui ke TA ${form.tahun_ajaran || ''}${success.movedFrom ? ` (dari TA ${success.movedFrom})` : ''} dan langsung tampil di dashboard.`
+                  : 'sudah tersimpan dan langsung tampil di dashboard.'}
               </p>
             </div>
             {success.warning && (
@@ -403,50 +368,6 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
                 className="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
               >
                 Selesai
-              </button>
-            </div>
-          </div>
-        ) : moveInfo ? (
-          <div className="px-5 py-8 text-center space-y-4">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100">
-              <span className="text-2xl">🔄</span>
-            </div>
-            <div>
-              <h3 className="text-lg font-black text-gray-900">Siswa Lama Terdeteksi</h3>
-              <p className="mt-1 text-sm text-gray-600">
-                <b>{moveInfo.nama}</b> sudah terdaftar di <b>TA {moveInfo.taLama}</b> ({moveInfo.tingkatLama}).
-              </p>
-              <p className="mt-1 text-sm text-gray-600">
-                Pindahkan ke <b>TA {moveInfo.taBaru}</b> dengan data isian ini ({form.tingkat_kelas || '-'}{form.unit ? ` · ${form.unit}` : ''})?
-              </p>
-              <p className="mt-1 text-[11px] text-gray-500">Tagihan diperbarui sesuai isian; histori pembayaran lama tetap tercatat.</p>
-            </div>
-            {error && (
-              <p className="rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-200">
-                {error}
-              </p>
-            )}
-            <div className="flex justify-center gap-2 pt-2">
-              {moveInfo.canMove ? (
-                <button
-                  type="button"
-                  onClick={moveToTA}
-                  disabled={saving}
-                  className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-white hover:bg-amber-600 disabled:opacity-60"
-                >
-                  {saving ? 'Memindahkan…' : `Pindahkan ke TA ${moveInfo.taBaru}`}
-                </button>
-              ) : (
-                <p className="rounded-xl bg-slate-100 px-3 py-2 text-xs font-medium text-slate-600">
-                  Akun Anda tidak bisa memindahkan TA — hubungi super admin / CS.
-                </p>
-              )}
-              <button
-                type="button"
-                onClick={() => { setMoveInfo(null); setError(''); }}
-                className="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
-              >
-                Kembali
               </button>
             </div>
           </div>

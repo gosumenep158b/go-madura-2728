@@ -101,6 +101,31 @@ async function writeSiswaSupabase(s: Siswa): Promise<{ ok: boolean; error?: stri
   } catch (e: any) { return { ok: false, error: e?.message || 'supabase error' } }
 }
 
+async function updateSiswaSupabase(noReg: string, s: Siswa): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const supabase = getSupabase()
+    const payload: any = {
+      tgl_lahir: s.tgl_lahir || null, nama_siswa: s.nama_siswa, no_hp: s.no_hp || null,
+      nama_ortu: s.nama_ortu || s.nama_ayah || null, no_hp_ortu: s.no_hp_ortu || s.no_hp_ayah || null,
+      nama_ayah: s.nama_ayah || null, no_hp_ayah: s.no_hp_ayah || null, nama_ibu: s.nama_ibu || null, no_hp_ibu: s.no_hp_ibu || null,
+      cabang: s.cabang || null, kota: s.kota || null, keterangan: s.keterangan || null,
+      unit: s.unit || null, kelas_go: s.kelas_go || null, tingkat_kelas: s.tingkat_kelas || null, program: s.program || null,
+      asal_sekolah: s.asal_sekolah || null, tgl_daftar: s.tgl_daftar || null,
+      tahun_ajaran: s.tahun_ajaran || '2027/2028', status_bayar: s.status_bayar || 'belum_lunas',
+      total_tagihan: Number(s.total_tagihan || 0), sisa_tagihan: Number(s.sisa_tagihan || 0), metode_bayar: s.metode_bayar || null,
+    }
+    const { data, error } = await supabase.from('siswa').update(payload).eq('no_reg', noReg).select('no_reg')
+    if (!error && data && data.length > 0) return { ok: true }
+    if (error && (error as any).code === 'PGRST205') return { ok: false, error: 'TABLE_MISSING' }
+    if (error && (error as any).code === '42703') return { ok: false, error: 'SCHEMA_OUTDATED' }
+    if (error) {
+      console.error('[api/siswa] supabase full-update error', error)
+      return { ok: false, error: error.message }
+    }
+    return { ok: false, error: 'NOT_FOUND' }
+  } catch (e: any) { return { ok: false, error: e?.message || 'supabase error' } }
+}
+
 export function getKapasitasMax(kelasGo: string, tingkat: string): number {
   const k = (kelasGo || '').toUpperCase()
   const t = (tingkat || '').toUpperCase()
@@ -142,22 +167,6 @@ export async function POST(req: Request) {
   try {
     const body = (await req.json()) as Partial<Siswa>
     if (!body.nama_siswa || !body.no_reg) return NextResponse.json({ error: 'Nama siswa dan No. Registrasi wajib diisi' }, { status: 400 })
-    const existing = await readSiswa()
-    const dup = existing.find((s)=>s.no_reg===body.no_reg)
-    if (dup) {
-      const session = getSessionFromRequest(req)
-      const sameTA = (dup.tahun_ajaran || '') === (body.tahun_ajaran || '2027/2028')
-      return NextResponse.json({
-        error: sameTA
-          ? 'No. Registrasi sudah terdaftar di TA ' + (dup.tahun_ajaran || '?') + '.'
-          : `Siswa ini sudah terdaftar di TA ${dup.tahun_ajaran || '?'} (${dup.tingkat_kelas || '-'}, ${dup.nama_siswa}).`,
-        code: 'DUPLICATE',
-        existing: { nama_siswa: dup.nama_siswa, tahun_ajaran: dup.tahun_ajaran, tingkat_kelas: dup.tingkat_kelas, unit: dup.unit },
-        sameTA,
-        // Pindah TA = edit data -> hanya super admin & CS
-        canMove: !sameTA && canEditSiswa(session?.role),
-      }, { status: 409 })
-    }
     const total = Number(body.total_tagihan ?? 0)
     const sisa = body.sisa_tagihan!=null ? Number(body.sisa_tagihan) : total
     const newSiswa: Siswa = {
@@ -169,6 +178,45 @@ export async function POST(req: Request) {
       tahun_ajaran: body.tahun_ajaran||'2027/2028', status_bayar: (body.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: total, sisa_tagihan: sisa, metode_bayar: body.metode_bayar as Siswa['metode_bayar']||undefined,
     }
     if(newSiswa.sisa_tagihan<=0 && newSiswa.total_tagihan>0) newSiswa.status_bayar='lunas'
+    const existing = await readSiswa()
+    const dup = existing.find((s)=>s.no_reg===newSiswa.no_reg)
+    // no_reg adalah kode unik permanen per siswa.
+    // - Sudah ada di TA yang SAMA -> tolak (entri ganda).
+    // - Sudah ada di TA BERBEDA (daftar ulang) -> update langsung tanpa validasi.
+    if (dup && (dup.tahun_ajaran || '') === (newSiswa.tahun_ajaran || '')) {
+      return NextResponse.json({
+        error: `No. Registrasi sudah terdaftar di TA ${dup.tahun_ajaran} (${dup.nama_siswa}).`,
+        code: 'DUPLICATE',
+      }, { status: 409 })
+    }
+    if (dup) {
+      const up = await updateSiswaSupabase(newSiswa.no_reg, newSiswa)
+      if (up.ok) return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran })
+      if (up.error === 'SCHEMA_OUTDATED' || up.error === 'TABLE_MISSING' || up.error === 'NOT_FOUND') {
+        try {
+          const fileData = readSiswaFile()
+          const idx = fileData.findIndex((s)=>s.no_reg===newSiswa.no_reg)
+          if (idx !== -1) fileData[idx] = newSiswa; else fileData.unshift(newSiswa)
+          writeSiswaFile(fileData)
+          return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran, warning: up.error === 'NOT_FOUND' ? undefined : 'Tersimpan lokal (dev). Jalankan database/siswa_schema.sql agar persisten di Vercel.' })
+        } catch (e: any) {
+          const msg = e?.code === 'EROFS' || String(e?.message||'').includes('read-only')
+            ? 'Gagal memperbarui: filesystem Vercel read-only. Jalankan database/siswa_schema.sql di Supabase, lalu coba lagi.'
+            : 'Gagal memperbarui data siswa'
+          return NextResponse.json({ error: msg }, { status: 500 })
+        }
+      }
+      try {
+        const fileData = readSiswaFile()
+        const idx = fileData.findIndex((s)=>s.no_reg===newSiswa.no_reg)
+        if (idx !== -1) fileData[idx] = newSiswa; else fileData.unshift(newSiswa)
+        writeSiswaFile(fileData)
+        return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran, warning: 'Supabase error (' + up.error + ') — fallback file' })
+      } catch (e2: any) {
+        console.error('[api/siswa POST] file fallback failed', e2)
+      }
+      return NextResponse.json({ error: up.error || 'Gagal menambah siswa' }, { status: 500 })
+    }
     const sb = await writeSiswaSupabase(newSiswa)
     if (sb.ok) return NextResponse.json({ success: true, data: newSiswa })
     if (sb.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
@@ -278,4 +326,52 @@ export async function PATCH(req: Request) {
     }
     return NextResponse.json({ success: true, data: s })
   } catch(e){ console.error(e); return NextResponse.json({ error: 'Gagal update siswa' }, { status: 500 }) }
+}
+
+// DELETE ?no_reg=xxx — khusus super admin & CS. Menghapus juga histori pembayaran siswa tsb.
+export async function DELETE(req: Request) {
+  try {
+    const session = getSessionFromRequest(req);
+    if (!session) return NextResponse.json({ error: 'Belum login.' }, { status: 401 });
+    if (!canEditSiswa(session.role)) {
+      return NextResponse.json({ error: 'Hanya super admin & CS yang boleh menghapus data siswa.' }, { status: 403 });
+    }
+    const url = new URL(req.url)
+    const noReg = url.searchParams.get('no_reg')
+    if (!noReg) return NextResponse.json({ error: 'no_reg wajib' }, { status: 400 })
+
+    let deletedPayments = 0
+    let siswaFound = false
+    try {
+      const supabase = getSupabase()
+      const pay = await supabase.from('pembayaran').select('id').eq('no_reg', noReg)
+      if (!pay.error && pay.data) {
+        deletedPayments = (pay.data as any[]).length
+        if (deletedPayments > 0) await supabase.from('pembayaran').delete().eq('no_reg', noReg)
+      }
+      const del = await supabase.from('siswa').delete({ count: 'exact' }).eq('no_reg', noReg)
+      if (del.error && (del.error as any).code !== 'PGRST205') throw del.error
+      if (!del.error && (del.count || 0) > 0) siswaFound = true
+    } catch (e: any) {
+      console.warn('[api/siswa DELETE] supabase error, fallback file', e?.message)
+    }
+    // Fallback / sinkron file lokal
+    try {
+      const payRaw = JSON.parse(readFileSync(join(process.cwd(), 'src/data/pembayaran.json'), 'utf-8')) as any[]
+      const rest = payRaw.filter((p) => p.no_reg !== noReg)
+      if (rest.length !== payRaw.length) {
+        deletedPayments = Math.max(deletedPayments, payRaw.length - rest.length)
+        try { writeFileSync(join(process.cwd(), 'src/data/pembayaran.json'), JSON.stringify(rest, null, 2), 'utf-8') } catch {}
+      }
+      const fileData = readSiswaFile()
+      const idx = fileData.findIndex((s) => s.no_reg === noReg)
+      if (idx !== -1) {
+        siswaFound = true
+        fileData.splice(idx, 1)
+        try { writeSiswaFile(fileData) } catch {}
+      }
+    } catch {}
+    if (!siswaFound) return NextResponse.json({ error: 'Siswa tidak ditemukan' }, { status: 404 })
+    return NextResponse.json({ success: true, deletedPayments })
+  } catch (e) { console.error(e); return NextResponse.json({ error: 'Gagal hapus siswa' }, { status: 500 }) }
 }

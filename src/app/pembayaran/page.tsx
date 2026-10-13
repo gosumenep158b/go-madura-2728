@@ -154,6 +154,7 @@ export default function PembayaranPage(){
                         <div className="flex gap-1.5">
                           <button onClick={()=> openDetail(s)} className="rounded-full bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700">Kelola</button>
                           {canEdit && <button onClick={()=> setEditTarget(s)} title="Edit data siswa (super admin & CS)" className="rounded-full bg-amber-500 px-3 py-1 text-xs font-medium text-white hover:bg-amber-600">Edit</button>}
+                          {canEdit && <button onClick={async()=>{ if(!confirm(`Hapus ${s.nama_siswa} (${s.no_reg}) beserta histori pembayarannya? Tindakan ini tidak bisa dibatalkan.`)) return; const r = await fetch(`/api/siswa?no_reg=${s.no_reg}`,{method:'DELETE'}); const j = await r.json().catch(()=>null); if(!r.ok){ alert(j?.error||'Gagal hapus siswa'); return; } if(selected?.no_reg===s.no_reg) setSelected(null); load(); }} title="Hapus siswa (super admin & CS)" className="rounded-full border border-red-300 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50">Hapus</button>}
                           {wa && Number(s.sisa_tagihan)>0 && <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700">WA Ortu</a>}
                         </div>
                       </td>
