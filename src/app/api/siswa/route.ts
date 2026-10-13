@@ -143,7 +143,21 @@ export async function POST(req: Request) {
     const body = (await req.json()) as Partial<Siswa>
     if (!body.nama_siswa || !body.no_reg) return NextResponse.json({ error: 'Nama siswa dan No. Registrasi wajib diisi' }, { status: 400 })
     const existing = await readSiswa()
-    if (existing.some((s)=>s.no_reg===body.no_reg)) return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
+    const dup = existing.find((s)=>s.no_reg===body.no_reg)
+    if (dup) {
+      const session = getSessionFromRequest(req)
+      const sameTA = (dup.tahun_ajaran || '') === (body.tahun_ajaran || '2027/2028')
+      return NextResponse.json({
+        error: sameTA
+          ? 'No. Registrasi sudah terdaftar di TA ' + (dup.tahun_ajaran || '?') + '.'
+          : `Siswa ini sudah terdaftar di TA ${dup.tahun_ajaran || '?'} (${dup.tingkat_kelas || '-'}, ${dup.nama_siswa}).`,
+        code: 'DUPLICATE',
+        existing: { nama_siswa: dup.nama_siswa, tahun_ajaran: dup.tahun_ajaran, tingkat_kelas: dup.tingkat_kelas, unit: dup.unit },
+        sameTA,
+        // Pindah TA = edit data -> hanya super admin & CS
+        canMove: !sameTA && canEditSiswa(session?.role),
+      }, { status: 409 })
+    }
     const total = Number(body.total_tagihan ?? 0)
     const sisa = body.sisa_tagihan!=null ? Number(body.sisa_tagihan) : total
     const newSiswa: Siswa = {

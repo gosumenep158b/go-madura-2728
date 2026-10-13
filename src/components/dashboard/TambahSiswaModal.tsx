@@ -51,6 +51,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState<{ nama: string; no_reg: string; warning?: string } | null>(null);
+  const [moveInfo, setMoveInfo] = useState<{ nama: string; taLama: string; tingkatLama: string; taBaru: string; canMove: boolean } | null>(null);
 
   const resetForm = () => {
     setHargaMaster(null);
@@ -210,9 +211,74 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     return d.startsWith('8') ? '0' + d : d;
   };
 
+  const calcFinancial = () => {
+    const tagihanFinal = hargaSetelahDiskonNum || hargaNormal || 0;
+    const sisaFinal = tagihanFinal ? sisaNum : 0;
+    let status: 'lunas' | 'cicilan' | 'belum_lunas' = 'belum_lunas';
+    if (tagihanFinal > 0) {
+      if (sisaFinal <= 0) status = 'lunas';
+      else if (sisaFinal < tagihanFinal) status = 'cicilan';
+      else status = 'belum_lunas';
+    }
+    return { tagihanFinal, sisaFinal, status };
+  };
+
+  const buildBody = () => {
+    const { tagihanFinal, sisaFinal, status } = calcFinancial();
+    return {
+      ...form,
+      tahun_ajaran: form.tahun_ajaran || '2027/2028',
+      total_tagihan: tagihanFinal,
+      sisa_tagihan: sisaFinal,
+      status_bayar: status,
+      metode_bayar: (form.metode_bayar as string) || (status === 'cicilan' ? 'cicilan' : status === 'lunas' ? 'lunas' : undefined),
+      no_reg: form.no_reg.trim(),
+      nama_siswa: form.nama_siswa.trim(),
+      no_hp: fixPhone(form.no_hp),
+      nama_ayah: form.nama_ayah.trim(),
+      no_hp_ayah: fixPhone(form.no_hp_ayah),
+      nama_ibu: form.nama_ibu.trim(),
+      no_hp_ibu: fixPhone(form.no_hp_ibu),
+      // Kompatibilitas: kolom lama diisi dari data ayah (fallback)
+      nama_ortu: form.nama_ortu.trim() || form.nama_ayah.trim(),
+      no_hp_ortu: fixPhone(form.no_hp_ortu || form.no_hp_ayah),
+      cabang: form.cabang.trim() || CABANG_DEFAULT,
+      kota: form.kota.trim(),
+      keterangan: form.keterangan.trim(),
+      program: form.program,
+      unit: form.unit || unitsForKota(form.kota)[0],
+    };
+  };
+
+  // Pindahkan siswa lama ke TA baru (hanya super admin & CS — digate API PATCH)
+  const moveToTA = async () => {
+    if (!moveInfo) return;
+    setSaving(true);
+    setError('');
+    try {
+      const res = await fetch('/api/siswa', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildBody()),
+      });
+      const j = await res.json().catch(() => ({} as any));
+      if (!res.ok) {
+        setError((j as any).error || 'Gagal memindahkan siswa ke TA baru.');
+        return;
+      }
+      onSuccess();
+      setMoveInfo(null);
+      setSuccess({ nama: form.nama_siswa.trim(), no_reg: form.no_reg.trim() });
+    } catch {
+      setError('Gagal terhubung ke server.');
+    } finally {
+      setSaving(false);
+    }
+  };
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setMoveInfo(null);
 
     if (!/^\d{12}$/.test(form.no_reg.trim())) {
       setError('No. Registrasi harus 12 digit angka (input manual dari sistem resmi GO).');
@@ -240,43 +306,25 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
     setSaving(true);
     try {
-      const tagihanFinal = hargaSetelahDiskonNum || hargaNormal || 0;
-      const sisaFinal = tagihanFinal ? sisaNum : 0;
-      let status: 'lunas' | 'cicilan' | 'belum_lunas' = 'belum_lunas';
-      if (tagihanFinal > 0) {
-        if (sisaFinal <= 0) status = 'lunas';
-        else if (sisaFinal < tagihanFinal) status = 'cicilan';
-        else status = 'belum_lunas';
-      }
       const res = await fetch('/api/siswa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          tahun_ajaran: form.tahun_ajaran || '2027/2028',
-          total_tagihan: tagihanFinal,
-          sisa_tagihan: sisaFinal,
-          status_bayar: status,
-          metode_bayar: (form.metode_bayar as string) || (status === 'cicilan' ? 'cicilan' : status === 'lunas' ? 'lunas' : undefined),
-          no_reg: form.no_reg.trim(),
-          nama_siswa: form.nama_siswa.trim(),
-          no_hp: fixPhone(form.no_hp),
-          nama_ayah: form.nama_ayah.trim(),
-          no_hp_ayah: fixPhone(form.no_hp_ayah),
-          nama_ibu: form.nama_ibu.trim(),
-          no_hp_ibu: fixPhone(form.no_hp_ibu),
-          // Kompatibilitas: kolom lama diisi dari data ayah (fallback)
-          nama_ortu: form.nama_ortu.trim() || form.nama_ayah.trim(),
-          no_hp_ortu: fixPhone(form.no_hp_ortu || form.no_hp_ayah),
-          cabang: form.cabang.trim() || CABANG_DEFAULT,
-          kota: form.kota.trim(),
-          keterangan: form.keterangan.trim(),
-          program: form.program,
-          unit: form.unit || unitsForKota(form.kota)[0],
-        }),
+        body: JSON.stringify(buildBody()),
       });
       const j = await res.json().catch(()=> ({} as any));
       if (!res.ok) {
+        // Siswa lama daftar ulang ke TA baru -> tawarkan pindah TA
+        if (res.status === 409 && (j as any).existing && !(j as any).sameTA) {
+          const ex = (j as any).existing;
+          setMoveInfo({
+            nama: ex.nama_siswa || form.nama_siswa.trim(),
+            taLama: ex.tahun_ajaran || '?',
+            tingkatLama: ex.tingkat_kelas || '-',
+            taBaru: form.tahun_ajaran || '2027/2028',
+            canMove: !!(j as any).canMove,
+          });
+          return;
+        }
         const msg = (j as any).error || (j as any).message || 'Gagal menambah siswa.';
         const hint = (j as any).warning ? ' ' + (j as any).warning : '';
         // hint khusus read-only / table missing
@@ -302,6 +350,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
   const closeAll = () => {
     setSuccess(null);
+    setMoveInfo(null);
     resetForm();
     onClose();
   };
@@ -354,6 +403,50 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
                 className="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
               >
                 Selesai
+              </button>
+            </div>
+          </div>
+        ) : moveInfo ? (
+          <div className="px-5 py-8 text-center space-y-4">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100">
+              <span className="text-2xl">🔄</span>
+            </div>
+            <div>
+              <h3 className="text-lg font-black text-gray-900">Siswa Lama Terdeteksi</h3>
+              <p className="mt-1 text-sm text-gray-600">
+                <b>{moveInfo.nama}</b> sudah terdaftar di <b>TA {moveInfo.taLama}</b> ({moveInfo.tingkatLama}).
+              </p>
+              <p className="mt-1 text-sm text-gray-600">
+                Pindahkan ke <b>TA {moveInfo.taBaru}</b> dengan data isian ini ({form.tingkat_kelas || '-'}{form.unit ? ` · ${form.unit}` : ''})?
+              </p>
+              <p className="mt-1 text-[11px] text-gray-500">Tagihan diperbarui sesuai isian; histori pembayaran lama tetap tercatat.</p>
+            </div>
+            {error && (
+              <p className="rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-200">
+                {error}
+              </p>
+            )}
+            <div className="flex justify-center gap-2 pt-2">
+              {moveInfo.canMove ? (
+                <button
+                  type="button"
+                  onClick={moveToTA}
+                  disabled={saving}
+                  className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-white hover:bg-amber-600 disabled:opacity-60"
+                >
+                  {saving ? 'Memindahkan…' : `Pindahkan ke TA ${moveInfo.taBaru}`}
+                </button>
+              ) : (
+                <p className="rounded-xl bg-slate-100 px-3 py-2 text-xs font-medium text-slate-600">
+                  Akun Anda tidak bisa memindahkan TA — hubungi super admin / CS.
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={() => { setMoveInfo(null); setError(''); }}
+                className="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              >
+                Kembali
               </button>
             </div>
           </div>
