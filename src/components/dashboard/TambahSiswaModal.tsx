@@ -401,7 +401,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
               {hasAnyKelas ? (
                 <select value={form.kelas_go} onChange={set('kelas_go')} className={`${inputCls} font-mono text-xs`}>
                   <option value="">— Pilih Kelas —</option>
-                  {kelasFiltered.map((c)=>(<option key={c.nama_kelompok} value={c.nama_kelompok}>{c.nama_kelompok}{c.hari_jam?` — ${c.hari_jam}`:''}{c.ruang?` (${c.ruang})`:''}{c.unit?` · ${c.unit}`:''}</option>))}
+                  {kelasFiltered.map((c)=>(<option key={c.nama_kelompok} value={c.nama_kelompok}>{c.nama_kelompok}</option>))}
                 </select>
               ) : (
                 <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" className={`${inputCls} font-mono text-xs`} />
