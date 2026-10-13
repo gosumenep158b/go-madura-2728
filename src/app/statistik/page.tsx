@@ -1,11 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import dynamic from 'next/dynamic';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 import CardSummary from '@/components/dashboard/CardSummary';
-import TambahSiswaModal from '@/components/dashboard/TambahSiswaModal';
 import { Users, DoorOpen, AlertTriangle } from 'lucide-react';
+
+const KapasitasChart = dynamic(() => import('@/components/dashboard/KapasitasChart'), {
+  ssr: false,
+  loading: () => <p className="py-16 text-center text-xs text-gray-400">Memuat grafik…</p>,
+});
+const TambahSiswaModal = dynamic(() => import('@/components/dashboard/TambahSiswaModal'), { ssr: false });
 
 interface Kapasitas {
   kelas: string;
@@ -97,20 +102,7 @@ export default function StatistikPage() {
             <h2 className="text-sm font-bold text-red-800">Okupansi per Kelas GO</h2>
             <p className="mb-4 text-xs text-gray-500">Terisi vs kapasitas maksimum</p>
             <div className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={sorted} layout="vertical" margin={{ left: 60, right: 16 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#fee2e2" />
-                  <XAxis type="number" tick={{ fontSize: 11 }} />
-                  <YAxis type="category" dataKey="kelas" tick={{ fontSize: 9 }} width={190} />
-                  <Tooltip
-                    formatter={(value, name) => [value, name === 'terisi' ? 'Terisi' : 'Kapasitas']}
-                    labelFormatter={(l) => `Kelas ${l}`}
-                  />
-                  <Bar dataKey="terisi" fill="#4f46e5" radius={[0, 6, 6, 0]} />
-                  <Bar dataKey="max" fill="#fecaca" radius={[0, 6, 6, 0]} />
-                  <ReferenceLine x={25} stroke="#991b1b" strokeDasharray="4 4" />
-                </BarChart>
-              </ResponsiveContainer>
+              <KapasitasChart data={sorted} />
             </div>
           </div>
 

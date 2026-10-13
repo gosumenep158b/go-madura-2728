@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import * as XLSX from 'xlsx';
+import Image from 'next/image';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qyjtbddnjvqhvukgubwb.supabase.co';
@@ -129,6 +129,8 @@ export default function PengaturanAdminPage() {
     const reader = new FileReader();
     reader.onload = async (evt) => {
       try {
+        // Dynamic import: xlsx (~7MB) hanya dimuat saat upload, tidak ikut bundle awal
+        const XLSX = await import('xlsx');
         const bstr = evt.target?.result;
         const workbook = XLSX.read(bstr, { type: 'binary' });
         const wsname = workbook.SheetNames[0];
@@ -321,7 +323,7 @@ export default function PengaturanAdminPage() {
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
         <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><img src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>
+            <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><Image src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>
             <div>
               <h1 className="font-bold text-lg leading-tight">Pengaturan Admin &amp; Master Data</h1>
               <span className="text-[11px] font-semibold tracking-wide text-slate-500">Ganesha Operation Semadura</span>

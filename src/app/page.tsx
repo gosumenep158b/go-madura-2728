@@ -1,15 +1,25 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend, LineChart, Line,
-} from 'recharts';
+import dynamic from 'next/dynamic';
 import { Users, School, Layers, Search, CreditCard } from 'lucide-react';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 import { SEMADURA_UNITS } from '@/lib/program';
 import CardSummary from '@/components/dashboard/CardSummary';
-import TambahSiswaModal from '@/components/dashboard/TambahSiswaModal';
+
+const TrendChart = dynamic(() => import('@/components/dashboard/DashboardCharts').then((m) => m.TrendChart), {
+  ssr: false,
+  loading: () => <p className="py-16 text-center text-xs text-gray-400">Memuat grafik…</p>,
+});
+const TingkatChart = dynamic(() => import('@/components/dashboard/DashboardCharts').then((m) => m.TingkatChart), {
+  ssr: false,
+  loading: () => <p className="py-16 text-center text-xs text-gray-400">Memuat grafik…</p>,
+});
+const SekolahChart = dynamic(() => import('@/components/dashboard/DashboardCharts').then((m) => m.SekolahChart), {
+  ssr: false,
+  loading: () => <p className="py-16 text-center text-xs text-gray-400">Memuat grafik…</p>,
+});
+const TambahSiswaModal = dynamic(() => import('@/components/dashboard/TambahSiswaModal'), { ssr: false });
 
 interface Siswa {
   no_reg: string;
@@ -47,8 +57,6 @@ interface Summary {
   kapasitasKelas: Kapasitas[];
   pendaftarBulan: { bulan: string; jumlah: number }[];
 }
-
-const MODERN_COLORS = ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#3b82f6', '#14b8a6', '#f43f5e', '#84cc16'];
 
 const NAMA_BULAN: Record<string, string> = {
   '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'Mei', '06': 'Jun',
@@ -222,17 +230,7 @@ export default function Home() {
             <h2 className="text-sm font-bold text-red-800">Pendaftar per Bulan — TA {ta}</h2>
             <p className="mb-4 text-xs text-gray-500">Tren pendaftaran berdasarkan tanggal daftar</p>
             <div className="h-64">
-              {trendBulan.length===0 ? <p className="py-16 text-center text-xs text-gray-400">Belum ada data di TA ini.</p> : (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendBulan} margin={{ left: -10, right: 16 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#fee2e2" />
-                  <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="jumlah" stroke="#dc2626" strokeWidth={2.5} dot={{ r: 3, fill: '#dc2626' }} />
-                </LineChart>
-              </ResponsiveContainer>
-              )}
+              <TrendChart data={trendBulan} />
             </div>
           </div>
 
@@ -241,17 +239,7 @@ export default function Home() {
               <h2 className="text-sm font-bold text-red-800">Siswa per Tingkat Kelas</h2>
               <p className="mb-4 text-xs text-gray-500">Distribusi jenjang TA {ta}</p>
               <div className="h-72">
-                {tingkatChart.length===0 ? <p className="py-16 text-center text-xs text-gray-400">Belum ada data.</p> : (
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={tingkatChart} layout="vertical" margin={{ left: 40, right: 16 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#fee2e2" />
-                    <XAxis type="number" tick={{ fontSize: 11 }} />
-                    <YAxis type="category" dataKey="tingkat" tick={{ fontSize: 11 }} width={110} />
-                    <Tooltip />
-                    <Bar dataKey="jumlah" fill="#dc2626" radius={[0, 6, 6, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-                )}
+                <TingkatChart data={tingkatChart} />
               </div>
             </div>
 
@@ -259,19 +247,7 @@ export default function Home() {
               <h2 className="text-sm font-bold text-red-800">Top 8 Asal Sekolah</h2>
               <p className="mb-4 text-xs text-gray-500">Sekolah dengan siswa terbanyak</p>
               <div className="h-72">
-                {topSekolah.length===0 ? <p className="py-16 text-center text-xs text-gray-400">Belum ada data.</p> : (
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={topSekolah} dataKey="jumlah" nameKey="sekolah" outerRadius={100} label={{ fontSize: 10 }}>
-                      {topSekolah.map((_, i) => (
-                        <Cell key={i} fill={MODERN_COLORS[i % MODERN_COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend wrapperStyle={{ fontSize: 11 }} />
-                  </PieChart>
-                </ResponsiveContainer>
-                )}
+                <SekolahChart data={topSekolah} />
               </div>
             </div>
           </div>

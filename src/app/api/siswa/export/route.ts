@@ -32,7 +32,14 @@ export async function GET() {
   try {
     let siswa: any[] = await readSiswaAll();
     let pembayaran: any[] = [];
-    try { pembayaran = JSON.parse(readFileSync(pembayaranPath, 'utf-8')); } catch { pembayaran = []; }
+    try {
+      const supabase = getSupabase();
+      const { data, error } = await supabase.from('pembayaran').select('*').order('tanggal', { ascending: true }).limit(5000);
+      if (!error && data && data.length > 0) pembayaran = data;
+      else throw error || new Error('empty');
+    } catch {
+      try { pembayaran = JSON.parse(readFileSync(pembayaranPath, 'utf-8')); } catch { pembayaran = []; }
+    }
 
     // Group pembayaran by no_reg sorted by tanggal
     const payByReg: Record<string, any[]> = {};

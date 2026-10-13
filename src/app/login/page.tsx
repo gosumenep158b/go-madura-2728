@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { Eye, EyeOff, LogIn, Award, Sparkles } from 'lucide-react';
 
 function LoginForm() {
@@ -45,10 +46,13 @@ function LoginForm() {
       <div className="hidden lg:flex lg:w-3/5 relative bg-red-950 overflow-hidden flex-col justify-between p-12 text-white shadow-2xl">
         {/* Background Enhanced Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/go_building_hero_enhanced.jpg" 
-            alt="Ganesha Operation Sumenep Building" 
-            className="w-full h-full object-cover object-center filter brightness-95 contrast-105 scale-105 transform hover:scale-100 transition duration-1000"
+          <Image
+            src="/images/go_building_hero_enhanced.jpg"
+            alt="Ganesha Operation Sumenep Building"
+            fill
+            priority
+            sizes="(max-width: 1024px) 0vw, 60vw"
+            className="object-cover object-center brightness-95 contrast-105 scale-105 hover:scale-100 transition duration-1000"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-red-950/75 to-red-900/40" />
         </div>
@@ -56,7 +60,7 @@ function LoginForm() {
         {/* Top Header / Logo */}
         <div className="relative z-10 flex items-center justify-between">
           <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-white/20 flex items-center gap-3">
-            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-9 w-auto object-contain" />
+            <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={36} className="h-9 w-auto object-contain" />
           </div>
           <div className="flex items-center gap-2 bg-amber-500 text-amber-950 px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg uppercase tracking-wider">
             <Sparkles size={14} /> TA 2027/2028 Sumenep
@@ -105,7 +109,7 @@ function LoginForm() {
           {/* Mobile Logo Header */}
           <div className="lg:hidden text-center space-y-3">
             <div className="inline-block bg-white p-3 rounded-2xl shadow-md border border-red-100">
-              <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto object-contain mx-auto" />
+              <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={40} className="h-10 w-auto object-contain mx-auto" />
             </div>
             <h2 className="text-xl font-black text-gray-900">Ganesha Operation Sumenep</h2>
             <p className="text-xs text-gray-500">Dashboard Siswa TA 2026/2027</p>

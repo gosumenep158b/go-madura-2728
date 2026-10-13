@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Settings, BarChart3, UserPlus, GraduationCap, LogOut, User, ShieldCheck, Users, Wallet } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -36,7 +37,7 @@ export default function Sidebar({ onTambah }: SidebarProps) {
       {/* Brand */}
       <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-5">
         <div className="shrink-0 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm">
-          <img src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-9 w-9 object-contain" />
+          <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-9 w-9 object-contain" />
         </div>
         <div className="min-w-0">
           <p className="text-[13px] font-black leading-none tracking-tight text-slate-900">Ganesha Operation</p>
@@ -112,7 +113,7 @@ export function MobileNav({ onTambah }: SidebarProps) {
     <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:hidden">
       <div className="flex items-center gap-2 px-3 py-2.5 overflow-x-auto scrollbar-none">
         <div className="shrink-0 rounded-lg border border-slate-200 bg-white p-1">
-          <img src="/images/logo_go_standar.png" alt="GO" width={28} height={28} className="h-7 w-7 object-contain" />
+          <Image src="/images/logo_go_standar.png" alt="GO" width={28} height={28} className="h-7 w-7 object-contain" />
         </div>
         <div className="flex items-center gap-1.5 overflow-x-auto">
           {NAV.map((n) => {
