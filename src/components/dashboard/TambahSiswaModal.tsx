@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS, SEMADURA_UNITS } from '@/lib/program';
+import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS, CABANG_DEFAULT, KOTA_LIST, unitsForKota } from '@/lib/program';
 
 interface KelasOpt { id?: any; nama_kelompok: string; tingkat_kelas?: string; unit?: string; ruang?: string; hari_jam?: string; }
 interface TambahSiswaModalProps {
@@ -19,7 +19,6 @@ const inputCls =
   'w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 outline-none placeholder:text-gray-400 focus:border-red-500 focus:ring-1 focus:ring-red-200';
 
 export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOptions }: TambahSiswaModalProps) {
-  const [filterUnit, setFilterUnit] = useState<string>('');
   const [form, setForm] = useState({
     no_reg: '',
     nama_siswa: '',
@@ -31,10 +30,10 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     no_hp_ayah: '',
     nama_ibu: '',
     no_hp_ibu: '',
-    cabang: 'Sumenep',
+    cabang: 'Madura',
     kota: 'Sumenep',
     keterangan: '',
-    unit: '',
+    unit: 'Unit Agus Salim',
     kelas_go: '',
     tingkat_kelas: '',
     program: '',
@@ -54,27 +53,19 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   const programOptions = form.tingkat_kelas ? getProgramOptions(form.tingkat_kelas) : [];
   // Normalisasi kelasOptions (string legacy vs object)
   const kelasList: KelasOpt[] = (kelasOptions || []).map((k:any)=> typeof k==='string' ? { nama_kelompok:k } : { nama_kelompok: k.nama_kelompok || k.class_name || '', tingkat_kelas: k.tingkat_kelas, unit: k.unit, ruang: k.ruang || k.unit_name, hari_jam: k.hari_jam || k.schedule });
+  const unitOptions = unitsForKota(form.kota);
   const kelasFiltered = kelasList.filter(c=>{
-    if(filterUnit && (c.unit||'').toLowerCase() !== filterUnit.toLowerCase()) return false;
+    if(form.unit && (c.unit||'').toLowerCase() !== form.unit.toLowerCase()) return false;
     return true;
   });
   const hasAnyKelas = kelasList.length>0;
-  // sync unit dari kelas terpilih; filterUnit sebagai fallback manual
+  // sync unit dari kelas terpilih
   useEffect(()=>{
     if(form.kelas_go){
       const found = kelasList.find(c=> c.nama_kelompok===form.kelas_go);
       if(found?.unit && found.unit !== form.unit) setForm(f=>({...f, unit: found.unit || f.unit}));
     }
   }, [form.kelas_go]);
-  useEffect(()=>{
-    if(filterUnit && !form.unit) setForm(f=>({...f, unit: filterUnit}));
-    if(filterUnit && form.unit && filterUnit !== form.unit){
-      const stillMatch = kelasList.some(c=> c.nama_kelompok===form.kelas_go && (c.unit||'')===filterUnit);
-      if(!stillMatch) {
-        // kelas tidak cocok dengan unit baru -> reset kelas_go agar user pilih ulang? keep as is for now
-      }
-    }
-  }, [filterUnit]);
 
   useEffect(() => {
     if (!form.tingkat_kelas) return;
@@ -94,6 +85,20 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  // Kota -> Unit otomatis: Bangkalan=Cempaka, Sampang=Imam Bonjol,
+  // Pamekasan=dropdown (Jokotole/Parteker), Sumenep=Agus Salim
+  const onKotaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const kota = e.target.value;
+    const units = unitsForKota(kota);
+    setForm((f) => ({
+      ...f,
+      kota,
+      cabang: CABANG_DEFAULT,
+      unit: units.length === 1 ? units[0] : units.includes(f.unit) ? f.unit : units[0],
+      kelas_go: '',
+    }));
+  };
 
   const fixPhone = (v: string) => {
     const d = v.replace(/\D/g, '');
@@ -159,11 +164,11 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           // Kompatibilitas: kolom lama diisi dari data ayah (fallback)
           nama_ortu: form.nama_ortu.trim() || form.nama_ayah.trim(),
           no_hp_ortu: fixPhone(form.no_hp_ortu || form.no_hp_ayah),
-          cabang: form.cabang.trim(),
+          cabang: form.cabang.trim() || CABANG_DEFAULT,
           kota: form.kota.trim(),
           keterangan: form.keterangan.trim(),
           program: form.program,
-          unit: form.unit || filterUnit || SEMADURA_UNITS[0],
+          unit: form.unit || unitsForKota(form.kota)[0],
         }),
       });
       const j = await res.json().catch(()=> ({} as any));
@@ -195,10 +200,10 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         no_hp_ayah: '',
         nama_ibu: '',
         no_hp_ibu: '',
-        cabang: 'Sumenep',
+        cabang: 'Madura',
         kota: 'Sumenep',
         keterangan: '',
-        unit: '',
+        unit: 'Unit Agus Salim',
         kelas_go: '',
         tingkat_kelas: '',
         program: '',
@@ -293,12 +298,18 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">Cabang</label>
-              <input value={form.cabang} onChange={set('cabang')} placeholder="cth: Sumenep" className={inputCls} />
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Cabang (otomatis)</label>
+              <input value={form.cabang || CABANG_DEFAULT} readOnly disabled className={`${inputCls} bg-gray-100 text-gray-600`} />
+              <p className="mt-1 text-[11px] text-gray-600">Selalu Madura</p>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">Kota</label>
-              <input value={form.kota} onChange={set('kota')} placeholder="cth: Sumenep" className={inputCls} />
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Kota *</label>
+              <select value={form.kota} onChange={onKotaChange} className={inputCls}>
+                {KOTA_LIST.map((k) => (
+                  <option key={k} value={k}>{k}</option>
+                ))}
+              </select>
+              <p className="mt-1 text-[11px] text-gray-600">Unit terisi otomatis mengikuti kota</p>
             </div>
           </div>
 
@@ -327,12 +338,16 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-gray-800">Unit *</label>
-              <select value={form.unit || filterUnit} onChange={e=>{ setFilterUnit(e.target.value); setForm(f=>({...f, unit: e.target.value})); }} className={inputCls}>
-                <option value="">— Semua Unit —</option>
-                {SEMADURA_UNITS.map((u:any)=>(<option key={u} value={u}>{u}</option>))}
+              <label className="mb-1 block text-xs font-semibold text-gray-800">Unit * {unitOptions.length > 1 ? '(pilih salah satu)' : '(otomatis)'}</label>
+              <select
+                value={form.unit}
+                onChange={set('unit')}
+                disabled={unitOptions.length === 1}
+                className={`${inputCls} ${unitOptions.length === 1 ? 'bg-gray-100 text-gray-600' : ''}`}
+              >
+                {unitOptions.map((u)=>(<option key={u} value={u}>{u}</option>))}
               </select>
-              <p className="mt-1 text-[11px] text-gray-600">{form.unit ? `Unit terpilih: ${form.unit}` : hasAnyKelas ? `${kelasFiltered.length} kelas di ${filterUnit||'semua unit'}` : 'Belum ada kelas — buat di Pengaturan'}</p>
+              <p className="mt-1 text-[11px] text-gray-600">{unitOptions.length === 1 ? `Otomatis dari Kota ${form.kota}: ${form.unit}` : hasAnyKelas ? `${kelasFiltered.length} kelas di ${form.unit}` : 'Pamekasan memiliki 2 unit — pilih salah satu'}</p>
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-gray-800">Kelas GO {form.tingkat_kelas ? `(${form.tingkat_kelas})` : ''}</label>
@@ -344,7 +359,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
               ) : (
                 <input value={form.kelas_go} onChange={set('kelas_go')} placeholder="cth: 12-SMA-R-N-001" className={`${inputCls} font-mono text-xs`} />
               )}
-              {hasAnyKelas && kelasFiltered.length===0 ? <p className="mt-1 text-[11px] font-medium text-amber-700">Tidak ada kelas untuk filter ini — pilih Semua Unit atau buat kelas baru di Pengaturan.</p> : null}
+              {hasAnyKelas && kelasFiltered.length===0 ? <p className="mt-1 text-[11px] font-medium text-amber-700">Tidak ada kelas untuk unit ini — buat kelas baru di Pengaturan.</p> : null}
             </div>
           </div>
 

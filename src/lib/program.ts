@@ -1,6 +1,19 @@
 export const SEMADURA_UNITS = ["Unit Agus Salim","Unit Jokotole","Unit Parteker","Unit Imam Bonjol","Unit Cempaka"] as const;
 export type UnitName = typeof SEMADURA_UNITS[number];
 
+// Cabang otomatis + pemetaan Kota -> Unit (dipakai Modul Tambah Siswa)
+export const CABANG_DEFAULT = "Madura";
+export const KOTA_LIST = ["Bangkalan","Sampang","Pamekasan","Sumenep"] as const;
+export const UNIT_BY_KOTA: Record<string, string[]> = {
+  "Bangkalan": ["Unit Cempaka"],
+  "Sampang": ["Unit Imam Bonjol"],
+  "Pamekasan": ["Unit Jokotole","Unit Parteker"],
+  "Sumenep": ["Unit Agus Salim"],
+};
+export function unitsForKota(kota: string): string[] {
+  return UNIT_BY_KOTA[kota] ? [...UNIT_BY_KOTA[kota]] : [...SEMADURA_UNITS];
+}
+
 export const PROGRAM_BY_TINGKAT: Record<string, string[]> = {
   "4 SD": ["TWT 4 SD KMERDEKA 4P TA. 2728", "TWT 4 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],
   "5 SD": ["TWT 5 SD KMERDEKA 4P TA. 2728", "TWT 5 SD TRISEMESTER LANJUTAN KMERDEKA 4P TA 2627 2728"],

@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Users, School, Layers, Search, CreditCard } from 'lucide-react';
+import { Users, School, Layers, CreditCard, Download, ExternalLink } from 'lucide-react';
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 import { SEMADURA_UNITS } from '@/lib/program';
 import CardSummary from '@/components/dashboard/CardSummary';
+
+const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1AlmWDTapham69WcXwqV_27075WgSLhxwYVrA4lpeGnY/edit?gid=0#gid=0';
 
 const TrendChart = dynamic(() => import('@/components/dashboard/DashboardCharts').then((m) => m.TrendChart), {
   ssr: false,
@@ -75,23 +77,11 @@ function labelBulan(ym: string) {
   return `${NAMA_BULAN[m] ?? m} ${y?.slice(2) ?? ''}`;
 }
 function fmtRp(n:number){ return 'Rp ' + Number(n||0).toLocaleString('id-ID') }
-function waOrtuLink(s: Siswa){
-  const hp = s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '';
-  const nama = s.nama_ayah || s.nama_ortu || s.nama_ibu || '-';
-  const d=(hp||'').replace(/\D/g,''); let no='';
-  if(d.startsWith('62')) no=d; else if(d.startsWith('0')) no='62'+d.slice(1); else if(d.startsWith('8')) no='62'+d; else no=d;
-  if(!no) return null;
-  const msg=encodeURIComponent(`Yth. Ortu/Wali ${nama} — siswa ${s.nama_siswa} (${s.no_reg})\nPengingat sisa tagihan bimbel GO: ${fmtRp(Number(s.sisa_tagihan||0))} dari total ${fmtRp(Number(s.total_tagihan||0))}. Mohon segera dilunasi. Terima kasih — Ganesha Operation Sumenep.`);
-  return `https://wa.me/${no}?text=${msg}`;
-}
-function waDisplay(s: Siswa){ return s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'; }
 
 export default function Home() {
   const [data, setData] = useState<Siswa[]>([]);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState('');
-  const [filterTingkat, setFilterTingkat] = useState('Semua');
   const [filterUnit, setFilterUnit] = useState('Semua');
   const [ta, setTa] = useState('2027/2028');
   const [modalOpen, setModalOpen] = useState(false);
@@ -137,11 +127,6 @@ export default function Home() {
 
   useEffect(() => { load(); }, [load]);
 
-  const tingkatOptions = useMemo(() => {
-    const s = new Set(data.map((d) => d.tingkat_kelas).filter(Boolean));
-    return ['Semua', ...Array.from(s).sort()];
-  }, [data]);
-
   const unitOptions = useMemo(() => {
     const fromData = new Set((data.map((d) => (d.unit || '').trim()).filter(Boolean) as string[]));
     const all = new Set<string>([...(SEMADURA_UNITS as readonly string[]), ...fromData]);
@@ -153,37 +138,37 @@ export default function Home() {
     [summary]
   );
 
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase();
-    return data.filter((d) => {
-      const matchQ =
-        !q ||
-        d.nama_siswa.toLowerCase().includes(q) ||
-        d.no_reg.includes(q) ||
-        d.asal_sekolah.toLowerCase().includes(q) ||
-        (d.unit || '').toLowerCase().includes(q) ||
-        (d.nama_ayah || '').toLowerCase().includes(q) ||
-        (d.nama_ibu || '').toLowerCase().includes(q);
-      const matchT = filterTingkat === 'Semua' || d.tingkat_kelas === filterTingkat;
-      const matchUnit = filterUnit === 'Semua' || (d.unit || '').trim() === filterUnit;
-      return matchQ && matchT && matchUnit;
-    });
-  }, [data, query, filterTingkat, filterUnit]);
+  // Data mengikuti filter nama unit (grafik + ringkasan + export)
+  const unitData = useMemo(() => {
+    if (filterUnit === 'Semua') return data;
+    return data.filter((d) => (d.unit || '').trim() === filterUnit);
+  }, [data, filterUnit]);
 
-  const tingkatChart = useMemo(
-    () => [...(summary?.tingkatKelas ?? [])].sort((a, b) => b.jumlah - a.jumlah),
-    [summary]
-  );
-  const topSekolah = useMemo(
-    () => [...(summary?.asalSekolah ?? [])].sort((a, b) => b.jumlah - a.jumlah).slice(0, 8),
-    [summary]
-  );
+  const tingkatChart = useMemo(() => {
+    const counts = new Map<string, number>();
+    unitData.forEach((d) => {
+      const k = d.tingkat_kelas || 'N/A';
+      counts.set(k, (counts.get(k) || 0) + 1);
+    });
+    return [...counts.entries()].map(([tingkat, jumlah]) => ({ tingkat, jumlah })).sort((a, b) => b.jumlah - a.jumlah);
+  }, [unitData]);
+  const topSekolah = useMemo(() => {
+    const counts = new Map<string, number>();
+    unitData.forEach((d) => {
+      const k = d.asal_sekolah || 'Tanpa Data';
+      counts.set(k, (counts.get(k) || 0) + 1);
+    });
+    return [...counts.entries()].map(([sekolah, jumlah]) => ({ sekolah, jumlah })).sort((a, b) => b.jumlah - a.jumlah).slice(0, 8);
+  }, [unitData]);
   const trendBulan = useMemo(() => {
-    const raw = summary?.pendaftarBulan ?? [];
-    if (raw.length === 0) return [];
-    const map = new Map(raw.map((p) => [p.bulan, p.jumlah]));
-    const sorted = [...raw].sort((a, b) => a.bulan.localeCompare(b.bulan));
-    const start = sorted[0].bulan;
+    const map = new Map<string, number>();
+    unitData.forEach((d) => {
+      const b = d.tgl_daftar?.slice(0, 7);
+      if (b && b.length === 7) map.set(b, (map.get(b) || 0) + 1);
+    });
+    if (map.size === 0) return [];
+    const sorted = [...map.keys()].sort((a, b) => a.localeCompare(b));
+    const start = sorted[0];
     const end = '2027-10';
     const out: { bulan: string; jumlah: number; label: string }[] = [];
     let [y, m] = start.split('-').map(Number);
@@ -194,18 +179,18 @@ export default function Home() {
       m += 1; if (m > 12) { m = 1; y += 1; }
     }
     return out;
-  }, [summary]);
+  }, [unitData]);
 
-  // ringkasan bayar untuk TA aktif
+  // ringkasan bayar mengikuti filter unit
   const bayarStats = useMemo(()=>{
-    const total = data.length;
-    const lunas = data.filter(d=> d.status_bayar==='lunas').length;
-    const cicilan = data.filter(d=> d.status_bayar==='cicilan').length;
-    const belum = data.filter(d=> d.status_bayar==='belum_lunas').length;
-    const tagihan = data.reduce((a,c)=> a+Number(c.total_tagihan||0),0);
-    const sisa = data.reduce((a,c)=> a+Number(c.sisa_tagihan||0),0);
+    const total = unitData.length;
+    const lunas = unitData.filter(d=> d.status_bayar==='lunas').length;
+    const cicilan = unitData.filter(d=> d.status_bayar==='cicilan').length;
+    const belum = unitData.filter(d=> d.status_bayar==='belum_lunas').length;
+    const tagihan = unitData.reduce((a,c)=> a+Number(c.total_tagihan||0),0);
+    const sisa = unitData.reduce((a,c)=> a+Number(c.sisa_tagihan||0),0);
     return { total, lunas, cicilan, belum, tagihan, sisa };
-  },[data]);
+  },[unitData]);
 
   if (loading) {
     return (
@@ -244,6 +229,24 @@ export default function Home() {
             </div>
           )}
 
+          {/* Filter Nama Unit — semua grafik & ringkasan mengikuti pilihan ini */}
+          <div className="flex flex-col gap-3 rounded-2xl border border-red-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-sm font-bold text-red-800">Filter Nama Unit</h2>
+              <p className="text-xs text-gray-500">{bayarStats.total} dari {data.length} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} · TA {ta}</p>
+            </div>
+            <select
+              value={filterUnit}
+              onChange={(e) => setFilterUnit(e.target.value)}
+              title="Filter nama unit"
+              className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 outline-none focus:border-red-400"
+            >
+              {unitOptions.map((u) => (
+                <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
+              ))}
+            </select>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <CardSummary title="Total Siswa" value={String(bayarStats.total)} description={`TA ${ta}`} icon={<Users size={22} />} />
             <CardSummary title="Sisa Tagihan" value={fmtRp(bayarStats.sisa)} description={`${bayarStats.cicilan+bayarStats.belum} belum lunas`} icon={<CreditCard size={22} />} />
@@ -265,7 +268,7 @@ export default function Home() {
 
           {/* Trend pendaftar per bulan */}
           <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-red-800">Pendaftar per Bulan — TA {ta}</h2>
+            <h2 className="text-sm font-bold text-red-800">Pendaftar per Bulan — {filterUnit === 'Semua' ? 'Semua Unit' : filterUnit} · TA {ta}</h2>
             <p className="mb-4 text-xs text-gray-500">Tren pendaftaran berdasarkan tanggal daftar</p>
             <div className="h-64">
               <TrendChart data={trendBulan} />
@@ -275,7 +278,7 @@ export default function Home() {
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
               <h2 className="text-sm font-bold text-red-800">Siswa per Tingkat Kelas</h2>
-              <p className="mb-4 text-xs text-gray-500">Distribusi jenjang TA {ta}</p>
+              <p className="mb-4 text-xs text-gray-500">Distribusi jenjang {filterUnit === 'Semua' ? 'semua unit' : filterUnit} · TA {ta}</p>
               <div className="h-72">
                 <TingkatChart data={tingkatChart} />
               </div>
@@ -283,109 +286,45 @@ export default function Home() {
 
             <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
               <h2 className="text-sm font-bold text-red-800">Top 8 Asal Sekolah</h2>
-              <p className="mb-4 text-xs text-gray-500">Sekolah dengan siswa terbanyak</p>
+              <p className="mb-4 text-xs text-gray-500">Sekolah dengan siswa terbanyak {filterUnit === 'Semua' ? '' : `di ${filterUnit}`}</p>
               <div className="h-72">
                 <SekolahChart data={topSekolah} />
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-red-100 bg-white shadow-sm">
-            <div className="flex flex-col gap-3 border-b border-red-100 p-5 sm:flex-row sm:items-center sm:justify-between">
+          {/* Menu Export Spreadsheet */}
+          <div className="rounded-2xl border border-emerald-200 bg-white p-5 shadow-sm">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-sm font-bold text-red-800">Data Siswa — TA {ta}</h2>
-                <p className="text-xs text-gray-500">{filtered.length} dari {data.length} siswa</p>
+                <h2 className="text-sm font-bold text-emerald-800">Export ke Spreadsheet</h2>
+                <p className="mt-1 text-xs text-gray-500">
+                  Unduh data {bayarStats.total} siswa {filterUnit === 'Semua' ? '(semua unit)' : `(${filterUnit})`} TA {ta} sebagai file .xlsx (33 kolom),
+                  lalu impor ke Google Sheet via menu <b>File → Impor</b>.
+                </p>
               </div>
-              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-                <label className="relative">
-                  <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Cari nama / no. registrasi / sekolah / ortu…"
-                    className="w-full rounded-full border border-red-200 bg-red-50/50 py-2 pl-9 pr-4 text-sm outline-none placeholder:text-gray-400 focus:border-red-400 focus:bg-white sm:w-72"
-                  />
-                </label>
-                <select
-                  value={filterTingkat}
-                  onChange={(e) => setFilterTingkat(e.target.value)}
-                  className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-red-400"
-                >
-                  {tingkatOptions.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </select>
-                <select
-                  value={filterUnit}
-                  onChange={(e) => setFilterUnit(e.target.value)}
-                  title="Filter nama unit"
-                  className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-red-400"
-                >
-                  {unitOptions.map((u) => (
-                    <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
-                  ))}
-                </select>
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <button
                   onClick={exportToSheet}
-                  disabled={exporting || filtered.length === 0}
+                  disabled={exporting || unitData.length === 0}
                   title="Export hasil filter ke spreadsheet (.xlsx)"
-                  className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50"
                 >
-                  {exporting ? 'Mengexport…' : `Export Spreadsheet (${filtered.length})`}
+                  <Download size={16} />
+                  {exporting ? 'Mengexport…' : `Export Spreadsheet (${unitData.length})`}
                 </button>
+                <a
+                  href={GOOGLE_SHEET_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Buka Google Sheet rekap"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-5 py-2.5 text-sm font-bold text-emerald-700 hover:bg-emerald-100"
+                >
+                  <ExternalLink size={16} />
+                  Buka Google Sheet
+                </a>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[1000px] text-left text-sm">
-                <thead>
-                  <tr className="bg-red-700 text-xs uppercase tracking-wide text-white">
-                    <th className="px-4 py-3">No. Registrasi</th>
-                    <th className="px-4 py-3">Nama Siswa</th>
-                    <th className="px-4 py-3">Tingkat Kelas</th>
-                    <th className="px-4 py-3">Unit</th>
-                    <th className="px-4 py-3">Kelas GO</th>
-                    <th className="px-4 py-3">Asal Sekolah</th>
-                    <th className="px-4 py-3">Tagihan / Sisa</th>
-                    <th className="px-4 py-3">WA Ortu</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.length===0 ? (
-                    <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">Tidak ada data di TA {ta}. {ta==='2027/2028' ? 'Tambah siswa baru untuk TA ini.' : ''}</td></tr>
-                  ) : filtered.slice(0, 100).map((s, i) => {
-                    const wa = s.sisa_tagihan>0 ? waOrtuLink(s) : null;
-                    return (
-                    <tr key={`${s.no_reg ?? "row"}-${i}`} className={i % 2 ? 'bg-red-50/40' : 'bg-white'}>
-                      <td className="px-4 py-2.5 font-mono text-xs text-red-800">{s.no_reg || '—'}</td>
-                      <td className="px-4 py-2.5 font-medium text-gray-800">{s.nama_siswa}</td>
-                      <td className="px-4 py-2.5">
-                        <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
-                          {s.tingkat_kelas || '—'}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2.5"><span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 border border-slate-200 whitespace-nowrap">{s.unit || '—'}</span></td>
-                      <td className="px-4 py-2.5 text-xs text-gray-600">{s.kelas_go}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-600">{s.asal_sekolah}</td>
-                      <td className="px-4 py-2.5 text-xs">
-                        <span className={Number(s.sisa_tagihan)>0 ? 'text-amber-700 font-bold' : 'text-green-700'}>{Number(s.sisa_tagihan)>0 ? fmtRp(Number(s.sisa_tagihan)) : 'Lunas'}</span>
-                        <span className="text-gray-400"> / {fmtRp(Number(s.total_tagihan||0))}</span>
-                      </td>
-                      <td className="px-4 py-2.5">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-xs text-gray-600">{waDisplay(s)}</span>
-                          {wa && <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-green-600 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-green-700">WA</a>}
-                        </div>
-                      </td>
-                    </tr>
-                  )})}
-                </tbody>
-              </table>
-            </div>
-            {filtered.length > 100 && (
-              <p className="border-t border-red-100 bg-red-50/50 px-5 py-3 text-center text-xs text-red-700">
-                Menampilkan 100 dari {filtered.length} hasil — gunakan pencarian untuk menyaring.
-              </p>
-            )}
           </div>
 
           <footer className="pb-4 pt-2 text-center text-xs text-gray-400">
