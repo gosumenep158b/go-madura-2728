@@ -50,6 +50,38 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState<{ nama: string; no_reg: string; warning?: string } | null>(null);
+
+  const resetForm = () => {
+    setHargaMaster(null);
+    setHargaManual(false);
+    setError('');
+    setForm({
+      no_reg: '',
+      nama_siswa: '',
+      tgl_lahir: '',
+      no_hp: '',
+      nama_ortu: '',
+      no_hp_ortu: '',
+      nama_ayah: '',
+      no_hp_ayah: '',
+      nama_ibu: '',
+      no_hp_ibu: '',
+      cabang: 'Madura',
+      kota: 'Sumenep',
+      keterangan: '',
+      unit: 'Unit Agus Salim',
+      kelas_go: '',
+      tingkat_kelas: '',
+      program: '',
+      asal_sekolah: '',
+      tgl_daftar: new Date().toISOString().slice(0, 10),
+      tahun_ajaran: '2027/2028',
+      total_tagihan: '',
+      metode_bayar: '',
+      pembayaran_sekarang: '',
+    });
+  };
   // Harga master dari modul Harga Bimbel (per kota/unit/tingkat/program)
   const [hargaMaster, setHargaMaster] = useState<number | null>(null);
   const [hargaManual, setHargaManual] = useState(false);
@@ -248,45 +280,18 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
         const msg = (j as any).error || (j as any).message || 'Gagal menambah siswa.';
         const hint = (j as any).warning ? ' ' + (j as any).warning : '';
         // hint khusus read-only / table missing
-        if (msg.includes('read-only') || msg.includes('Supabase')) {
+        if (msg.includes('read-only') || msg.includes('Supabase') || msg.includes('Kolom Supabase')) {
           setError(msg + hint + ' — Jalankan database/siswa_schema.sql di Supabase Dashboard > SQL Editor.');
         } else {
           setError(msg + hint);
         }
         return;
       }
-      if ((j as any).warning) {
-        // surface warning tapi tetap sukses (mis. fallback file saat tabel belum ada)
-        console.warn((j as any).warning);
-      }
       onSuccess();
-      onClose();
-      setHargaMaster(null);
-      setHargaManual(false);
-      setForm({
-        no_reg: '',
-        nama_siswa: '',
-        tgl_lahir: '',
-        no_hp: '',
-        nama_ortu: '',
-        no_hp_ortu: '',
-        nama_ayah: '',
-        no_hp_ayah: '',
-        nama_ibu: '',
-        no_hp_ibu: '',
-        cabang: 'Madura',
-        kota: 'Sumenep',
-        keterangan: '',
-        unit: 'Unit Agus Salim',
-        kelas_go: '',
-        tingkat_kelas: '',
-        program: '',
-        asal_sekolah: '',
-        tgl_daftar: new Date().toISOString().slice(0, 10),
-        tahun_ajaran: '2027/2028',
-        total_tagihan: '',
-        metode_bayar: '',
-        pembayaran_sekarang: '',
+      setSuccess({
+        nama: form.nama_siswa.trim(),
+        no_reg: form.no_reg.trim(),
+        warning: (j as any).warning || undefined,
       });
     } catch {
       setError('Gagal terhubung ke server.');
@@ -295,8 +300,14 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     }
   };
 
+  const closeAll = () => {
+    setSuccess(null);
+    resetForm();
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4" onClick={closeAll}>
       <div
         className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl border border-slate-200"
         onClick={(e) => e.stopPropagation()}
@@ -306,11 +317,47 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             <h2 className="text-sm font-bold">Tambah Siswa Baru</h2>
             <p className="text-xs font-medium text-slate-400">No. Registrasi input manual (sistem resmi GO)</p>
           </div>
-          <button onClick={onClose} className="rounded-full p-1 hover:bg-white/10">
+          <button onClick={closeAll} className="rounded-full p-1 hover:bg-white/10">
             <X size={18} />
           </button>
         </div>
 
+        {success ? (
+          <div className="px-5 py-8 text-center space-y-4">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+              <svg viewBox="0 0 24 24" className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-black text-gray-900">Berhasil Tambah Siswa!</h3>
+              <p className="mt-1 text-sm text-gray-600">
+                <b>{success.nama}</b> <span className="font-mono text-xs text-red-700">({success.no_reg})</span> sudah tersimpan dan langsung tampil di dashboard.
+              </p>
+            </div>
+            {success.warning && (
+              <p className="rounded-xl bg-amber-50 px-3 py-2 text-xs font-medium text-amber-800 ring-1 ring-inset ring-amber-200">
+                {success.warning}
+              </p>
+            )}
+            <div className="flex justify-center gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => { setSuccess(null); resetForm(); }}
+                className="rounded-full bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-700"
+              >
+                + Tambah Lagi
+              </button>
+              <button
+                type="button"
+                onClick={closeAll}
+                className="rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              >
+                Selesai
+              </button>
+            </div>
+          </div>
+        ) : (
         <form onSubmit={submit} className="space-y-3 px-5 py-5">
           {error && (
             <p className="rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-200">
@@ -489,7 +536,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={closeAll}
               className="rounded-full border border-gray-300 px-5 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
             >
               Batal
@@ -503,6 +550,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );
