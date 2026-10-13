@@ -1,8 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 import { TINGKATS_9, getProgramOptions, hargaForTingkat, PROGRAMS, CABANG_DEFAULT, KOTA_LIST, unitsForKota } from '@/lib/program';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qyjtbddnjvqhvukgubwb.supabase.co';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_93qIWR8_O2AD8AD39IUhhA_SjlmEpfh';
 
 interface KelasOpt { id?: any; nama_kelompok: string; tingkat_kelas?: string; unit?: string; ruang?: string; hari_jam?: string; }
 interface TambahSiswaModalProps {
@@ -51,12 +55,55 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
   const bayarSekarangNum = parseRp((form as any).pembayaran_sekarang || '');
   const sisaNum = Math.max(0, (hargaSetelahDiskonNum || hargaNormal) - bayarSekarangNum);
   const programOptions = form.tingkat_kelas ? getProgramOptions(form.tingkat_kelas) : [];
-  // Normalisasi kelasOptions (string legacy vs object)
-  const kelasList: KelasOpt[] = (kelasOptions || []).map((k:any)=> typeof k==='string' ? { nama_kelompok:k } : { nama_kelompok: k.nama_kelompok || k.class_name || '', tingkat_kelas: k.tingkat_kelas, unit: k.unit, ruang: k.ruang || k.unit_name, hari_jam: k.hari_jam || k.schedule });
+  // Kelas yang sudah dibuat di Pengaturan (admin_classes) — diambil langsung agar selalu muncul
+  const [kelasDb, setKelasDb] = useState<KelasOpt[]>([]);
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        const { data, error } = await supabase
+          .from('admin_classes')
+          .select('nama_kelompok,tingkat_kelas,unit,ruang,hari_jam')
+          .order('nama_kelompok', { ascending: true })
+          .limit(500);
+        if (!error && data && !cancelled) {
+          setKelasDb(
+            (data as any[]).map((c) => ({
+              nama_kelompok: c.nama_kelompok || '',
+              tingkat_kelas: c.tingkat_kelas,
+              unit: c.unit,
+              ruang: c.ruang,
+              hari_jam: c.hari_jam,
+            })),
+          );
+        }
+      } catch {}
+    })();
+    return () => { cancelled = true; };
+  }, [open ]);
+  // Normalisasi kelasOptions (string legacy vs object) + gabung dengan data admin_classes
+  const kelasList: KelasOpt[] = useMemo(() => {
+    const map = new Map<string, KelasOpt>();
+    (kelasOptions || []).forEach((k: any) => {
+      const c: KelasOpt = typeof k === 'string'
+        ? { nama_kelompok: k }
+        : { nama_kelompok: k.nama_kelompok || k.class_name || '', tingkat_kelas: k.tingkat_kelas, unit: k.unit, ruang: k.ruang || k.unit_name, hari_jam: k.hari_jam || k.schedule };
+      if (c.nama_kelompok) map.set(c.nama_kelompok, c);
+    });
+    kelasDb.forEach((c) => {
+      if (!c.nama_kelompok) return;
+      map.set(c.nama_kelompok, { ...(map.get(c.nama_kelompok) || {}), ...c, nama_kelompok: c.nama_kelompok });
+    });
+    return [...map.values()].sort((a, b) => a.nama_kelompok.localeCompare(b.nama_kelompok));
+  }, [kelasOptions, kelasDb]);
   const unitOptions = unitsForKota(form.kota);
+  // Filter longgar: opsi tanpa info unit selalu tampil; yang ber-unit harus cocok dengan kota
+  const allowedUnits = useMemo(() => unitOptions.map((u) => u.toLowerCase()), [form.kota]);
   const kelasFiltered = kelasList.filter(c=>{
-    if(form.unit && (c.unit||'').toLowerCase() !== form.unit.toLowerCase()) return false;
-    return true;
+    if(!c.unit) return true;
+    return allowedUnits.includes(c.unit.toLowerCase());
   });
   const hasAnyKelas = kelasList.length>0;
   // sync unit dari kelas terpilih
@@ -65,7 +112,7 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
       const found = kelasList.find(c=> c.nama_kelompok===form.kelas_go);
       if(found?.unit && found.unit !== form.unit) setForm(f=>({...f, unit: found.unit || f.unit}));
     }
-  }, [form.kelas_go]);
+  }, [form.kelas_go, kelasList]);
 
   useEffect(() => {
     if (!form.tingkat_kelas) return;
