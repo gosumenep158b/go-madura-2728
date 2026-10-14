@@ -216,43 +216,43 @@ export default function HargaBimbelPage() {
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-800">
-          <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-10 w-auto object-contain bg-white rounded-xl p-1 shadow-sm border border-red-100" />
-              <div>
-                <h1 className="font-bold leading-tight text-base">Harga Bimbel per Kota, Unit & Program</h1>
-                <span className="text-xs text-gray-500 dark:text-slate-400">TA 2027/2028 · sumber harga Tambah Siswa & portal pendaftaran</span>
+        <header className="sticky top-[57px] z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:h-16">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-8 w-8 shrink-0 object-contain bg-white rounded-xl p-1 shadow-sm border border-red-100" />
+              <div className="min-w-0">
+                <h1 className="font-bold leading-tight text-sm md:text-base truncate">Harga Bimbel per Kota, Unit & Program</h1>
+                <span className="hidden sm:block text-xs text-gray-500 dark:text-slate-400 truncate">TA 2027/2028 · sumber harga Tambah Siswa & portal pendaftaran</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl hover:bg-red-100 dark:bg-red-950 dark:text-red-300">Modul Penawaran →</a>
+            <div className="flex items-center gap-2 shrink-0">
+              <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl whitespace-nowrap hover:bg-red-100 dark:bg-red-950 dark:text-red-300">Penawaran →</a>
             </div>
           </div>
         </header>
 
         <main className="max-w-7xl mx-auto p-4 md:p-6 space-y-5">
           {/* Filter */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap gap-3 items-end shadow-sm dark:bg-slate-900 dark:border-slate-800">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[auto_auto_1fr_auto] gap-3 items-end shadow-sm dark:bg-slate-900 dark:border-slate-800">
             <div>
               <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Kota</label>
-              <select value={fKota} onChange={(e) => { setFKota(e.target.value); setFUnit("Semua"); }} className="px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+              <select value={fKota} onChange={(e) => { setFKota(e.target.value); setFUnit("Semua"); }} className="w-full sm:w-auto px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                 <option value="Semua">Semua Kota</option>
                 {KOTA_LIST.map((k) => (<option key={k} value={k}>{k}</option>))}
               </select>
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Unit</label>
-              <select value={fUnit} onChange={(e) => setFUnit(e.target.value)} className="px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+              <select value={fUnit} onChange={(e) => setFUnit(e.target.value)} className="w-full sm:w-auto px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                 <option value="Semua">Semua Unit</option>
                 {unitOptionsFilter.map((u) => (<option key={u} value={u}>{u}</option>))}
               </select>
             </div>
-            <div className="flex-1 min-w-[180px]">
+            <div className="sm:col-span-2 lg:col-span-1">
               <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Cari jenjang / program</label>
-              <input value={fText} onChange={(e) => setFText(e.target.value)} placeholder="cth: 12 SMA / Medical..." className="w-full px-3 py-2 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-700" />
+              <input value={fText} onChange={(e) => setFText(e.target.value)} placeholder="cth: 12 SMA / Medical..." className="w-full px-3 py-2.5 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-700" />
             </div>
-            <button onClick={fetchData} className="px-4 py-2 rounded-xl text-sm font-bold bg-white border hover:bg-gray-50 dark:bg-slate-800 dark:border-slate-700">↻ Muat Ulang</button>
+            <button onClick={fetchData} className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-sm font-bold bg-white border hover:bg-gray-50 dark:bg-slate-800 dark:border-slate-700">↻ Muat Ulang</button>
           </div>
 
           {msg && (
@@ -265,40 +265,40 @@ export default function HargaBimbelPage() {
           {/* Form tambah */}
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3 dark:bg-slate-900 dark:border-slate-800">
             <h2 className="font-bold text-sm">Tambah / Update Harga</h2>
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Kota *</label>
-                <select value={nKota} onChange={(e) => onNKota(e.target.value)} className="w-full px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+                <select value={nKota} onChange={(e) => onNKota(e.target.value)} className="w-full px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                   {KOTA_LIST.map((k) => (<option key={k} value={k}>{k}</option>))}
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Unit *</label>
-                <select value={nUnit} onChange={(e) => setNUnit(e.target.value)} className="w-full px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+                <select value={nUnit} onChange={(e) => setNUnit(e.target.value)} className="w-full px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                   {nUnitOptions.map((u) => (<option key={u} value={u}>{u}</option>))}
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Tingkat *</label>
-                <select value={nTingkat} onChange={(e) => onNTingkat(e.target.value)} className="w-full px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+                <select value={nTingkat} onChange={(e) => onNTingkat(e.target.value)} className="w-full px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                   {TINGKATS_9.map((t) => (<option key={t} value={t}>{t}</option>))}
                 </select>
               </div>
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Program *</label>
-                <select value={nProgram} onChange={(e) => setNProgram(e.target.value)} className="w-full px-3 py-2 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
+                <select value={nProgram} onChange={(e) => setNProgram(e.target.value)} className="w-full px-3 py-2.5 border rounded-xl text-sm bg-white dark:bg-slate-800 dark:border-slate-700">
                   {nProgramOptions.map((p) => (<option key={p} value={p}>{p}</option>))}
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 dark:text-slate-400 mb-1">Harga (Rp) *</label>
-                <input value={nHarga} onChange={(e) => setNHarga(e.target.value)} inputMode="numeric" placeholder="cth: 11500000" className="w-full px-3 py-2 border rounded-xl text-sm font-mono dark:bg-slate-800 dark:border-slate-700" />
+                <input value={nHarga} onChange={(e) => setNHarga(e.target.value)} inputMode="numeric" placeholder="cth: 11500000" className="w-full px-3 py-2.5 border rounded-xl text-sm font-mono dark:bg-slate-800 dark:border-slate-700" />
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <button onClick={handleAdd} disabled={saving} className="px-5 py-2.5 rounded-xl bg-[#b70011] text-white font-bold text-sm hover:bg-red-700 disabled:opacity-50">+ Simpan Harga</button>
-              <button onClick={handleGenerate} disabled={saving} className="px-5 py-2.5 rounded-xl border font-bold text-sm hover:bg-gray-50 dark:border-slate-700 dark:hover:bg-slate-800">⚙️ Generate Default (100)</button>
-              <button onClick={handleSaveAll} disabled={saving || loading || rows.length === 0} className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 disabled:opacity-50">💾 Simpan Semua Perubahan</button>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+              <button onClick={handleAdd} disabled={saving} className="px-5 py-3 rounded-xl bg-[#b70011] text-white font-bold text-sm hover:bg-red-700 disabled:opacity-50 sm:w-auto">+ Simpan Harga</button>
+              <button onClick={handleGenerate} disabled={saving} className="px-5 py-3 rounded-xl border font-bold text-sm hover:bg-gray-50 dark:border-slate-700 dark:hover:bg-slate-800">⚙️ Generate Default (100)</button>
+              <button onClick={handleSaveAll} disabled={saving || loading || rows.length === 0} className="px-5 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-700 disabled:opacity-50">💾 Simpan Semua Perubahan</button>
             </div>
           </div>
 
