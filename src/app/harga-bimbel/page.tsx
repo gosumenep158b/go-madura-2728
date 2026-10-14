@@ -216,7 +216,7 @@ export default function HargaBimbelPage() {
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-        <header className="sticky top-[57px] z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-800">
+        <header className="sticky top-[60px] z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-800">
           <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:h-16">
             <div className="flex items-center gap-2.5 min-w-0">
               <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-8 w-8 shrink-0 object-contain bg-white rounded-xl p-1 shadow-sm border border-red-100" />
