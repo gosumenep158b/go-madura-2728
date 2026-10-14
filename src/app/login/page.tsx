@@ -104,14 +104,14 @@ function LoginForm() {
 
       {/* Right Side: Clean Modern Login Form */}
       <div className="w-full lg:w-2/5 flex items-center justify-center p-6 sm:p-12 bg-white">
-        <div className="w-full max-w-md space-y-8">
-          
+        <div className="w-full max-w-md space-y-6 sm:space-y-8">
+
           {/* Mobile Logo Header */}
-          <div className="lg:hidden text-center space-y-3">
-            <div className="inline-block bg-white p-3 rounded-2xl shadow-md border border-red-100">
-              <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={40} className="h-10 w-auto object-contain mx-auto" />
+          <div className="lg:hidden text-center space-y-2">
+            <div className="inline-block bg-white p-2.5 rounded-2xl shadow-md border border-red-100">
+              <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={40} className="h-8 w-auto object-contain mx-auto" />
             </div>
-            <h2 className="text-xl font-black text-gray-900">Ganesha Operation Sumenep</h2>
+            <h2 className="text-lg font-black text-gray-900">Ganesha Operation Sumenep</h2>
             <p className="text-xs text-gray-500">Dashboard Siswa TA 2026/2027</p>
           </div>
 
@@ -146,7 +146,7 @@ function LoginForm() {
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
                   Password
                 </label>
-                <a href="#" className="text-xs font-semibold text-red-600 hover:underline">
+                <a href="#" className="inline-flex min-h-[32px] items-center px-1 text-xs font-semibold text-red-600 hover:underline">
                   Lupa password?
                 </a>
               </div>

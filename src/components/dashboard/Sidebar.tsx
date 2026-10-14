@@ -10,14 +10,14 @@ interface SidebarProps { onTambah: () => void; }
 interface SessionUser { nama: string; jabatan: string; role: string; }
 
 const NAV = [
-  { href: '/', label: 'Dashboard Siswa', icon: LayoutDashboard },
-  { href: '/pendaftaran', label: 'Modul Penawaran', icon: UserPlus },
-  { href: '/harga-bimbel', label: 'Harga Bimbel', icon: Wallet },
-  { href: '/pembayaran', label: 'Pembayaran & Cicilan', icon: Wallet },
-  { href: '/grup-belajar', label: 'Grup Belajar', icon: Users },
-  { href: '/pengaturan', label: 'Pengaturan Admin', icon: Settings },
-  { href: '/statistik', label: 'Data Statistik', icon: BarChart3 },
-  { href: '/akun', label: 'Akun Saya', icon: UserCog },
+  { href: '/', label: 'Dashboard Siswa', short: 'Dashboard', icon: LayoutDashboard },
+  { href: '/pendaftaran', label: 'Modul Penawaran', short: 'Penawaran', icon: UserPlus },
+  { href: '/harga-bimbel', label: 'Harga Bimbel', short: 'Harga', icon: Wallet },
+  { href: '/pembayaran', label: 'Pembayaran & Cicilan', short: 'Bayar', icon: Wallet },
+  { href: '/grup-belajar', label: 'Grup Belajar', short: 'Grup', icon: Users },
+  { href: '/pengaturan', label: 'Pengaturan Admin', short: 'Pengaturan', icon: Settings },
+  { href: '/statistik', label: 'Data Statistik', short: 'Statistik', icon: BarChart3 },
+  { href: '/akun', label: 'Akun Saya', short: 'Akun', icon: UserCog },
 ];
 
 function useSession() {
@@ -114,23 +114,23 @@ export function MobileNav({ onTambah }: SidebarProps) {
   const logout = async () => { await fetch('/api/auth/logout', { method: 'POST' }); router.push('/login'); router.refresh(); };
   return (
     <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:hidden dark:border-slate-800 dark:bg-slate-900/95">
-      <div className="flex items-center gap-2 px-3 py-2.5 overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-2 px-3 py-2.5">
         <div className="shrink-0 rounded-lg border border-slate-200 bg-white p-1">
           <Image src="/images/logo_go_standar.png" alt="GO" width={28} height={28} className="h-7 w-7 object-contain" />
         </div>
-        <div className="flex items-center gap-1.5 overflow-x-auto">
+        <div className="flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto scrollbar-none">
           {NAV.map((n) => {
             const active = pathname === n.href;
             const Icon = n.icon;
             return (
-              <Link key={n.href} href={n.href} className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold whitespace-nowrap ${active ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
-                <Icon size={14} />{n.label}
+              <Link key={n.href} href={n.href} title={n.label} className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold whitespace-nowrap ${active ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
+                <Icon size={14} /><span className="md:hidden">{n.short}</span><span className="hidden md:inline">{n.label}</span>
               </Link>
             );
           })}
-          <button onClick={onTambah} className="flex shrink-0 items-center gap-1.5 rounded-full bg-[#b70011] px-3.5 py-1.5 text-xs font-bold text-white whitespace-nowrap hover:bg-[#991b1b]"><UserPlus size={14} />Tambah</button>
+          <button onClick={onTambah} className="flex shrink-0 items-center gap-1.5 rounded-full bg-[#b70011] px-3.5 py-2 text-xs font-bold text-white whitespace-nowrap hover:bg-[#991b1b]"><UserPlus size={14} />Tambah</button>
         </div>
-        {user && <button onClick={logout} className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"><LogOut size={13} />Keluar</button>}
+        {user && <button onClick={logout} title="Keluar" aria-label="Keluar" className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-slate-100 p-2.5 text-slate-700 hover:bg-slate-200"><LogOut size={15} /><span className="sr-only">Keluar</span></button>}
       </div>
     </div>
   );

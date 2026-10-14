@@ -234,8 +234,8 @@ export default function Home() {
               <h1 className="text-xl font-black tracking-tight leading-tight sm:text-2xl">Monitoring Penerimaan Siswa Baru TA 2027–2028</h1>
               <p className="mt-1 text-xs text-red-100">Data arsip TA 2026/2027 tersimpan — dashboard kini menampilkan TA 2027/2028.</p>
             </div>
-            <div className="flex items-center gap-2">
-              <select value={ta} onChange={e=> setTa(e.target.value)} className="rounded-full bg-white px-4 py-2 text-sm font-medium text-red-700 outline-none">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <select value={ta} onChange={e=> setTa(e.target.value)} className="w-full rounded-full bg-white px-4 py-2.5 text-sm font-medium text-red-700 outline-none sm:w-auto">
                 <option value="2027/2028">TA 2027/2028 (Aktif)</option>
                 <option value="2026/2027">TA 2026/2027 (Arsip)</option>
                 <option value="Semua">Semua TA</option>
@@ -260,7 +260,7 @@ export default function Home() {
               value={filterUnit}
               onChange={(e) => setFilterUnit(e.target.value)}
               title="Filter nama unit"
-              className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 outline-none focus:border-red-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              className="w-full rounded-full border border-red-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 outline-none focus:border-red-400 sm:w-auto dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
             >
               {unitOptions.map((u) => (
                 <option key={u} value={u}>{u === 'Semua' ? 'Semua Unit' : u}</option>
