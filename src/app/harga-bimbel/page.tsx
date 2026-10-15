@@ -216,17 +216,18 @@ export default function HargaBimbelPage() {
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-        <header className="sticky top-[60px] z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-800">
-          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 md:h-16">
+        {/* Desktop: header halaman. Mobile: disembunyikan (judul sudah ada di top bar MobileNav) */}
+        <header className="hidden lg:block border-b border-slate-200 bg-white/80 backdrop-blur-xl dark:bg-slate-900/80 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0">
               <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={40} height={40} className="h-8 w-8 shrink-0 object-contain bg-white rounded-xl p-1 shadow-sm border border-red-100" />
               <div className="min-w-0">
-                <h1 className="font-bold leading-tight text-sm md:text-base truncate">Harga Bimbel per Kota, Unit & Program</h1>
-                <span className="hidden sm:block text-xs text-gray-500 dark:text-slate-400 truncate">TA 2027/2028 · sumber harga Tambah Siswa & portal pendaftaran</span>
+                <h1 className="font-bold leading-tight text-base truncate">Harga Bimbel per Kota, Unit & Program</h1>
+                <span className="block text-xs text-gray-500 dark:text-slate-400 truncate">TA 2027/2028 · sumber harga Tambah Siswa & portal pendaftaran</span>
               </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl whitespace-nowrap hover:bg-red-100 dark:bg-red-950 dark:text-red-300">Penawaran →</a>
+              <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl whitespace-nowrap hover:bg-red-100 dark:bg-red-950 dark:text-red-300">Modul Penawaran →</a>
             </div>
           </div>
         </header>
