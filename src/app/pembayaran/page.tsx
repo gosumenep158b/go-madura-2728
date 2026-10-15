@@ -141,9 +141,9 @@ export default function PembayaranPage(){
 
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[900px] text-left text-sm">
-                <thead><tr className="bg-slate-900 text-[11px] uppercase tracking-widest text-white">
-                  <th className="px-4 py-3">No Reg</th><th className="px-4 py-3">Nama Siswa</th><th className="px-4 py-3">TA</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Tagihan</th><th className="px-4 py-3">Sisa</th><th className="px-4 py-3">Terakhir Bayar</th><th className="px-4 py-3">WA Ortu</th><th className="px-4 py-3">Aksi</th>
+              <table className="w-full min-w-[980px] text-left text-xs sm:text-sm">
+                <thead><tr className="bg-slate-900 text-[10px] sm:text-[11px] uppercase tracking-wide text-white">
+                  <th className="px-3 py-2.5 whitespace-nowrap">No Reg</th><th className="px-3 py-2.5">Nama Siswa</th><th className="px-3 py-2.5">TA</th><th className="px-3 py-2.5">Status</th><th className="px-3 py-2.5">Tagihan</th><th className="px-3 py-2.5">Sisa</th><th className="px-3 py-2.5 whitespace-nowrap">Terakhir Bayar</th><th className="px-3 py-2.5">WA Ortu</th><th className="px-3 py-2.5">Aksi</th>
                 </tr></thead>
                 <tbody>
                   {loading ? <tr><td colSpan={9} className="px-4 py-8 text-center text-sm text-gray-400">Memuat...</td></tr> :
@@ -153,20 +153,20 @@ export default function PembayaranPage(){
                     const st = s.status_bayar;
                     return (
                     <tr key={s.no_reg} className={i%2?'bg-red-50/40 dark:bg-slate-800/60':'bg-white dark:bg-slate-900'}>
-                      <td className="px-4 py-2.5 font-mono text-xs text-red-700 dark:text-red-300">{s.no_reg}</td>
-                      <td className="px-4 py-2.5 font-medium text-gray-800 dark:text-slate-100">{s.nama_siswa}<div className="text-[11px] text-gray-500 dark:text-slate-400">{s.tingkat_kelas} • {s.asal_sekolah}</div></td>
-                      <td className="px-4 py-2.5"><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${s.tahun_ajaran==='2027/2028'?'bg-emerald-100 text-emerald-700':'bg-gray-100 text-gray-600'}`}>{s.tahun_ajaran}</span></td>
-                      <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${st==='lunas'?'bg-green-100 text-green-700':st==='cicilan'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>{st==='lunas'?'Lunas':st==='cicilan'?'Cicilan':'Belum Lunas'}</span></td>
-                      <td className="px-4 py-2.5 text-xs">{fmtRp(Number(s.total_tagihan||0))}</td>
-                      <td className="px-4 py-2.5 text-xs font-bold text-amber-700">{fmtRp(Number(s.sisa_tagihan||0))}</td>
-                      <td className="px-4 py-2.5 font-mono text-xs text-gray-700">{lastBayar[s.no_reg] || <span className="text-gray-400">belum ada</span>}</td>
-                      <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'}</td>
-                      <td className="px-4 py-2.5">
-                        <div className="flex gap-1.5">
-                          <button onClick={()=> openDetail(s)} className="rounded-full bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700">Kelola</button>
-                          {canEdit && <button onClick={()=> setEditTarget(s)} title="Edit data siswa (super admin & CS)" className="rounded-full bg-amber-500 px-3 py-1 text-xs font-medium text-white hover:bg-amber-600">Edit</button>}
-                          {canEdit && <button onClick={async()=>{ if(!confirm(`Hapus ${s.nama_siswa} (${s.no_reg}) beserta histori pembayarannya? Tindakan ini tidak bisa dibatalkan.`)) return; const r = await fetch(`/api/siswa?no_reg=${s.no_reg}`,{method:'DELETE'}); const j = await r.json().catch(()=>null); if(!r.ok){ alert(j?.error||'Gagal hapus siswa'); return; } if(selected?.no_reg===s.no_reg) setSelected(null); load(); }} title="Hapus siswa (super admin & CS)" className="rounded-full border border-red-300 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50">Hapus</button>}
-                          {wa && Number(s.sisa_tagihan)>0 && <a href={wa} target="_blank" rel="noreferrer" className="rounded-full bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700">WA Ortu</a>}
+                      <td className="px-3 py-2.5 font-mono text-[11px] whitespace-nowrap text-red-700 dark:text-red-300">{s.no_reg}</td>
+                      <td className="px-3 py-2.5 font-medium text-gray-800 dark:text-slate-100">{s.nama_siswa}<div className="text-[10px] sm:text-[11px] text-gray-500 dark:text-slate-400">{s.tingkat_kelas} • {s.asal_sekolah}</div></td>
+                      <td className="px-3 py-2.5 whitespace-nowrap"><span className={`rounded-full px-2 py-0.5 text-[10px] sm:text-xs font-medium ${s.tahun_ajaran==='2027/2028'?'bg-emerald-100 text-emerald-700':'bg-gray-100 text-gray-600'}`}>{s.tahun_ajaran}</span></td>
+                      <td className="px-3 py-2.5 whitespace-nowrap"><span className={`rounded-full px-2 py-0.5 text-[10px] sm:text-xs font-medium ${st==='lunas'?'bg-green-100 text-green-700':st==='cicilan'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>{st==='lunas'?'Lunas':st==='cicilan'?'Cicilan':'Belum Lunas'}</span></td>
+                      <td className="px-3 py-2.5 whitespace-nowrap text-[11px] sm:text-xs">{fmtRp(Number(s.total_tagihan||0))}</td>
+                      <td className="px-3 py-2.5 whitespace-nowrap text-[11px] sm:text-xs font-bold text-amber-700">{fmtRp(Number(s.sisa_tagihan||0))}</td>
+                      <td className="px-3 py-2.5 font-mono whitespace-nowrap text-[11px] sm:text-xs text-gray-700">{lastBayar[s.no_reg] || <span className="text-gray-400">belum ada</span>}</td>
+                      <td className="px-3 py-2.5 font-mono whitespace-nowrap text-[11px] sm:text-xs text-gray-600">{s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'}</td>
+                      <td className="px-3 py-2.5">
+                        <div className="flex flex-wrap gap-1.5">
+                          <button onClick={()=> openDetail(s)} className="whitespace-nowrap rounded-full bg-red-600 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white hover:bg-red-700">Kelola</button>
+                          {canEdit && <button onClick={()=> setEditTarget(s)} title="Edit data siswa (super admin & CS)" className="whitespace-nowrap rounded-full bg-amber-500 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white hover:bg-amber-600">Edit</button>}
+                          {canEdit && <button onClick={async()=>{ if(!confirm(`Hapus ${s.nama_siswa} (${s.no_reg}) beserta histori pembayarannya? Tindakan ini tidak bisa dibatalkan.`)) return; const r = await fetch(`/api/siswa?no_reg=${s.no_reg}`,{method:'DELETE'}); const j = await r.json().catch(()=>null); if(!r.ok){ alert(j?.error||'Gagal hapus siswa'); return; } if(selected?.no_reg===s.no_reg) setSelected(null); load(); }} title="Hapus siswa (super admin & CS)" className="whitespace-nowrap rounded-full border border-red-300 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-red-600 hover:bg-red-50">Hapus</button>}
+                          {wa && Number(s.sisa_tagihan)>0 && <a href={wa} target="_blank" rel="noreferrer" className="whitespace-nowrap rounded-full bg-green-600 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white hover:bg-green-700">WA Ortu</a>}
                         </div>
                       </td>
                     </tr>
