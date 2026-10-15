@@ -16,6 +16,7 @@ interface Siswa {
   kelas_go: string;
   asal_sekolah: string;
   no_hp: string;
+  tahun_ajaran: string;
 }
 
 interface KelasItem {
@@ -42,7 +43,8 @@ export default function GrupBelajarPage() {
     try {
       const [classRes, regRes] = await Promise.all([
         supabase.from('admin_classes').select('*').order('id'),
-        supabase.from('registrations').select('*')
+        // Sumber roster = tabel 'siswa' (data Tambah Siswa / dashboard), bukan 'registrations'
+        supabase.from('siswa').select('no_reg,nama_siswa,kelas_go,tingkat_kelas,unit,asal_sekolah,no_hp,no_hp_ayah,no_hp_ortu,tahun_ajaran').order('nama_siswa')
       ]);
 
       let loadedClasses: KelasItem[] = [];
@@ -71,13 +73,14 @@ export default function GrupBelajarPage() {
     }
   }
 
-  // Group siswa by kelas_go matching nama_kelompok
+  // Group siswa by kelas_go matching nama_kelompok (hanya TA aktif untuk hitungan kuota)
   const kelasMap = useMemo(() => {
     const map: Record<string, Siswa[]> = {};
     adminClasses.forEach((k) => {
       map[k.kelas] = [];
     });
     siswaList.forEach((s) => {
+      if ((s.tahun_ajaran || '2027/2028') !== '2027/2028') return;
       const k = s.kelas_go || '';
       if (!map[k]) map[k] = [];
       map[k].push(s);
@@ -92,9 +95,11 @@ export default function GrupBelajarPage() {
 
   const filteredSiswa = activeSiswa.filter(
     (s) =>
-      s.nama_siswa.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.asal_sekolah.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.no_reg.includes(searchQuery)
+      // hanya siswa TA aktif 2027/2028 (arsip 2026/2027 tidak dihitung di kelas)
+      (s.tahun_ajaran || '2027/2028') === '2027/2028' &&
+      (s.nama_siswa.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (s.asal_sekolah || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.no_reg.includes(searchQuery))
   );
 
   return (
@@ -127,7 +132,7 @@ export default function GrupBelajarPage() {
                   <p className="mt-1">Buat kelas resmi di menu <a href="/pengaturan" className="underline font-bold">Pengaturan</a>.</p>
                 </div>
               ) : (
-                <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
                   {adminClasses.map((k) => {
                   const count = (kelasMap[k.kelas] || []).length;
                   const full = count >= k.max;
@@ -143,9 +148,9 @@ export default function GrupBelajarPage() {
                           : 'bg-gray-50 dark:bg-slate-900 hover:bg-red-50 dark:bg-red-950/30 text-gray-800 dark:text-slate-100 border-gray-200 dark:border-slate-800'
                       }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-sm font-mono">{k.kelas}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-bold text-sm font-mono break-all leading-tight">{k.kelas}</span>
+                        <span className={`shrink-0 text-[11px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap ${
                           isSelected 
                             ? 'bg-white dark:bg-slate-900 text-red-700 dark:text-red-400' 
                             : full ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300' : 'bg-green-100 text-green-800'
@@ -179,15 +184,19 @@ export default function GrupBelajarPage() {
                 <>
                   <div className="space-y-4">
                     <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-extrabold text-lg text-red-900 font-mono">{activeKelasInfo.kelas}</h3>
-                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${isFull ? 'bg-red-600 text-white' : 'bg-green-600 text-white'}`}>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-extrabold text-base sm:text-lg text-red-900 dark:text-red-300 font-mono break-all">{activeKelasInfo.kelas}</h3>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold whitespace-nowrap ${isFull ? 'bg-red-600 text-white' : 'bg-green-600 text-white'}`}>
                         {isFull ? 'KAPASITAS PENUH' : 'KUOTA TERSEDIA'}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-slate-400 mt-1">
-                      Jenjang: <b>{activeKelasInfo.tingkat}</b> | Ruang: <b>{activeKelasInfo.ruang}</b> | Jadwal: <b>{activeKelasInfo.jadwal}</b>
+                    <p className="text-xs text-gray-600 dark:text-slate-400 mt-1 space-x-1">
+                      <span>Jenjang: <b>{activeKelasInfo.tingkat}</b></span>
+                      <span className="hidden sm:inline">|</span>
+                      <span className="block sm:inline">Ruang: <b>{activeKelasInfo.ruang}</b></span>
+                      <span className="hidden sm:inline">|</span>
+                      <span className="block sm:inline">Jadwal: <b>{activeKelasInfo.jadwal}</b></span>
                     </p>
                   </div>
 
