@@ -341,7 +341,7 @@ export default function PengaturanAdminPage() {
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
+      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 bg-white/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><Image src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>

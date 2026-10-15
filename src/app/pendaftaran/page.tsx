@@ -498,37 +498,60 @@ export default function ModulPenawaranBimbel() {
         }
       ` }} />
 
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 print:hidden">
-        {/* Desktop: satu baris. Mobile: dua baris (judul di atas, tombol di bawah) */}
-        <div className="max-w-5xl mx-auto px-4 py-2 md:h-16 md:py-0 md:flex md:items-center md:justify-between">
+      {/* Desktop: header halaman. Mobile: disembunyikan (judul + aksi sudah ada di top bar MobileNav) */}
+      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 bg-white/80 backdrop-blur-xl print:hidden">
+        <div className="max-w-5xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto shrink-0 object-contain bg-white rounded-xl p-1.5 shadow-sm border border-red-100" />
             <div className="min-w-0">
-              <h1 className="font-bold text-base md:text-lg leading-tight truncate">Modul Penawaran Bimbel</h1>
+              <h1 className="font-bold text-lg leading-tight truncate">Modul Penawaran Bimbel</h1>
             </div>
           </div>
-          <div className="mt-2 md:mt-0 flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-2">
             <a
               href="/api/siswa/export"
-              className="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
             >
               <span>⬇️ Export</span>
             </a>
             <button
               onClick={fetchHistory}
-              className="shrink-0 bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="bg-gray-900 hover:bg-black text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
             >
               <span>📋 Riwayat</span>
             </button>
             <button
               onClick={() => { savePenawaranHistory('print'); window.print(); }}
-              className="shrink-0 bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
+              className="bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
             >
               <span>🖨️ Cetak Surat</span>
             </button>
           </div>
         </div>
       </header>
+      {/* Aksi (Export/Riwayat/Cetak) untuk mobile — header halaman disembunyikan di layar kecil */}
+      <div className="lg:hidden print:hidden px-4 pt-3">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <a
+            href="/api/siswa/export"
+            className="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+          >
+            <span>⬇️ Export</span>
+          </a>
+          <button
+            onClick={fetchHistory}
+            className="shrink-0 bg-gray-900 hover:bg-black text-white font-bold px-3 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+          >
+            <span>📋 Riwayat</span>
+          </button>
+          <button
+            onClick={() => { savePenawaranHistory('print'); window.print(); }}
+            className="shrink-0 bg-red-700 hover:bg-red-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-sm transition"
+          >
+            <span>🖨️ Cetak Surat</span>
+          </button>
+        </div>
+      </div>
 
       <main className="max-w-5xl mx-auto p-4 md:p-6 space-y-6 print:p-0 print:max-w-none">
         
