@@ -49,6 +49,41 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
     pembayaran_sekarang: '',
   });
   const [error, setError] = useState('');
+  const [lookupState, setLookupState] = useState<'idle' | 'loading' | 'found' | 'none'>('idle');
+
+  // Auto-lookup: saat no_reg lengkap (12 digit), cari di database siswa TA 2026/2027.
+  // Jika match, isi otomatis tanggal lahir, nama siswa, nama orang tua (ayah/ibu), dan kontak.
+  const lookupNoReg = (val: string) => {
+    const noreg = val.trim();
+    if (!/^\d{12}$/.test(noreg)) { setLookupState('idle'); return; }
+    setLookupState('loading');
+    fetch('/api/siswa')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        const arsip = ((j?.data || []) as any[]).find(
+          (s) => String(s.no_reg).trim() === noreg && (s.tahun_ajaran || '').includes('2026'),
+        );
+        if (!arsip) { setLookupState('none'); return; }
+        setLookupState('found');
+        setForm((f) => ({
+          ...f,
+          no_reg: noreg,
+          nama_siswa: f.nama_siswa || arsip.nama_siswa || '',
+          tgl_lahir: f.tgl_lahir || arsip.tgl_lahir || '',
+          nama_ortu: f.nama_ortu || arsip.nama_ortu || '',
+          no_hp_ortu: f.no_hp_ortu || arsip.no_hp_ortu || '',
+          nama_ayah: f.nama_ayah || arsip.nama_ayah || arsip.nama_ortu || '',
+          no_hp_ayah: f.no_hp_ayah || arsip.no_hp_ayah || arsip.no_hp_ortu || '',
+          nama_ibu: f.nama_ibu || arsip.nama_ibu || '',
+          no_hp_ibu: f.no_hp_ibu || arsip.no_hp_ibu || '',
+          no_hp: f.no_hp || arsip.no_hp || '',
+          asal_sekolah: f.asal_sekolah || arsip.asal_sekolah || '',
+          cabang: f.cabang || arsip.cabang || 'Madura',
+          kota: arsip.kota || f.kota,
+        }));
+      })
+      .catch(() => setLookupState('none'));
+  };
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState<{ nama: string; no_reg: string; warning?: string; updated?: boolean; movedFrom?: string } | null>(null);
 
@@ -382,8 +417,12 @@ export default function TambahSiswaModal({ open, onClose, onSuccess, kelasOption
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-semibold text-gray-800">No. Registrasi (12 digit) *</label>
-              <input value={form.no_reg} onChange={set('no_reg')} placeholder="cth: 101109123001" className={`${inputCls} font-mono`} maxLength={12} />
-              <p className="mt-1 text-[11px] font-medium text-gray-600">Manual dari aplikasi resmi GO</p>
+              <input value={form.no_reg} onChange={(e) => { set('no_reg')(e); lookupNoReg(e.target.value); }} placeholder="cth: 101109123001" className={`${inputCls} font-mono`} maxLength={12} inputMode="numeric" autoComplete="off" />
+              <p className="mt-1 text-[11px] font-medium">
+                {lookupState === 'loading' && <span className="text-gray-500">🔍 Mencari di database siswa TA 2026/2027…</span>}
+                {lookupState === 'found' && <span className="text-green-700 font-semibold">✓ Ditemukan di TA 2026/2027 — data terisi otomatis. Cek & lengkapi kelas/program.</span>}
+                {lookupState === 'none' && <span className="text-gray-600">Siswa baru — isi data manual.</span>}
+              </p>
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-gray-800">Tanggal Daftar</label>
