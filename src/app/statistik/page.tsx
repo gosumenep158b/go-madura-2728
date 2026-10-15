@@ -73,21 +73,21 @@ export default function StatistikPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-red-50/50">
-        <p className="animate-pulse text-sm font-medium text-red-700">Memuat statistik kapasitas…</p>
+      <div className="flex min-h-screen items-center justify-center bg-red-50 dark:bg-red-950/30/50 dark:bg-slate-950">
+        <p className="animate-pulse text-sm font-medium text-red-700 dark:text-red-400">Memuat statistik kapasitas…</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
       <Sidebar onTambah={() => setModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setModalOpen(true)} />
         <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
           <div>
             <h1 className="text-lg font-black tracking-tight text-slate-900">Data Statistik — Kapasitas Kelas</h1>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-slate-400">
               SD (4, 5, 6) maks 20 siswa · SMP (7, 8, 9) &amp; SMA (10, 11, 12) maks 25 siswa
             </p>
           </div>
@@ -98,24 +98,24 @@ export default function StatistikPage() {
             <CardSummary title="Hampir Penuh" value={hampir} description="terisi ≥ 80% kapasitas" icon={<AlertTriangle size={22} />} />
           </div>
 
-          <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-red-800">Okupansi per Kelas GO</h2>
-            <p className="mb-4 text-xs text-gray-500">Terisi vs kapasitas maksimum</p>
+          <div className="rounded-2xl border border-red-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+            <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Okupansi per Kelas GO</h2>
+            <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Terisi vs kapasitas maksimum</p>
             <div className="h-96">
               <KapasitasChart data={sorted} />
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex flex-col gap-3 border-b border-red-100 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <div className="flex flex-col gap-3 border-b border-red-100 dark:border-slate-800 p-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-sm font-bold text-red-800">Rincian Kapasitas per Kelas</h2>
-                <p className="text-xs text-gray-500">{sorted.length} kelas ditampilkan</p>
+                <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Rincian Kapasitas per Kelas</h2>
+                <p className="text-xs text-gray-500 dark:text-slate-400">{sorted.length} kelas ditampilkan</p>
               </div>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-red-400"
+                className="rounded-full border border-red-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 outline-none focus:border-red-400"
               >
                 {['Semua', 'Tersedia', 'Hampir Penuh', 'Penuh'].map((s) => (
                   <option key={s} value={s}>{s}</option>
@@ -137,25 +137,25 @@ export default function StatistikPage() {
                 </thead>
                 <tbody>
                   {sorted.map((k, i) => (
-                    <tr key={k.kelas} className={i % 2 ? 'bg-red-50/40' : 'bg-white'}>
-                      <td className="px-4 py-2.5 font-mono text-xs font-medium text-red-800">{k.kelas}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-600">{k.tingkat}</td>
-                      <td className="px-4 py-2.5 text-xs font-semibold text-gray-800">{k.terisi}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-600">{k.max}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-600">{k.sisa}</td>
+                    <tr key={k.kelas} className={i % 2 ? 'bg-red-50 dark:bg-red-950/30/40 dark:bg-slate-800/60' : 'bg-white dark:bg-slate-900'}>
+                      <td className="px-4 py-2.5 font-mono text-xs font-medium text-red-800 dark:text-red-300">{k.kelas}</td>
+                      <td className="px-4 py-2.5 text-xs text-gray-600 dark:text-slate-400">{k.tingkat}</td>
+                      <td className="px-4 py-2.5 text-xs font-semibold text-gray-800 dark:text-slate-100">{k.terisi}</td>
+                      <td className="px-4 py-2.5 text-xs text-gray-600 dark:text-slate-400">{k.max}</td>
+                      <td className="px-4 py-2.5 text-xs text-gray-600 dark:text-slate-400">{k.sisa}</td>
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-2">
-                          <div className="h-2 w-24 overflow-hidden rounded-full bg-red-100">
+                          <div className="h-2 w-24 overflow-hidden rounded-full bg-red-100 dark:bg-red-950">
                             <div
                               className="h-full rounded-full"
                               style={{ width: `${Math.min(100, k.persen)}%`, background: barColor(k) }}
                             />
                           </div>
-                          <span className="text-xs text-gray-600">{k.persen}%</span>
+                          <span className="text-xs text-gray-600 dark:text-slate-400">{k.persen}%</span>
                         </div>
                       </td>
                       <td className="px-4 py-2.5">
-                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle[k.status] ?? 'bg-gray-100 text-gray-700'}`}>
+                        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle[k.status] ?? 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300'}`}>
                           {k.status}
                         </span>
                       </td>

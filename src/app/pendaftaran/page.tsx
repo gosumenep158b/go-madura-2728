@@ -481,7 +481,7 @@ export default function ModulPenawaranBimbel() {
   const kelasForModal: any[] = (kelasOptions as any[]).map((c: any) => ({ id: c.id, nama_kelompok: c.nama_kelompok, tingkat_kelas: c.tingkat_kelas, unit: (c as any).unit, ruang: c.ruang, hari_jam: c.hari_jam }));
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 pb-24 print:bg-white print:pb-0">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 pb-24 print:bg-white dark:bg-slate-900 print:pb-0">
       <Sidebar onTambah={() => setSiswaModalOpen(true)} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => setSiswaModalOpen(true)} />
@@ -499,10 +499,10 @@ export default function ModulPenawaranBimbel() {
       ` }} />
 
       {/* Desktop: header halaman. Mobile: disembunyikan (judul + aksi sudah ada di top bar MobileNav) */}
-      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 bg-white/80 backdrop-blur-xl print:hidden">
+      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 backdrop-blur-xl print:hidden">
         <div className="max-w-5xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto shrink-0 object-contain bg-white rounded-xl p-1.5 shadow-sm border border-red-100" />
+            <img src="/images/logo_go_standar.png" alt="Ganesha Operation" className="h-10 w-auto shrink-0 object-contain bg-white dark:bg-slate-900 rounded-xl p-1.5 shadow-sm border border-red-100 dark:border-slate-800" />
             <div className="min-w-0">
               <h1 className="font-bold text-lg leading-tight truncate">Modul Penawaran Bimbel</h1>
             </div>
@@ -561,7 +561,7 @@ export default function ModulPenawaranBimbel() {
             <span className="px-3 py-1 rounded-full bg-amber-400 text-amber-900 text-[11px] font-bold uppercase tracking-widest">
               📄 Surat Penawaran Resmi & Kalkulator Diskon
             </span>
-            <span className="text-xs bg-white/10 px-2.5 py-1 rounded-full font-medium shrink-0 border border-white/20">{selectedUnit}</span>
+            <span className="text-xs bg-white dark:bg-slate-900/10 px-2.5 py-1 rounded-full font-medium shrink-0 border border-white/20">{selectedUnit}</span>
           </div>
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-1">
             Modul Penawaran Bimbel Ganesha Operation Semadura
@@ -575,17 +575,17 @@ export default function ModulPenawaranBimbel() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:block print:space-y-0">
           
           {/* Kolom Kiri: Form & Diskon Dinamis (Hidden on Print) */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 print:hidden">
-            <h3 className="text-lg font-bold text-gray-800 border-b pb-2 flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-5 print:hidden">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-slate-100 border-b pb-2 flex items-center justify-between">
               <span>Data &amp; Konfigurasi Penawaran</span>
             </h3>
 
             <div>
-              <label className="block text-xs font-bold text-gray-600 uppercase mb-1">1. Pilih Unit GO</label>
+              <label className="block text-xs font-bold text-gray-600 dark:text-slate-400 uppercase mb-1">1. Pilih Unit GO</label>
               <select 
                 value={selectedUnit} 
                 onChange={(e) => setSelectedUnit(e.target.value)}
-                className="w-full p-2.5 border rounded-xl text-sm font-bold bg-red-50 text-[#b70011]"
+                className="w-full p-2.5 border rounded-xl text-sm font-bold bg-red-50 dark:bg-red-950/30 text-[#b70011]"
               >
                 {SEMADURA_UNITS.map(u => (
                   <option key={u} value={u}>{u}</option>
@@ -594,26 +594,26 @@ export default function ModulPenawaranBimbel() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-600 uppercase mb-1">2. Status &amp; Cari Nomor Registrasi SLP</label>
+              <label className="block text-xs font-bold text-gray-600 dark:text-slate-400 uppercase mb-1">2. Status &amp; Cari Nomor Registrasi SLP</label>
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <button
                   type="button"
                   onClick={() => setStudentType('fresh')}
-                  className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${studentType === 'fresh' ? 'bg-red-600 text-white border-red-600' : 'bg-gray-50 text-gray-700 border-gray-200'}`}
+                  className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${studentType === 'fresh' ? 'bg-red-600 text-white border-red-600' : 'bg-gray-50 dark:bg-slate-900 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-800'}`}
                 >
                   Siswa Fresh (Baru)
                 </button>
                 <button
                   type="button"
                   onClick={() => setStudentType('slp')}
-                  className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${studentType === 'slp' ? 'bg-red-600 text-white border-red-600' : 'bg-gray-50 text-gray-700 border-gray-200'}`}
+                  className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${studentType === 'slp' ? 'bg-red-600 text-white border-red-600' : 'bg-gray-50 dark:bg-slate-900 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-800'}`}
                 >
                   Siswa SLP (Ex-GO)
                 </button>
               </div>
 
               {studentType === 'slp' && (
-                <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+                <div className="bg-amber-50 dark:bg-amber-950/40 p-3 rounded-xl border border-amber-200 space-y-2">
                   <p className="text-xs text-amber-900 font-semibold">Cari No. Registrasi SLP (Basis data Master: Unit Agus Salim Sumenep. Unit lain menyusul):</p>
                   <form onSubmit={handleCheckSlp} className="flex gap-2">
                     <input 
@@ -621,7 +621,7 @@ export default function ModulPenawaranBimbel() {
                       placeholder="Contoh: REG-2026-001" 
                       value={noRegInput}
                       onChange={(e) => setNoRegInput(e.target.value)}
-                      className="flex-1 p-2 border rounded-xl text-xs bg-white"
+                      className="flex-1 p-2 border rounded-xl text-xs bg-white dark:bg-slate-900"
                     />
                     <button 
                       type="submit" 
@@ -632,7 +632,7 @@ export default function ModulPenawaranBimbel() {
                     </button>
                   </form>
                   {slpCheckResult && (
-                    <div className={`text-xs p-2 rounded-lg ${slpCheckResult.found ? 'bg-green-100 text-green-900 font-bold' : 'bg-red-100 text-red-900'}`}>
+                    <div className={`text-xs p-2 rounded-lg ${slpCheckResult.found ? 'bg-green-100 text-green-900 font-bold' : 'bg-red-100 dark:bg-red-950 text-red-900'}`}>
                       {slpCheckResult.found ? `✅ Ditemukan: ${slpCheckResult.data.nama_siswa} (${slpCheckResult.data.asal_sekolah})` : slpCheckResult.message}
                     </div>
                   )}
@@ -642,7 +642,7 @@ export default function ModulPenawaranBimbel() {
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700">Nama Lengkap Siswa</label>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Nama Lengkap Siswa</label>
                 <input
                   type="text"
                   value={namaSiswa}
@@ -653,7 +653,7 @@ export default function ModulPenawaranBimbel() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700">No. WA Siswa</label>
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">No. WA Siswa</label>
                     <input
                       type="text"
                       value={noHp}
@@ -663,7 +663,7 @@ export default function ModulPenawaranBimbel() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700">No. WA Orang Tua</label>
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">No. WA Orang Tua</label>
                     <input
                       type="text"
                       value={noHpOrtu}
@@ -674,7 +674,7 @@ export default function ModulPenawaranBimbel() {
                   </div>
                 </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-700">Asal Sekolah</label>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Asal Sekolah</label>
                 <input
                   type="text"
                   value={asalSekolah}
@@ -687,7 +687,7 @@ export default function ModulPenawaranBimbel() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700">Tingkat Kelas</label>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Tingkat Kelas</label>
                 <select
                   value={grade}
                   onChange={(e) => setGrade(e.target.value)}
@@ -703,11 +703,11 @@ export default function ModulPenawaranBimbel() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-700">Program / Paket</label>
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Program / Paket</label>
                 <select
                   value={program}
                   onChange={(e) => setProgram(e.target.value)}
-                  className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white"
+                  className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white dark:bg-slate-900"
                 >
                   {getProgramOptions(grade).map((opt)=> (
                     <option key={opt} value={opt}>{opt}</option>
@@ -718,7 +718,7 @@ export default function ModulPenawaranBimbel() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Pilihan Kelas GO (sesuai Tingkat & Unit) <span className="font-normal text-gray-400">— opsional, dari Pengaturan</span></label>
               {(() => {
                 // removed debug
                 const filtered = kelasOptions.filter((c:any) => {
@@ -740,14 +740,14 @@ export default function ModulPenawaranBimbel() {
                 if (!displayList.length) {
                   const hasAnyForGrade = kelasOptions.some((c:any)=> c.tingkat_kelas === grade);
                   return (
-                    <div className="mt-1 p-3 rounded-xl border border-dashed bg-gray-50 text-xs text-gray-500">
+                    <div className="mt-1 p-3 rounded-xl border border-dashed bg-gray-50 dark:bg-slate-900 text-xs text-gray-500 dark:text-slate-400">
                       {kelasOptions.length===0 ? 'Belum ada kelas dibuat — buat di menu Pengaturan > Kelola Kelas.' : hasAnyForGrade ? `Belum ada kelas untuk ${grade} di ${selectedUnit}. Buat di Pengaturan > Kelola Kelas.` : `Belum ada kelas untuk ${grade} di semua unit. Buat di Pengaturan > Kelola Kelas.`}
                       <a href="/pengaturan" className="ml-1 text-[#b70011] font-bold underline">Buka Pengaturan →</a>
                     </div>
                   );
                 }
                 return (
-                  <select value={selectedKelasId} onChange={e=> setSelectedKelasId(e.target.value)} className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white">
+                  <select value={selectedKelasId} onChange={e=> setSelectedKelasId(e.target.value)} className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-white dark:bg-slate-900">
                     <option value="">— Pilih Kelas —</option>
                     {displayList.map((c:any)=> (
                       <option key={c.id} value={String(c.id)}>{c.nama_kelompok} — {c.hari_jam} ({c.ruang})</option>
@@ -756,16 +756,16 @@ export default function ModulPenawaranBimbel() {
                 );
               })()}
               {selectedKelasId ? (
-                <p className="text-[11px] text-gray-500 mt-1">Terpilih: <b>{(() => { const f = kelasOptions.find((c:any)=> String(c.id)===selectedKelasId); return f ? `${f.nama_kelompok} · ${f.hari_jam} · ${f.ruang}` : selectedKelasId; })()}</b> — akan tercantum di surat penawaran WhatsApp.</p>
+                <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">Terpilih: <b>{(() => { const f = kelasOptions.find((c:any)=> String(c.id)===selectedKelasId); return f ? `${f.nama_kelompok} · ${f.hari_jam} · ${f.ruang}` : selectedKelasId; })()}</b> — akan tercantum di surat penawaran WhatsApp.</p>
               ) : null}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700">Bulan Pendaftaran (Menentukan Diskon SLP &amp; Promo)</label>
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300">Bulan Pendaftaran (Menentukan Diskon SLP &amp; Promo)</label>
               <select
                 value={bulanDaftar}
                 onChange={(e) => setBulanDaftar(e.target.value)}
-                className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-amber-50 text-amber-900"
+                className="w-full mt-1 p-2 border rounded-xl text-sm font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-900"
               >
                 {(['November','Desember','Januari','Februari','Maret','April','Mei','Juni'] as const).map((b) => (
                   <option key={b} value={b}>{b} 2026 (Diskon SLP: Rp {(slpByMonth[b] ?? SLP_DISCOUNT_BY_MONTH[b] ?? 0).toLocaleString('id-ID')} | Promo: {((promoByMonth[b] ?? PROMO_RATE_BY_MONTH[b] ?? 0)*100).toFixed(0)}%)</option>
@@ -776,21 +776,21 @@ export default function ModulPenawaranBimbel() {
             {/* DYNAMIC DISCOUNTS MANAGER */}
             <div className="space-y-3 pt-3 border-t">
               <div className="flex items-center justify-between">
-                <h4 className="font-bold text-xs text-gray-700 uppercase">Manajemen Diskon (Tambah / Hapus)</h4>
+                <h4 className="font-bold text-xs text-gray-700 dark:text-slate-300 uppercase">Manajemen Diskon (Tambah / Hapus)</h4>
                 <div className="flex gap-1">
-                  <button type="button" onClick={() => handleAddDiscount('Diskon Loyalitas')} className="px-2 py-1 bg-red-50 text-red-700 border rounded-lg text-xs font-bold hover:bg-red-100">+ Loyalitas</button>
-                  <button type="button" onClick={() => handleAddDiscount('Diskon Ranking 1')} className="px-2 py-1 bg-red-50 text-red-700 border rounded-lg text-xs font-bold hover:bg-red-100">+ Ranking</button>
-                  <button type="button" onClick={() => handleAddDiscount('Diskon Khusus')} className="px-2 py-1 bg-red-50 text-red-700 border rounded-lg text-xs font-bold hover:bg-red-100">+ Lainnya</button>
+                  <button type="button" onClick={() => handleAddDiscount('Diskon Loyalitas')} className="px-2 py-1 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border rounded-lg text-xs font-bold hover:bg-red-100 dark:bg-red-950">+ Loyalitas</button>
+                  <button type="button" onClick={() => handleAddDiscount('Diskon Ranking 1')} className="px-2 py-1 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border rounded-lg text-xs font-bold hover:bg-red-100 dark:bg-red-950">+ Ranking</button>
+                  <button type="button" onClick={() => handleAddDiscount('Diskon Khusus')} className="px-2 py-1 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400 border rounded-lg text-xs font-bold hover:bg-red-100 dark:bg-red-950">+ Lainnya</button>
                 </div>
               </div>
 
               <div className="space-y-2">
                 {discounts.map((disc) => (
-                  <div key={disc.id} className="flex items-center gap-2 bg-gray-50 p-2.5 rounded-xl border">
+                  <div key={disc.id} className="flex items-center gap-2 bg-gray-50 dark:bg-slate-900 p-2.5 rounded-xl border">
                     <select
                       value={disc.type}
                       onChange={(e) => handleUpdateDiscount(disc.id, 'type', e.target.value)}
-                      className="text-xs p-1.5 border rounded-lg bg-white font-semibold flex-1"
+                      className="text-xs p-1.5 border rounded-lg bg-white dark:bg-slate-900 font-semibold flex-1"
                     >
                       <option value="Diskon Promo Bulanan">Diskon Promo Bulanan</option>
                       <option value="Diskon Loyalitas">Diskon Loyalitas (SLP)</option>
@@ -804,21 +804,21 @@ export default function ModulPenawaranBimbel() {
                         type="number"
                         value={disc.percent}
                         onChange={(e) => handleUpdateDiscount(disc.id, 'percent', Number(e.target.value))}
-                        className="w-14 text-xs p-1.5 border rounded-lg bg-white text-center font-bold"
+                        className="w-14 text-xs p-1.5 border rounded-lg bg-white dark:bg-slate-900 text-center font-bold"
                       />
-                      <span className="text-xs text-gray-500">%</span>
+                      <span className="text-xs text-gray-500 dark:text-slate-400">%</span>
                     </div>
-                    <button type="button" onClick={() => handleRemoveDiscount(disc.id)} className="text-red-600 font-bold px-2 py-1 text-xs" title="Hapus">✕</button>
+                    <button type="button" onClick={() => handleRemoveDiscount(disc.id)} className="text-red-600 dark:text-red-400 font-bold px-2 py-1 text-xs" title="Hapus">✕</button>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-600 uppercase mb-1">Metode Pembayaran</label>
+              <label className="block text-xs font-bold text-gray-600 dark:text-slate-400 uppercase mb-1">Metode Pembayaran</label>
               <div className="grid grid-cols-2 gap-2">
-                <button type="button" onClick={() => setPaymentMethod('cash')} className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${paymentMethod === 'cash' ? 'bg-amber-500 text-white border-amber-500' : 'bg-gray-50 text-gray-700'}`}>Lunas Tunai</button>
-                <button type="button" onClick={() => setPaymentMethod('installment')} className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${paymentMethod === 'installment' ? 'bg-amber-500 text-white border-amber-500' : 'bg-gray-50 text-gray-700'}`}>Cicilan 7x</button>
+                <button type="button" onClick={() => setPaymentMethod('cash')} className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${paymentMethod === 'cash' ? 'bg-amber-500 text-white border-amber-500' : 'bg-gray-50 dark:bg-slate-900 text-gray-700 dark:text-slate-300'}`}>Lunas Tunai</button>
+                <button type="button" onClick={() => setPaymentMethod('installment')} className={`py-2 px-3 rounded-xl font-bold text-sm border transition ${paymentMethod === 'installment' ? 'bg-amber-500 text-white border-amber-500' : 'bg-gray-50 dark:bg-slate-900 text-gray-700 dark:text-slate-300'}`}>Cicilan 7x</button>
               </div>
             </div>
 
@@ -827,28 +827,28 @@ export default function ModulPenawaranBimbel() {
           {/* Kolom Kanan: Surat Penawaran (1 Halaman / Print-ready) */}
           <div className="space-y-6 print:space-y-0">
             
-            <div id="print-letter" className="bg-white p-6 rounded-2xl shadow-sm border border-red-200 space-y-4 print:border-none print:shadow-none print:p-0">
+            <div id="print-letter" className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-red-200 dark:border-slate-700 space-y-4 print:border-none print:shadow-none print:p-0">
               
               <div className="text-center border-b pb-3 space-y-1">
-                <p className="text-[10px] text-gray-500">Kantor Cabang: <b>{selectedUnit}</b> | Tahun Ajaran 2027/2028</p>
+                <p className="text-[10px] text-gray-500 dark:text-slate-400">Kantor Cabang: <b>{selectedUnit}</b> | Tahun Ajaran 2027/2028</p>
               </div>
 
               {/* Data Calon Siswa — Compact 1 Baris (Tanpa Duplikasi) */}
-              <div className="bg-gray-50 px-3 py-2 rounded-xl text-[11px] border flex flex-wrap gap-x-4 gap-y-1">
-                <span><span className="text-gray-500">Siswa:</span> <b>{namaSiswa || '(Belum diisi)'}</b></span>
-                <span><span className="text-gray-500">Asal Sekolah:</span> <b>{asalSekolah || '(Belum diisi)'}</b></span>
-                <span><span className="text-gray-500">No. WA:</span> <b>{noHp || '(Belum diisi)'}</b></span>
-                <span><span className="text-gray-500">Jenjang:</span> <b>{grade}</b></span>
-                <span><span className="text-gray-500">Status:</span> <b>{studentType.toUpperCase()} ({bulanDaftar})</b></span>
+              <div className="bg-gray-50 dark:bg-slate-900 px-3 py-2 rounded-xl text-[11px] border flex flex-wrap gap-x-4 gap-y-1">
+                <span><span className="text-gray-500 dark:text-slate-400">Siswa:</span> <b>{namaSiswa || '(Belum diisi)'}</b></span>
+                <span><span className="text-gray-500 dark:text-slate-400">Asal Sekolah:</span> <b>{asalSekolah || '(Belum diisi)'}</b></span>
+                <span><span className="text-gray-500 dark:text-slate-400">No. WA:</span> <b>{noHp || '(Belum diisi)'}</b></span>
+                <span><span className="text-gray-500 dark:text-slate-400">Jenjang:</span> <b>{grade}</b></span>
+                <span><span className="text-gray-500 dark:text-slate-400">Status:</span> <b>{studentType.toUpperCase()} ({bulanDaftar})</b></span>
                 {(() => { 
                   const k = selectedKelasId ? kelasOptions.find((c:any)=> String(c.id)===selectedKelasId) : null; 
                   return k ? (
-                    <div className="w-full mt-2 pt-2 border-t border-red-100 flex items-center justify-between bg-red-50/50 px-2.5 py-1.5 rounded-lg text-xs">
-                      <div className="flex items-center gap-1.5 font-bold text-red-800">
+                    <div className="w-full mt-2 pt-2 border-t border-red-100 dark:border-slate-800 flex items-center justify-between bg-red-50 dark:bg-red-950/30/50 dark:bg-slate-950 px-2.5 py-1.5 rounded-lg text-xs">
+                      <div className="flex items-center gap-1.5 font-bold text-red-800 dark:text-red-300">
                         <span>🏫 Kelas GO Terpilih:</span>
                         <span className="bg-red-700 text-white px-2 py-0.5 rounded-md">{k.nama_kelompok}</span>
                       </div>
-                      <div className="text-gray-600 text-[11px] font-medium">
+                      <div className="text-gray-600 dark:text-slate-400 text-[11px] font-medium">
                         <span>📅 {k.hari_jam}</span>
                         <span className="mx-1.5 text-gray-400">|</span>
                         <span>📍 {k.ruang}</span>
@@ -880,7 +880,7 @@ export default function ModulPenawaranBimbel() {
                 )}
 
                 {discountLogs.map((log, idx) => (
-                  <div key={idx} className="flex justify-between text-red-700 text-xs">
+                  <div key={idx} className="flex justify-between text-red-700 dark:text-red-400 text-xs">
                     <span>- {log.label}:</span>
                     <span>(Rp {Math.round(log.amount).toLocaleString('id-ID')})</span>
                   </div>
@@ -888,10 +888,10 @@ export default function ModulPenawaranBimbel() {
               </div>
 
               <div className="pt-2 border-t">
-                <div className="bg-red-50 p-3 rounded-xl border border-red-200 flex items-center justify-between">
+                <div className="bg-red-50 dark:bg-red-950/30 p-3 rounded-xl border border-red-200 dark:border-slate-700 flex items-center justify-between">
                   <div>
-                    <div className="text-[10px] text-red-800 uppercase tracking-wider font-bold">Total Net Investasi Bimbel</div>
-                    <div className="text-2xl font-black text-red-700">
+                    <div className="text-[10px] text-red-800 dark:text-red-300 uppercase tracking-wider font-bold">Total Net Investasi Bimbel</div>
+                    <div className="text-2xl font-black text-red-700 dark:text-red-400">
                       Rp {Math.round(finalNet).toLocaleString('id-ID')}
                     </div>
                     <div className="text-[11px] text-emerald-700 font-semibold">
@@ -899,8 +899,8 @@ export default function ModulPenawaranBimbel() {
                     </div>
                   </div>
                   {paymentMethod === 'installment' && (
-                    <div className="text-right text-[11px] text-gray-700 bg-white p-2 rounded-lg border">
-                      <div className="font-bold text-red-600">Skema Cicilan 7x:</div>
+                    <div className="text-right text-[11px] text-gray-700 dark:text-slate-300 bg-white dark:bg-slate-900 p-2 rounded-lg border">
+                      <div className="font-bold text-red-600 dark:text-red-400">Skema Cicilan 7x:</div>
                       <div>~Rp {installmentPerMonth.toLocaleString('id-ID')} / bln</div>
                     </div>
                   )}
@@ -909,11 +909,11 @@ export default function ModulPenawaranBimbel() {
 
               {/* Fasilitas */}
               <div className="space-y-1.5 pt-1">
-                <h4 className="font-bold text-xs text-red-700 uppercase">Fasilitas Resmi Jenjang {grade}:</h4>
-                <ul className="grid grid-cols-2 gap-1 text-[10px] leading-tight text-gray-700">
+                <h4 className="font-bold text-xs text-red-700 dark:text-red-400 uppercase">Fasilitas Resmi Jenjang {grade}:</h4>
+                <ul className="grid grid-cols-2 gap-1 text-[10px] leading-tight text-gray-700 dark:text-slate-300">
                   {currentGradeFacilities.map((f, i) => (
-                    <li key={i} className="flex items-start gap-1 bg-gray-50 px-1.5 py-1 rounded border">
-                      <span className="text-red-600 font-bold">✓</span>
+                    <li key={i} className="flex items-start gap-1 bg-gray-50 dark:bg-slate-900 px-1.5 py-1 rounded border">
+                      <span className="text-red-600 dark:text-red-400 font-bold">✓</span>
                       <span>{f}</span>
                     </li>
                   ))}

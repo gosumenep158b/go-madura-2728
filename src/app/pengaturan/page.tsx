@@ -337,21 +337,21 @@ export default function PengaturanAdminPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 pb-20">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 pb-20">
       <Sidebar onTambah={() => {}} />
       <div className="min-w-0 flex-1">
         <MobileNav onTambah={() => {}} />
-      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+      <header className="hidden lg:sticky lg:top-0 lg:z-40 lg:block border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><Image src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-sm"><Image src="/images/logo_go_standar.png" alt="GO" width={36} height={36} className="h-8 w-8 object-contain" /></div>
             <div>
               <h1 className="font-bold text-lg leading-tight">Pengaturan Admin &amp; Master Data</h1>
               <span className="text-[11px] font-semibold tracking-wide text-slate-500">Ganesha Operation Semadura</span>
             </div>
           </div>
           <div className="flex gap-2">
-            <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 px-3 py-2 rounded-xl hover:bg-red-100 transition">
+            <a href="/pendaftaran" className="text-xs font-bold text-[#b70011] bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-xl hover:bg-red-100 dark:bg-red-950 transition">
               ← Kembali ke Modul Penawaran
             </a>
           </div>
@@ -364,25 +364,25 @@ export default function PengaturanAdminPage() {
         <div className="flex gap-2 border-b pb-3 overflow-x-auto">
           <button 
             onClick={() => setActiveTab('upload')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'upload' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'upload' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
             📤 Upload Database Siswa (Excel/CSV)
           </button>
           <button 
             onClick={() => setActiveTab('classes')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'classes' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'classes' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
             🏫 Kelola Kelas &amp; Jadwal
           </button>
           <button 
             onClick={() => setActiveTab('prices')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'prices' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'prices' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
             💰 Pengaturan Harga &amp; Bundling
           </button>
           <button 
             onClick={() => setActiveTab('discounts')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'discounts' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'discounts' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
             🏷️ Aturan Diskon Berjenjang
           </button>
@@ -390,14 +390,14 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'upload' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-              <h2 className="text-lg font-bold text-gray-900">Upload Database Siswa (Excel / CSV)</h2>
-              <p className="text-xs text-gray-600 leading-relaxed">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
+              <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">Upload Database Siswa (Excel / CSV)</h2>
+              <p className="text-xs text-gray-600 dark:text-slate-400 leading-relaxed">
                 Unggah file Excel (`.xlsx`, `.xls`) atau CSV untuk memperbarui atau memasukkan data siswa SLP ke database Supabase secara massal. Sistem akan otomatis mendeteksi dan memperbarui data berdasarkan nomor registrasi (`no_reg`).
               </p>
 
               {/* Header Specification Box */}
-              <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl space-y-2">
+              <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 p-4 rounded-xl space-y-2">
                 <h3 className="font-bold text-xs text-amber-900 uppercase tracking-wider">
                   📋 Urutan &amp; Format Header Kolom yang Wajib Digunakan pada Baris Pertama File Excel/CSV:
                 </h3>
@@ -418,10 +418,10 @@ export default function PengaturanAdminPage() {
               </div>
 
               <div className="pt-2">
-                <label className="block w-full border-2 border-dashed border-gray-300 hover:border-[#b70011] rounded-2xl p-8 text-center cursor-pointer bg-gray-50/50 transition">
+                <label className="block w-full border-2 border-dashed border-gray-300 hover:border-[#b70011] rounded-2xl p-8 text-center cursor-pointer bg-gray-50 dark:bg-slate-900/50 transition">
                   <div className="space-y-2">
                     <div className="text-3xl">📁</div>
-                    <div className="font-bold text-sm text-gray-700">
+                    <div className="font-bold text-sm text-gray-700 dark:text-slate-300">
                       {uploading ? 'Sedang Memproses &amp; Mengunggah...' : 'Klik untuk Pilih File Excel / CSV (.xlsx, .xls, .csv)'}
                     </div>
                     <div className="text-xs text-gray-400">Mendukung file Excel dan CSV standar Ganesha Operation Semadura</div>
@@ -437,20 +437,20 @@ export default function PengaturanAdminPage() {
               </div>
 
               {uploadStats && (
-                <div className="p-4 rounded-xl bg-green-50 border border-green-200 text-green-800 text-sm font-semibold">
+                <div className="p-4 rounded-xl bg-green-50 dark:bg-green-950/40 border border-green-200 text-green-800 text-sm font-semibold">
                   ✅ {uploadStats.message} (Total diproses: {uploadStats.total} data)
                 </div>
               )}
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
-              <h2 className="text-lg font-bold text-gray-900">Migrasi Arsip ke Supabase</h2>
-              <p className="text-xs text-gray-600 leading-relaxed">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
+              <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">Migrasi Arsip ke Supabase</h2>
+              <p className="text-xs text-gray-600 dark:text-slate-400 leading-relaxed">
                 Pindahkan arsip siswa dari file (<code>src/data/siswa.json</code>) ke tabel Supabase agar bisa ditambah/diubah/hapus dari Vercel.
                 Baris yang no. reg-nya sudah ada dilewati otomatis. Lakukan sekali saja (atau setelah arsip file bertambah).
               </p>
               {migrateMsg && (
-                <div className={`p-4 rounded-xl text-sm font-semibold border ${migrateMsg.type === 'ok' ? 'bg-green-50 border-green-200 text-green-800' : migrateMsg.type === 'err' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+                <div className={`p-4 rounded-xl text-sm font-semibold border ${migrateMsg.type === 'ok' ? 'bg-green-50 dark:bg-green-950/40 border-green-200 text-green-800' : migrateMsg.type === 'err' ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-slate-700 text-red-700 dark:text-red-400' : 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 text-amber-800'}`}>
                   {migrateMsg.text}
                 </div>
               )}
@@ -460,12 +460,12 @@ export default function PengaturanAdminPage() {
             </div>
 
             {previewData.length > 0 && (
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-                <h3 className="font-bold text-sm text-gray-800">Pratinjau 10 Data Teratas yang Diunggah:</h3>
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
+                <h3 className="font-bold text-sm text-gray-800 dark:text-slate-100">Pratinjau 10 Data Teratas yang Diunggah:</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-gray-100 text-gray-700 border-b">
+                      <tr className="bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-b">
                         <th className="p-2">No Reg</th>
                         <th className="p-2">Kota</th>
                         <th className="p-2">Unit</th>
@@ -477,7 +477,7 @@ export default function PengaturanAdminPage() {
                     </thead>
                     <tbody>
                       {previewData.map((row, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
+                        <tr key={idx} className="border-b hover:bg-gray-50 dark:bg-slate-900">
                           <td className="p-2 font-mono font-bold">{row.no_reg || row['No Reg']}</td>
                           <td className="p-2">{row.kota || row['Kota']}</td>
                           <td className="p-2">{row.unit || row['Unit']}</td>
@@ -497,23 +497,23 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'classes' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-5">
               <div>
-                <h2 className="text-lg font-bold text-gray-900">🏫 Kelola Jadwal &amp; Kelas</h2>
-                <p className="text-xs text-gray-500">Buat jadwal kelas baru dengan format nama otomatis sesuai jenjang (SD/SMP/SMA) dan anti-bentrok ruangan.</p>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">🏫 Kelola Jadwal &amp; Kelas</h2>
+                <p className="text-xs text-gray-500 dark:text-slate-400">Buat jadwal kelas baru dengan format nama otomatis sesuai jenjang (SD/SMP/SMA) dan anti-bentrok ruangan.</p>
               </div>
 
               <form onSubmit={handleAddClass} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Unit Cabang</label>
-                    <select value={cUnit} onChange={e=>setCUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Pilih Unit Cabang</label>
+                    <select value={cUnit} onChange={e=>setCUnit(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50 dark:bg-slate-900">
                       {SEMADURA_UNITS.map(u => <option key={u} value={u}>{u} {u==='Unit Jokotole'?'(Medical Class)':''}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Program</label>
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Pilih Program</label>
                     <select value={cProgram} onChange={e=>{
                       const p=e.target.value;
                       setCProgram(p);
@@ -521,7 +521,7 @@ export default function PengaturanAdminPage() {
                       else if(p==='Reguler Non SD') setCTingkat('12 SMA UMUM');
                       else if(p==='Eksekutif Silver') setCTingkat('12 SMA Silver');
                       else if(p==='Eksekutif Medical Class') setCTingkat('12 SMA Med');
-                    }} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50">
+                    }} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-gray-50 dark:bg-slate-900">
                       <option value="Reguler SD">Reguler SD (Kls 4-6 SD)</option>
                       <option value="Reguler Non SD">Reguler Non SD (Kls 7-12 SMA)</option>
                       <option value="Eksekutif Silver">Eksekutif Silver (12 SMA Silver)</option>
@@ -530,8 +530,8 @@ export default function PengaturanAdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Tingkat Kelas</label>
-                    <select value={cTingkat} onChange={e=>setCTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Pilih Tingkat Kelas</label>
+                    <select value={cTingkat} onChange={e=>setCTingkat(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-amber-50 dark:bg-amber-950/40">
                       {cProgram === 'Reguler SD' && ['6 SD','5 SD','4 SD'].map(x=> <option key={x} value={x}>{x}</option>)}
                       {cProgram === 'Reguler Non SD' && ['12 SMA UMUM','11 SMA UMUM','10 SMA UMUM','9 SMP','8 SMP','7 SMP'].map(x=> <option key={x} value={x}>{x}</option>)}
                       {cProgram === 'Eksekutif Silver' && ['12 SMA Silver'].map(x=> <option key={x} value={x}>{x}</option>)}
@@ -540,11 +540,11 @@ export default function PengaturanAdminPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-gray-50 border">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-gray-50 dark:bg-slate-900 border">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">Nomor / Suffix Nama Kelas</label>
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Nomor / Suffix Nama Kelas</label>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-gray-500 bg-white px-2 py-2 border rounded-xl">
+                      <span className="text-xs font-bold text-gray-500 dark:text-slate-400 bg-white dark:bg-slate-900 px-2 py-2 border rounded-xl">
                         {(() => {
                           const tn = cTingkat.replace(/[^0-9]/g,'') || '12';
                           const jen = cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'SMA';
@@ -556,7 +556,7 @@ export default function PengaturanAdminPage() {
                       </span>
                       <input type="text" value={cNumber} onChange={e=>setCNumber(e.target.value)} className="w-20 p-2 border rounded-xl text-sm font-bold text-center" placeholder="230" />
                     </div>
-                    <p className="text-[10px] text-gray-500 mt-1">Format: <b>{(() => {
+                    <p className="text-[10px] text-gray-500 dark:text-slate-400 mt-1">Format: <b>{(() => {
                       const tn = cTingkat.replace(/[^0-9]/g,'') || '12';
                       const jen = cTingkat.includes('SD')?'SD':cTingkat.includes('SMP')?'SMP':'SMA';
                       const isMed = cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL');
@@ -567,8 +567,8 @@ export default function PengaturanAdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">Pilih Ruangan (Anti-Bentrok)</label>
-                    <select value={cRuang} onChange={e=>setCRuang(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-white">
+                    <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Pilih Ruangan (Anti-Bentrok)</label>
+                    <select value={cRuang} onChange={e=>setCRuang(e.target.value)} className="w-full p-2.5 border rounded-xl text-sm font-semibold bg-white dark:bg-slate-900">
                       {['UGM','Unair','ITB','ITS','UM','IPB','Unesa','UI','UB'].map(r => <option key={r} value={r}>Ruang {r}</option>)}
                     </select>
                     <p className="text-[10px] text-green-700 font-semibold mt-1">
@@ -585,26 +585,26 @@ export default function PengaturanAdminPage() {
 
                 {/* Jadwal: 2 hari normal (4 KBM), 3 hari khusus Medical 6P (6 KBM) */}
                 {(cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL')) && (
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">🩺 Program Medical 6P: <b>3 hari × 2 sesi = 6 KBM/minggu</b> — atur Hari 1, 2, dan 3 di bawah.</div>
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/40 px-3 py-2 text-xs font-semibold text-amber-800">🩺 Program Medical 6P: <b>3 hari × 2 sesi = 6 KBM/minggu</b> — atur Hari 1, 2, dan 3 di bawah.</div>
                 )}
                 <div className={`grid grid-cols-1 gap-4 pt-2 border-t ${cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL') ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
 
-                  <div className="p-4 rounded-xl border bg-white space-y-3">
+                  <div className="p-4 rounded-xl border bg-white dark:bg-slate-900 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-black uppercase tracking-wider text-red-700">Pertemuan Hari 1</span>
-                      <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 text-red-800">
+                      <span className="text-xs font-black uppercase tracking-wider text-red-700 dark:text-red-400">Pertemuan Hari 1</span>
+                      <select value={cHari1} onChange={e=>setCHari1(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 dark:bg-red-950/30 text-red-800 dark:text-red-300">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
                       </select>
                     </div>
                     <div className="space-y-2 text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                        <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 1:</span>
                         <input type="text" value={cHari1S1Awal} onChange={e=>setCHari1S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="16.00" />
                         <span>s.d.</span>
                         <input type="text" value={cHari1S1Akhir} onChange={e=>setCHari1S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="17.30" />
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                        <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 2:</span>
                         <input type="text" value={cHari1S2Awal} onChange={e=>setCHari1S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="18.00" />
                         <span>s.d.</span>
                         <input type="text" value={cHari1S2Akhir} onChange={e=>setCHari1S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="19.30" />
@@ -612,22 +612,22 @@ export default function PengaturanAdminPage() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl border bg-white space-y-3">
+                  <div className="p-4 rounded-xl border bg-white dark:bg-slate-900 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-black uppercase tracking-wider text-red-700">Pertemuan Hari 2</span>
-                      <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 text-red-800">
+                      <span className="text-xs font-black uppercase tracking-wider text-red-700 dark:text-red-400">Pertemuan Hari 2</span>
+                      <select value={cHari2} onChange={e=>setCHari2(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-red-50 dark:bg-red-950/30 text-red-800 dark:text-red-300">
                         {['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].map(h=><option key={h} value={h}>{h}</option>)}
                       </select>
                     </div>
                     <div className="space-y-2 text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                        <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 1:</span>
                         <input type="text" value={cHari2S1Awal} onChange={e=>setcHari2S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="16.00" />
                         <span>s.d.</span>
                         <input type="text" value={cHari2S1Akhir} onChange={e=>setcHari2S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="17.30" />
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                        <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 2:</span>
                         <input type="text" value={cHari2S2Awal} onChange={e=>setcHari2S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="18.00" />
                         <span>s.d.</span>
                         <input type="text" value={cHari2S2Akhir} onChange={e=>setcHari2S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="19.30" />
@@ -635,7 +635,7 @@ export default function PengaturanAdminPage() {
                     </div>
                   </div>
                   {(cProgram==='Eksekutif Medical Class' || String(cProgram).toUpperCase().includes('MEDICAL')) && (
-                    <div className="p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 space-y-3">
+                    <div className="p-4 rounded-xl border-2 border-amber-300 bg-amber-50 dark:bg-amber-950/40/70 space-y-3">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-black uppercase tracking-wider text-amber-700">Pertemuan Hari 3 <span className="font-normal normal-case">(Medical 6P)</span></span>
                         <select value={cHari3} onChange={e=>setCHari3(e.target.value)} className="p-1.5 border rounded-lg text-xs font-bold bg-amber-100 text-amber-800">
@@ -644,13 +644,13 @@ export default function PengaturanAdminPage() {
                       </div>
                       <div className="space-y-2 text-xs">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-600 w-12">Sesi 1:</span>
+                          <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 1:</span>
                           <input type="text" value={cHari3S1Awal} onChange={e=>setcHari3S1Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="08.00" />
                           <span>s.d.</span>
                           <input type="text" value={cHari3S1Akhir} onChange={e=>setcHari3S1Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="09.30" />
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-600 w-12">Sesi 2:</span>
+                          <span className="font-semibold text-gray-600 dark:text-slate-400 w-12">Sesi 2:</span>
                           <input type="text" value={cHari3S2Awal} onChange={e=>setcHari3S2Awal(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="10.00" />
                           <span>s.d.</span>
                           <input type="text" value={cHari3S2Akhir} onChange={e=>setcHari3S2Akhir(e.target.value)} className="w-20 p-1.5 border rounded text-center font-mono text-xs" placeholder="11.30" />
@@ -662,18 +662,18 @@ export default function PengaturanAdminPage() {
               </form>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-bold text-gray-900">Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
-                <span className="text-xs text-gray-500">Muncul otomatis di modul Pendaftaran</span>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">Daftar Kelas &amp; Sisa Daya Kapasitas</h2>
+                <span className="text-xs text-gray-500 dark:text-slate-400">Muncul otomatis di modul Pendaftaran</span>
               </div>
               {loadingClasses ? (
-                <p className="text-sm text-gray-500">Memuat daftar kelas...</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400">Memuat daftar kelas...</p>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-gray-100 text-gray-700 border-b">
+                      <tr className="bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-b">
                         <th className="p-3">ID</th>
                         <th className="p-3">Tingkat</th>
                         <th className="p-3">Nama Kelas</th>
@@ -692,11 +692,11 @@ export default function PengaturanAdminPage() {
                         const enrolled = Number(c.enrolled ?? 0);
                         const sisa = Math.max(0, cap - enrolled);
                         return (
-                          <tr key={c.id} className="border-b hover:bg-gray-50">
+                          <tr key={c.id} className="border-b hover:bg-gray-50 dark:bg-slate-900">
                             <td className="p-3 font-mono">{c.id}</td>
                             <td className="p-3"><span className="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">{c.tingkat_kelas ?? '-'}</span></td>
                             <td className="p-3 font-bold text-[#b70011]">{c.nama_kelompok ?? c.class_name}</td>
-                            <td className="p-3 font-semibold text-gray-700">{c.kurikulum ?? 'Reguler'}</td>
+                            <td className="p-3 font-semibold text-gray-700 dark:text-slate-300">{c.kurikulum ?? 'Reguler'}</td>
                             <td className="p-3 font-bold text-indigo-700">Ruang {c.ruang ?? c.unit_name}</td>
                             <td className="p-3">{c.hari_jam ?? c.schedule}</td>
                             <td className="p-3">{cap} siswa</td>
@@ -705,7 +705,7 @@ export default function PengaturanAdminPage() {
                             <td className="p-3 text-center">
                               <div className="flex items-center justify-center gap-1.5">
                                 <button onClick={()=>startEditClass(c)} className="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-[11px] font-bold">Edit</button>
-                                <button onClick={()=>handleDeleteClass(c.id, c.nama_kelompok ?? c.class_name)} className="px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-[11px] font-bold">Hapus</button>
+                                <button onClick={()=>handleDeleteClass(c.id, c.nama_kelompok ?? c.class_name)} className="px-2.5 py-1 rounded-lg bg-red-100 dark:bg-red-950 hover:bg-red-200 text-red-700 dark:text-red-400 text-[11px] font-bold">Hapus</button>
                               </div>
                             </td>
                           </tr>
@@ -720,29 +720,29 @@ export default function PengaturanAdminPage() {
         )}
 
 {activeTab === 'prices' && (
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Pengaturan Harga &amp; Bundling per Jenjang</h2>
-            <p className="text-xs text-gray-600">Harga dasar program bimbingan belajar TA 2027/2028 per jenjang kelas.</p>
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">Pengaturan Harga &amp; Bundling per Jenjang</h2>
+            <p className="text-xs text-gray-600 dark:text-slate-400">Harga dasar program bimbingan belajar TA 2027/2028 per jenjang kelas.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl border bg-gray-50 space-y-2">
+              <div className="p-4 rounded-xl border bg-gray-50 dark:bg-slate-900 space-y-2">
                 <div className="font-bold text-sm">12 SMA / SNBT (Eksekutif Silver)</div>
                 <div className="text-2xl font-black text-[#b70011]">Rp 11.500.000</div>
-                <div className="text-xs text-gray-500">Fasilitas lengkap 4 KBM/pekan + TST + e-TOBK</div>
+                <div className="text-xs text-gray-500 dark:text-slate-400">Fasilitas lengkap 4 KBM/pekan + TST + e-TOBK</div>
               </div>
-              <div className="p-4 rounded-xl border bg-gray-50 space-y-2">
+              <div className="p-4 rounded-xl border bg-gray-50 dark:bg-slate-900 space-y-2">
                 <div className="font-bold text-sm">10 &amp; 11 SMA Umum (TWT 1 Tahun)</div>
                 <div className="text-2xl font-black text-[#b70011]">Rp 10.200.000</div>
-                <div className="text-xs text-gray-500">Fasilitas lengkap 4 KBM/pekan + TST</div>
+                <div className="text-xs text-gray-500 dark:text-slate-400">Fasilitas lengkap 4 KBM/pekan + TST</div>
               </div>
-              <div className="p-4 rounded-xl border bg-gray-50 space-y-2">
+              <div className="p-4 rounded-xl border bg-gray-50 dark:bg-slate-900 space-y-2">
                 <div className="font-bold text-sm">7, 8, 9 SMP (TWT 1 Tahun)</div>
                 <div className="text-2xl font-black text-[#b70011]">Rp 8.900.000</div>
-                <div className="text-xs text-gray-500">Fasilitas lengkap 4 KBM/pekan + TST</div>
+                <div className="text-xs text-gray-500 dark:text-slate-400">Fasilitas lengkap 4 KBM/pekan + TST</div>
               </div>
-              <div className="p-4 rounded-xl border bg-gray-50 space-y-2">
+              <div className="p-4 rounded-xl border bg-gray-50 dark:bg-slate-900 space-y-2">
                 <div className="font-bold text-sm">4, 5, 6 SD (TWT 1 Tahun)</div>
                 <div className="text-2xl font-black text-[#b70011]">Rp 7.500.000</div>
-                <div className="text-xs text-gray-500">Fasilitas lengkap 4 KBM/pekan (60 menit)</div>
+                <div className="text-xs text-gray-500 dark:text-slate-400">Fasilitas lengkap 4 KBM/pekan (60 menit)</div>
               </div>
               <div className="p-4 rounded-xl border bg-indigo-50 border-indigo-200 space-y-2">
                 <div className="font-bold text-sm text-indigo-900">🩺 Unit Jokotole: Medical Class</div>
@@ -755,20 +755,20 @@ export default function PengaturanAdminPage() {
 
         {activeTab === 'discounts' && (
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-bold text-gray-900">Diskon per Bulan — Modul (Promo %) &amp; SLP (Rp)</h2>
-                  <p className="text-xs text-gray-600 mt-1">Ubah <b>Diskon Modul</b> (persen promo lunas &amp; cicilan) dan <b>Diskon SLP</b> (Rp, khusus siswa lama) per bulan daftar. Nilai dipakai otomatis di <a href="/pendaftaran" className="text-[#b70011] underline">Pendaftaran</a> &amp; ringkasan pembayaran.</p>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-slate-50">Diskon per Bulan — Modul (Promo %) &amp; SLP (Rp)</h2>
+                  <p className="text-xs text-gray-600 dark:text-slate-400 mt-1">Ubah <b>Diskon Modul</b> (persen promo lunas &amp; cicilan) dan <b>Diskon SLP</b> (Rp, khusus siswa lama) per bulan daftar. Nilai dipakai otomatis di <a href="/pendaftaran" className="text-[#b70011] underline">Pendaftaran</a> &amp; ringkasan pembayaran.</p>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={fetchMonthly} disabled={loadingMonthly} className="px-3 py-2 rounded-xl text-xs font-bold border bg-white hover:bg-gray-50 disabled:opacity-50">{loadingMonthly ? 'Memuat…' : '↻ Muat Ulang'}</button>
-                  <button onClick={resetMonthlyDefault} className="px-3 py-2 rounded-xl text-xs font-bold border bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100">Reset Default Juklak</button>
+                  <button onClick={fetchMonthly} disabled={loadingMonthly} className="px-3 py-2 rounded-xl text-xs font-bold border bg-white dark:bg-slate-900 hover:bg-gray-50 dark:bg-slate-900 disabled:opacity-50">{loadingMonthly ? 'Memuat…' : '↻ Muat Ulang'}</button>
+                  <button onClick={resetMonthlyDefault} className="px-3 py-2 rounded-xl text-xs font-bold border bg-amber-50 dark:bg-amber-950/40 text-amber-800 border-amber-200 hover:bg-amber-100">Reset Default Juklak</button>
                 </div>
               </div>
 
               {monthlyMsg && (
-                <div className={`p-3 rounded-xl text-xs font-medium border ${monthlyMsg.type==='ok' ? 'bg-green-50 border-green-200 text-green-800' : monthlyMsg.type==='err' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-amber-50 border-amber-200 text-amber-800'}`}>
+                <div className={`p-3 rounded-xl text-xs font-medium border ${monthlyMsg.type==='ok' ? 'bg-green-50 dark:bg-green-950/40 border-green-200 text-green-800' : monthlyMsg.type==='err' ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-slate-700 text-red-700 dark:text-red-400' : 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 text-amber-800'}`}>
                   {monthlyMsg.text}
                 </div>
               )}
@@ -776,16 +776,16 @@ export default function PengaturanAdminPage() {
               <div className="overflow-x-auto -mx-1">
                 <table className="w-full text-sm border-collapse min-w-[520px]">
                   <thead>
-                    <tr className="bg-gray-50 text-gray-700 border-y">
+                    <tr className="bg-gray-50 dark:bg-slate-900 text-gray-700 dark:text-slate-300 border-y">
                       <th className="text-left p-3 font-bold">Bulan Daftar</th>
-                      <th className="text-left p-3 font-bold">Diskon Modul (Promo) <span className="font-normal text-gray-500">— %</span></th>
-                      <th className="text-left p-3 font-bold">Diskon SLP <span className="font-normal text-gray-500">— Rp</span></th>
+                      <th className="text-left p-3 font-bold">Diskon Modul (Promo) <span className="font-normal text-gray-500 dark:text-slate-400">— %</span></th>
+                      <th className="text-left p-3 font-bold">Diskon SLP <span className="font-normal text-gray-500 dark:text-slate-400">— Rp</span></th>
                       <th className="text-left p-3 font-bold">Preview</th>
                     </tr>
                   </thead>
                   <tbody>
                     {monthly.map(r=>(
-                      <tr key={r.bulan} className="border-b hover:bg-gray-50/70">
+                      <tr key={r.bulan} className="border-b hover:bg-gray-50 dark:bg-slate-900/70">
                         <td className="p-3 font-bold text-[#b70011]">{r.bulan}</td>
                         <td className="p-2">
                           <div className="flex items-center gap-2">
@@ -793,19 +793,19 @@ export default function PengaturanAdminPage() {
                               value={Number((r.promo_rate*100).toFixed(1))}
                               onChange={e=> updMonthly(r.bulan,'promo_rate', Math.max(0,Math.min(100, Number(e.target.value)||0))/100)}
                               className="w-24 p-2 border rounded-xl text-sm font-mono" />
-                            <span className="text-xs text-gray-500">%</span>
+                            <span className="text-xs text-gray-500 dark:text-slate-400">%</span>
                           </div>
                         </td>
                         <td className="p-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500">Rp</span>
+                            <span className="text-xs text-gray-500 dark:text-slate-400">Rp</span>
                             <input type="number" min={0} step={5000}
                               value={r.slp_discount}
                               onChange={e=> updMonthly(r.bulan,'slp_discount', Math.max(0, Math.round(Number(e.target.value)||0)))}
                               className="w-32 p-2 border rounded-xl text-sm font-mono" />
                           </div>
                         </td>
-                        <td className="p-3 text-xs text-gray-600">
+                        <td className="p-3 text-xs text-gray-600 dark:text-slate-400">
                           Promo <b>{(r.promo_rate*100).toFixed(0)}%</b> · SLP <b>Rp {r.slp_discount.toLocaleString('id-ID')}</b>
                         </td>
                       </tr>
@@ -818,14 +818,14 @@ export default function PengaturanAdminPage() {
                 <button onClick={saveMonthly} disabled={savingMonthly} className="bg-[#b70011] hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm disabled:opacity-50 shadow-sm">
                   {savingMonthly ? 'Menyimpan…' : '💾 Simpan Diskon Bulanan'}
                 </button>
-                <span className="text-xs text-gray-500 self-center">Disimpan ke Supabase (<code>admin_monthly_discounts</code>) + cache lokal. Jika tabel belum ada, jalankan <code>database/monthly_discounts_schema.sql</code> di SQL Editor.</span>
+                <span className="text-xs text-gray-500 dark:text-slate-400 self-center">Disimpan ke Supabase (<code>admin_monthly_discounts</code>) + cache lokal. Jika tabel belum ada, jalankan <code>database/monthly_discounts_schema.sql</code> di SQL Editor.</span>
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
-              <h3 className="font-bold text-sm text-gray-900">Urutan Penerapan Diskon (Successive Discount)</h3>
-              <p className="text-xs text-gray-600">Sistem menerapkan diskon berurutan — nilai <b>Promo %</b> dan <b>SLP Rp</b> di atas diambil per <b>bulan daftar</b>:</p>
-              <ol className="list-decimal list-inside text-xs space-y-2 text-gray-700 font-medium">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
+              <h3 className="font-bold text-sm text-gray-900 dark:text-slate-50">Urutan Penerapan Diskon (Successive Discount)</h3>
+              <p className="text-xs text-gray-600 dark:text-slate-400">Sistem menerapkan diskon berurutan — nilai <b>Promo %</b> dan <b>SLP Rp</b> di atas diambil per <b>bulan daftar</b>:</p>
+              <ol className="list-decimal list-inside text-xs space-y-2 text-gray-700 dark:text-slate-300 font-medium">
                 <li><b>Diskon Tetap SLP:</b> Potongan sesuai tabel di atas (kolom SLP Rp) — khusus Siswa Lama/Ex-GO.</li>
                 <li><b>Diskon Loyalitas SLP:</b> Pilihan dropdown 6%, 7%, atau 8%.</li>
                 <li><b>Diskon Ranking / Prestasi:</b> Ranking 1 (20%), Ranking 2-3 (10%), Ranking 4-5 (7%).</li>

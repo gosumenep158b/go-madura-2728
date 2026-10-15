@@ -21,16 +21,17 @@ function waNormalize(no: string){
 function fmtRp(n:number){ return 'Rp ' + Number(n||0).toLocaleString('id-ID') }
 function waReminderLink(s: Siswa, tb: number, sisa: number, nextJml?: number){
   const hp = s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '';
-  const ortu = s.nama_ayah || s.nama_ortu || s.nama_ibu || '—';
+  const ortu = (s.nama_ayah || s.nama_ortu || s.nama_ibu || '—').toUpperCase();
   const no = waNormalize(hp);
   if(!no) return null;
   const msg = encodeURIComponent(
-    `Yth. Orang Tua/Wali *${ortu}* — siswa *${s.nama_siswa}* (${s.no_reg}, ${s.tingkat_kelas}, TA ${s.tahun_ajaran})\n\n`+
-    `Pengingat pembayaran bimbel GO:\n`+
-    `Total tagihan: ${fmtRp(tb)}\n`+
-    `Sudah bayar: ${fmtRp(tb - sisa)}\n`+
-    `*Sisa tagihan: ${fmtRp(sisa)}*${nextJml ? `\nJatuh tempo cicilan berikutnya: ${fmtRp(nextJml)}` : ''}\n\n`+
-    `Mohon segera melakukan pembayaran. Info: Ganesha Operation Sumenep.`
+    `Yth. Bapak/Ibu *${ortu}* orangtua Adik *${(s.nama_siswa||'').toUpperCase()}*.\n`+
+    `Pengingat pembayaran bimbel GO: \n`+
+    `- Total tagihan: ${fmtRp(tb)}\n`+
+    `- Sudah bayar: ${fmtRp(tb - sisa)}\n`+
+    `- *Sisa tagihan: ${fmtRp(sisa)}* \n\n`+
+    `Mohon segera melakukan pembayaran.\n`+
+    `Info: Ganesha Operation Sumenep.`
   );
   return `https://wa.me/${no}?text=${msg}`;
 }

@@ -59,7 +59,7 @@ function LoginForm() {
 
         {/* Top Header / Logo */}
         <div className="relative z-10 flex items-center justify-between">
-          <div className="bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-white/20 flex items-center gap-3">
+          <div className="bg-white dark:bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-white/20 flex items-center gap-3">
             <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={36} className="h-9 w-auto object-contain" />
           </div>
           <div className="flex items-center gap-2 bg-amber-500 text-amber-950 px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg uppercase tracking-wider">
@@ -69,7 +69,7 @@ function LoginForm() {
 
         {/* Middle / Bottom Content */}
         <div className="relative z-10 space-y-5 max-w-xl mb-4">
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-300 border border-white/25 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-300 border border-white/25 shadow-sm">
             <Award size={15} /> Bimbel Tatap Muka Berbasis Teknologi Digital
           </div>
           <h1 className="text-4xl xl:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
@@ -80,15 +80,15 @@ function LoginForm() {
           </p>
 
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
               <div className="text-2xl font-black text-amber-400">207+</div>
               <div className="text-xs text-red-100 font-medium">Siswa SLP Terverifikasi</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
               <div className="text-2xl font-black text-amber-400">20+</div>
               <div className="text-xs text-red-100 font-medium">Kelas GO Aktif</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
+            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
               <div className="text-2xl font-black text-amber-400">100%</div>
               <div className="text-xs text-red-100 font-medium">Fasilitas Unggulan</div>
             </div>
@@ -103,32 +103,32 @@ function LoginForm() {
       </div>
 
       {/* Right Side: Clean Modern Login Form */}
-      <div className="w-full lg:w-2/5 flex items-center justify-center p-6 sm:p-12 bg-white">
+      <div className="w-full lg:w-2/5 flex items-center justify-center p-6 sm:p-12 bg-white dark:bg-slate-900">
         <div className="w-full max-w-md space-y-6 sm:space-y-8">
 
           {/* Mobile Logo Header */}
           <div className="lg:hidden text-center space-y-2">
-            <div className="inline-block bg-white p-2.5 rounded-2xl shadow-md border border-red-100">
+            <div className="inline-block bg-white dark:bg-slate-900 p-2.5 rounded-2xl shadow-md border border-red-100 dark:border-slate-800">
               <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={40} className="h-8 w-auto object-contain mx-auto" />
             </div>
-            <h2 className="text-lg font-black text-gray-900">Ganesha Operation Sumenep</h2>
-            <p className="text-xs text-gray-500">Dashboard Siswa TA 2026/2027</p>
+            <h2 className="text-lg font-black text-gray-900 dark:text-slate-50">Ganesha Operation Sumenep</h2>
+            <p className="text-xs text-gray-500 dark:text-slate-400">Dashboard Siswa TA 2026/2027</p>
           </div>
 
           <div className="space-y-2 text-center lg:text-left">
-            <h2 className="text-2xl font-black tracking-tight text-gray-900">Masuk ke Dashboard</h2>
-            <p className="text-sm text-gray-500">Masukkan username dan password Anda untuk melanjutkan.</p>
+            <h2 className="text-2xl font-black tracking-tight text-gray-900 dark:text-slate-50">Masuk ke Dashboard</h2>
+            <p className="text-sm text-gray-500 dark:text-slate-400">Masukkan username dan password Anda untuk melanjutkan.</p>
           </div>
 
           {error && (
-            <div className="rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700 border border-red-200 flex items-center gap-2">
+            <div className="rounded-2xl bg-red-50 dark:bg-red-950/30 p-4 text-sm font-medium text-red-700 dark:text-red-400 border border-red-200 dark:border-slate-700 flex items-center gap-2">
               <span>⚠️</span> {error}
             </div>
           )}
 
           <form onSubmit={submit} className="space-y-5">
             <div>
-              <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-gray-700">
+              <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-slate-300">
                 Username / NIK
               </label>
               <input
@@ -136,17 +136,17 @@ function LoginForm() {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Masukkan username atau NIK"
                 autoComplete="username"
-                className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3.5 text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
+                className="w-full rounded-2xl border border-gray-300 bg-white dark:bg-slate-900 px-4 py-3.5 text-sm font-medium text-gray-900 dark:text-slate-50 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
                 required
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-slate-300">
                   Password
                 </label>
-                <a href="#" className="inline-flex min-h-[32px] items-center px-1 text-xs font-semibold text-red-600 hover:underline">
+                <a href="#" className="inline-flex min-h-[32px] items-center px-1 text-xs font-semibold text-red-600 dark:text-red-400 hover:underline">
                   Lupa password?
                 </a>
               </div>
@@ -157,13 +157,13 @@ function LoginForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Masukkan password"
                   autoComplete="current-password"
-                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-3.5 pr-12 text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
+                  className="w-full rounded-2xl border border-gray-300 bg-white dark:bg-slate-900 px-4 py-3.5 pr-12 text-sm font-medium text-gray-900 dark:text-slate-50 placeholder:text-gray-400 outline-none transition focus:border-red-600 focus:ring-4 focus:ring-red-100"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPw((v) => !v)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600 dark:text-red-400"
                   tabIndex={-1}
                 >
                   {showPw ? <EyeOff size={19} /> : <Eye size={19} />}
