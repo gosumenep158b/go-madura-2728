@@ -38,6 +38,11 @@ async function readPembayaranAll(): Promise<any[]> {
 
 // POST { ta?, unit? } -> tulis ulang sheet pertama dengan tabel export (header + rows)
 export async function POST(req: Request) {
+  return syncSheet(req)
+}
+
+// Dipakai juga untuk auto-sync: tanpa body -> semua TA, semua unit
+async function syncSheet(req: Request) {
   try {
     const { sheetId } = assertSheetEnv();
     const body = (await req.json().catch(() => ({}))) as { ta?: string; unit?: string };
@@ -70,9 +75,21 @@ export async function POST(req: Request) {
     });
   } catch (e: any) {
     if (String(e?.message || '').startsWith('ENV belum lengkap')) {
+      console.warn('[api/siswa/google-sheet] auto-sync skip: ENV belum lengkap');
       return NextResponse.json({ error: e.message }, { status: 500 });
     }
     console.error('[api/siswa/google-sheet]', e);
     return NextResponse.json({ error: sheetErrorMessage(e) }, { status: 500 });
   }
+}
+
+// Helper dipakai route lain: fire-and-forget sync ke Google Sheet setelah perubahan data.
+// Tidak melempar error — kegagalan sheet tidak boleh menggagalkan simpan siswa/pembayaran.
+// Langsung panggil syncSheet() in-process (serverless-safe), tanpa fetch ke diri sendiri.
+export async function autoSyncSheet() {
+  try {
+    const hasEnv = !!(process.env.GOOGLE_SHEET_ID && process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_PRIVATE_KEY);
+    if (!hasEnv) return
+    await syncSheet(new Request('http://internal/api/siswa/google-sheet', { method: 'POST', body: '{}' })).catch(() => {})
+  } catch {}
 }

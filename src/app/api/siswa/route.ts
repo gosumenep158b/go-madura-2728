@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { createClient } from '@supabase/supabase-js'
 import { getSessionFromRequest, canEditSiswa } from '@/lib/auth'
+import { autoSyncSheet } from '@/app/api/siswa/google-sheet/route'
 
 export interface Siswa {
   no_reg: string;
@@ -214,11 +215,11 @@ export async function POST(req: Request) {  try {
     }
     if (dup) {
       const up = await updateSiswaSupabase(newSiswa.no_reg, newSiswa)
-      if (up.ok) { await recordFirstPayment_(newSiswa); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
+      if (up.ok) { await recordFirstPayment_(newSiswa); autoSyncSheet(); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
       if (up.error === 'NOT_FOUND') {
         // Baris hanya ada di arsip file (belum migrasi) -> insert ke Supabase agar bisa dikelola di Vercel
         const ins = await writeSiswaSupabase(newSiswa)
-        if (ins.ok) { await recordFirstPayment_(newSiswa); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
+        if (ins.ok) { await recordFirstPayment_(newSiswa); autoSyncSheet(); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
         if (ins.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
       }
       if (up.error === 'SCHEMA_OUTDATED' || up.error === 'TABLE_MISSING' || up.error === 'NOT_FOUND') {
@@ -249,6 +250,7 @@ export async function POST(req: Request) {  try {
     const sb = await writeSiswaSupabase(newSiswa)
     if (sb.ok) {
       await recordFirstPayment_(newSiswa)
+      autoSyncSheet()
       return NextResponse.json({ success: true, data: newSiswa })
     }
     if (sb.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })

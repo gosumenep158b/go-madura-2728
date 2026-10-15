@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { createClient } from '@supabase/supabase-js'
+import { autoSyncSheet } from '@/app/api/siswa/google-sheet/route'
 
 export interface Pembayaran {
   id: string;
@@ -202,6 +203,7 @@ export async function POST(req: Request) {
     } catch (e) { console.warn('[api/pembayaran] siswa update unavailable', e) }
 
     const waOrtu = siswaUpdated ? waNormalize(siswaUpdated.no_hp_ortu) : waNormalize((lookup.row as any)?.no_hp_ortu || '')
+    autoSyncSheet()
     return NextResponse.json({ success: true, data: rec, siswa: siswaUpdated || lookup.row, waOrtu, sisaBaru, totalBayarBaru })
   } catch (e) { console.error(e); return NextResponse.json({ error: 'Gagal simpan pembayaran' }, { status: 500 }) }
 }
@@ -258,6 +260,7 @@ export async function DELETE(req: Request) {
           status_bayar: tagihan > 0 && tagihan - totalBayar <= 0 ? 'lunas' : totalBayar > 0 ? 'cicilan' : 'belum_lunas',
         }).eq('no_reg', (target as Pembayaran).no_reg)
       } catch (e) { console.warn('[api/pembayaran DELETE] recalc unavailable', e) }
+      autoSyncSheet()
       return NextResponse.json({ success: true })
     }
 
