@@ -361,30 +361,34 @@ export default function PengaturanAdminPage() {
       <main className="max-w-6xl mx-auto p-4 md:p-6 space-y-6">
         
         {/* Nav Tabs */}
-        <div className="flex gap-2 border-b pb-3 overflow-x-auto">
+        <div className="grid grid-cols-2 sm:flex gap-2 border-b pb-3">
           <button 
             onClick={() => setActiveTab('upload')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'upload' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
+            className={`w-full sm:w-auto px-3 sm:px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-sm text-center transition ${activeTab === 'upload' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
-            📤 Upload Database Siswa (Excel/CSV)
+            <span className="hidden sm:inline">📤 Upload Database Siswa (Excel/CSV)</span>
+            <span className="sm:hidden">📤 Upload Siswa</span>
           </button>
           <button 
             onClick={() => setActiveTab('classes')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'classes' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
+            className={`w-full sm:w-auto px-3 sm:px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-sm text-center transition ${activeTab === 'classes' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
-            🏫 Kelola Kelas &amp; Jadwal
+            <span className="hidden sm:inline">🏫 Kelola Kelas &amp; Jadwal</span>
+            <span className="sm:hidden">🏫 Kelas</span>
           </button>
           <button 
             onClick={() => setActiveTab('prices')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'prices' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
+            className={`w-full sm:w-auto px-3 sm:px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-sm text-center transition ${activeTab === 'prices' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
-            💰 Pengaturan Harga &amp; Bundling
+            <span className="hidden sm:inline">💰 Pengaturan Harga &amp; Bundling</span>
+            <span className="sm:hidden">💰 Harga</span>
           </button>
           <button 
             onClick={() => setActiveTab('discounts')}
-            className={`px-4 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'discounts' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
+            className={`w-full sm:w-auto px-3 sm:px-4 py-2.5 rounded-xl font-bold text-[11px] sm:text-sm text-center transition ${activeTab === 'discounts' ? 'bg-[#b70011] text-white shadow-sm' : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:bg-slate-800'}`}
           >
-            🏷️ Aturan Diskon Berjenjang
+            <span className="hidden sm:inline">🏷️ Aturan Diskon Berjenjang</span>
+            <span className="sm:hidden">🏷️ Diskon</span>
           </button>
         </div>
 
@@ -401,7 +405,7 @@ export default function PengaturanAdminPage() {
                 <h3 className="font-bold text-xs text-amber-900 uppercase tracking-wider">
                   📋 Urutan &amp; Format Header Kolom yang Wajib Digunakan pada Baris Pertama File Excel/CSV:
                 </h3>
-                <ol className="list-decimal list-inside text-xs text-amber-800 space-y-1 font-mono">
+                <ol className="list-decimal list-inside text-[11px] sm:text-xs text-amber-800 space-y-1 font-mono">
                   <li><span className="font-bold text-black">no_reg</span> (Nomor Registrasi Unik)</li>
                   <li><span className="font-bold text-black">kota</span> (Nama Kota Cabang, misal: Pamekasan, Sumenep, Sampang, Bangkalan)</li>
                   <li><span className="font-bold text-black">unit</span> (Nama Unit GO, misal: Unit Jokotole, Unit Parteker, Unit Agus Salim, Unit Imam Bonjol, Unit Cempaka)</li>
@@ -418,7 +422,7 @@ export default function PengaturanAdminPage() {
               </div>
 
               <div className="pt-2">
-                <label className="block w-full border-2 border-dashed border-gray-300 hover:border-[#b70011] rounded-2xl p-8 text-center cursor-pointer bg-gray-50 dark:bg-slate-900/50 transition">
+                <label className="block w-full border-2 border-dashed border-gray-300 hover:border-[#b70011] rounded-2xl p-5 sm:p-8 text-center cursor-pointer bg-gray-50 dark:bg-slate-900/50 transition">
                   <div className="space-y-2">
                     <div className="text-3xl">📁</div>
                     <div className="font-bold text-sm text-gray-700 dark:text-slate-300">
