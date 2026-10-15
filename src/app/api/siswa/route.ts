@@ -198,6 +198,8 @@ export async function POST(req: Request) {  try {
       unit: (body as any).unit||'', kelas_go: body.kelas_go||'', tingkat_kelas: body.tingkat_kelas||'', program: (body as any).program||'', asal_sekolah: body.asal_sekolah||'', tgl_daftar: body.tgl_daftar||new Date().toISOString().slice(0,10),
       tahun_ajaran: body.tahun_ajaran||'2027/2028', status_bayar: (body.status_bayar as Siswa['status_bayar']) || 'belum_lunas', total_tagihan: total, sisa_tagihan: sisa, metode_bayar: body.metode_bayar as Siswa['metode_bayar']||undefined,
     }
+    // bawa DP saat pendaftaran untuk pencatatan histori pembayaran pertama
+    ;(newSiswa as any).pembayaran_sekarang = (body as any).pembayaran_sekarang || ''
     if(newSiswa.sisa_tagihan<=0 && newSiswa.total_tagihan>0) newSiswa.status_bayar='lunas'
     const existing = await readSiswa()
     const dup = existing.find((s)=>s.no_reg===newSiswa.no_reg)
