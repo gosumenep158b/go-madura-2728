@@ -1,4 +1,6 @@
 'use client';
+
+import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -155,11 +157,17 @@ export function MobileNav({ onTambah }: SidebarProps) {
         </div>
       </div>
 
-      {/* Drawer overlay */}
+      {/* Drawer overlay — animasi slide (Motion) */}
+      <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
-          <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <aside className="absolute left-0 top-0 flex h-full w-[280px] max-w-[85vw] flex-col bg-white shadow-2xl dark:bg-slate-900">
+        <motion.div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+          <motion.div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} />
+          <motion.aside className="absolute left-0 top-0 flex h-full w-[280px] max-w-[85vw] flex-col bg-white shadow-2xl dark:bg-slate-900"
+            initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+            transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+            style={{ willChange: 'transform' }}>
             {/* Brand + close */}
             <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4 dark:border-slate-800">
               <div className="flex min-w-0 items-center gap-2.5">
@@ -220,9 +228,10 @@ export function MobileNav({ onTambah }: SidebarProps) {
               )}
               <p className="mt-3 text-center text-[10px] font-medium text-slate-400">© 2027 Ganesha Operation</p>
             </div>
-          </aside>
-        </div>
+          </motion.aside>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 }

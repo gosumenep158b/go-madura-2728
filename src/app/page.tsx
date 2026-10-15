@@ -6,6 +6,7 @@ import { Users, School, Layers, CreditCard, Download, ExternalLink } from 'lucid
 import Sidebar, { MobileNav } from '@/components/dashboard/Sidebar';
 import { SEMADURA_UNITS } from '@/lib/program';
 import CardSummary from '@/components/dashboard/CardSummary';
+import { Reveal } from '@/components/dashboard/DashboardCharts';
 
 const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1AlmWDTapham69WcXwqV_27075WgSLhxwYVrA4lpeGnY/edit?gid=0#gid=0';
 
@@ -249,10 +250,14 @@ export default function Home() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <CardSummary title="Total Siswa" value={String(bayarStats.total)} description={`TA ${ta}`} icon={<Users size={22} />} />
-            <CardSummary title="Sisa Tagihan" value={fmtRp(bayarStats.sisa)} description={`${bayarStats.cicilan+bayarStats.belum} belum lunas`} icon={<CreditCard size={22} />} />
-            <CardSummary title="Lunas" value={String(bayarStats.lunas)} description={`${bayarStats.total? Math.round(bayarStats.lunas/bayarStats.total*100):0}% dari total`} icon={<Layers size={22} />} />
-            <CardSummary title="Total Kelas GO" value={String(summary?.kapasitasKelas.length ?? 0)} description="Kelas terpakai di TA ini" icon={<School size={22} />} />
+            {[
+              <CardSummary key="a" title="Total Siswa" value={String(bayarStats.total)} description={`TA ${ta}`} icon={<Users size={22} />} />,
+              <CardSummary key="b" title="Sisa Tagihan" value={fmtRp(bayarStats.sisa)} description={`${bayarStats.cicilan+bayarStats.belum} belum lunas`} icon={<CreditCard size={22} />} />,
+              <CardSummary key="c" title="Lunas" value={String(bayarStats.lunas)} description={`${bayarStats.total? Math.round(bayarStats.lunas/bayarStats.total*100):0}% dari total`} icon={<Layers size={22} />} />,
+              <CardSummary key="d" title="Total Kelas GO" value={String(summary?.kapasitasKelas.length ?? 0)} description="Kelas terpakai di TA ini" icon={<School size={22} />} />,
+            ].map((card, i) => (
+              <Reveal key={i} delay={i * 0.07}>{card}</Reveal>
+            ))}
           </div>
 
           {bayarStats.tagihan>0 && (
@@ -268,6 +273,7 @@ export default function Home() {
           )}
 
           {/* Trend pendaftar per bulan */}
+          <Reveal>
           <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Pendaftar per Bulan — {filterUnit === 'Semua' ? 'Semua Unit' : filterUnit} · TA {ta}</h2>
             <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Tren pendaftaran berdasarkan tanggal daftar</p>
@@ -275,23 +281,28 @@ export default function Home() {
               <TrendChart data={trendBulan} />
             </div>
           </div>
+          </Reveal>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <Reveal>
+            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 h-72">
               <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Siswa per Tingkat Kelas</h2>
               <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Distribusi jenjang {filterUnit === 'Semua' ? 'semua unit' : filterUnit} · TA {ta}</p>
-              <div className="h-72">
+              <div className="h-52">
                 <TingkatChart data={tingkatChart} />
               </div>
             </div>
+            </Reveal>
 
-            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <Reveal delay={0.1}>
+            <div className="rounded-2xl border border-red-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 h-72">
               <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Top 8 Asal Sekolah</h2>
               <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Sekolah dengan siswa terbanyak {filterUnit === 'Semua' ? '' : `di ${filterUnit}`}</p>
-              <div className="h-72">
+              <div className="h-52">
                 <SekolahChart data={topSekolah} />
               </div>
             </div>
+            </Reveal>
           </div>
 
           {/* Menu Export Spreadsheet */}
