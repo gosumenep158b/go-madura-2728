@@ -163,8 +163,29 @@ export async function GET(req: Request) {
   return NextResponse.json({ summary, data, allTahun })
 }
 
-export async function POST(req: Request) {
+// Rekam pembayaran pertama (DP / bayar saat daftar) ke tabel pembayaran bila ada.
+// Dipanggil setelah siswa berhasil disimpan, agar "Pembayaran Sekarang" muncul
+// di riwayat modul Pembayaran & Cicilan (cicilan_ke = 1).
+async function recordFirstPayment_(s: Partial<Siswa>) {
+  const jml = Number((s as any).pembayaran_sekarang || 0)
+  if (!jml || jml <= 0) return
+  const supabase = getSupabase()
   try {
+    const rec = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      no_reg: String(s.no_reg),
+      tanggal: s.tgl_daftar || new Date().toISOString().slice(0, 10),
+      jumlah: jml,
+      metode: ((s as any).metode_pembayaran as any) || 'tunai',
+      keterangan: 'Pembayaran pertama saat pendaftaran',
+      cicilan_ke: 1,
+    }
+    const { error } = await supabase.from('pembayaran').insert(rec)
+    if (error) console.warn('[api/siswa] recordFirstPayment insert error', (error as any).message)
+  } catch (e) { console.warn('[api/siswa] recordFirstPayment unavailable', e) }
+}
+
+export async function POST(req: Request) {  try {
     const body = (await req.json()) as Partial<Siswa>
     if (!body.nama_siswa || !body.no_reg) return NextResponse.json({ error: 'Nama siswa dan No. Registrasi wajib diisi' }, { status: 400 })
     const total = Number(body.total_tagihan ?? 0)
@@ -191,11 +212,11 @@ export async function POST(req: Request) {
     }
     if (dup) {
       const up = await updateSiswaSupabase(newSiswa.no_reg, newSiswa)
-      if (up.ok) return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran })
+      if (up.ok) { await recordFirstPayment_(newSiswa); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
       if (up.error === 'NOT_FOUND') {
         // Baris hanya ada di arsip file (belum migrasi) -> insert ke Supabase agar bisa dikelola di Vercel
         const ins = await writeSiswaSupabase(newSiswa)
-        if (ins.ok) return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran })
+        if (ins.ok) { await recordFirstPayment_(newSiswa); return NextResponse.json({ success: true, updated: true, data: newSiswa, movedFrom: dup.tahun_ajaran }) }
         if (ins.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
       }
       if (up.error === 'SCHEMA_OUTDATED' || up.error === 'TABLE_MISSING' || up.error === 'NOT_FOUND') {
@@ -224,7 +245,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: up.error || 'Gagal menambah siswa' }, { status: 500 })
     }
     const sb = await writeSiswaSupabase(newSiswa)
-    if (sb.ok) return NextResponse.json({ success: true, data: newSiswa })
+    if (sb.ok) {
+      await recordFirstPayment_(newSiswa)
+      return NextResponse.json({ success: true, data: newSiswa })
+    }
     if (sb.error === 'DUPLICATE') return NextResponse.json({ error: 'No. Registrasi sudah terdaftar!' }, { status: 400 })
     if (sb.error === 'SCHEMA_OUTDATED' || sb.error === 'TABLE_MISSING') {
       const schemaMsg = sb.error === 'SCHEMA_OUTDATED'

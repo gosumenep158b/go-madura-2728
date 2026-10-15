@@ -52,12 +52,22 @@ export default function PembayaranPage(){
   const [msg, setMsg] = useState("");
   const [editTarget, setEditTarget] = useState<EditSiswaData | null>(null);
   const [myRole, setMyRole] = useState("");
+  const [lastBayar, setLastBayar] = useState<Record<string,string>>({});
   const canEdit = myRole.toLowerCase() === "super admin" || myRole.toLowerCase() === "cs";
 
   const load = useCallback(()=>{
     setLoading(true);
     const qs = ta==="Semua" ? "" : `?ta=${encodeURIComponent(ta)}`;
     fetch(`/api/siswa${qs}`).then(r=>r.json()).then(j=> setSiswa(j.data??[])).finally(()=> setLoading(false));
+    // tanggal terakhir bayar per siswa (dari histori pembayaran)
+    fetch("/api/pembayaran").then(r=>r.json()).then((j)=>{
+      const map: Record<string,string> = {};
+      (j.data??[]).forEach((p:any)=>{
+        const cur = map[p.no_reg];
+        if(!cur || String(p.tanggal) > cur) map[p.no_reg] = String(p.tanggal).slice(0,10);
+      });
+      setLastBayar(map);
+    }).catch(()=>{});
   },[ta]);
   useEffect(()=>{ load() },[load]);
   useEffect(()=>{
@@ -133,11 +143,11 @@ export default function PembayaranPage(){
             <div className="overflow-x-auto">
               <table className="w-full min-w-[900px] text-left text-sm">
                 <thead><tr className="bg-slate-900 text-[11px] uppercase tracking-widest text-white">
-                  <th className="px-4 py-3">No Reg</th><th className="px-4 py-3">Nama Siswa</th><th className="px-4 py-3">TA</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Tagihan</th><th className="px-4 py-3">Sisa</th><th className="px-4 py-3">WA Ortu</th><th className="px-4 py-3">Aksi</th>
+                  <th className="px-4 py-3">No Reg</th><th className="px-4 py-3">Nama Siswa</th><th className="px-4 py-3">TA</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Tagihan</th><th className="px-4 py-3">Sisa</th><th className="px-4 py-3">Terakhir Bayar</th><th className="px-4 py-3">WA Ortu</th><th className="px-4 py-3">Aksi</th>
                 </tr></thead>
                 <tbody>
-                  {loading ? <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">Memuat...</td></tr> :
-                   filtered.length===0 ? <tr><td colSpan={8} className="px-4 py-8 text-center text-sm text-gray-400">Tidak ada data untuk filter TA ini. Tambah siswa TA 2027/2028 via tombol Tambah Siswa.</td></tr> :
+                  {loading ? <tr><td colSpan={9} className="px-4 py-8 text-center text-sm text-gray-400">Memuat...</td></tr> :
+                   filtered.length===0 ? <tr><td colSpan={9} className="px-4 py-8 text-center text-sm text-gray-400">Tidak ada data untuk filter TA ini. Tambah siswa TA 2027/2028 via tombol Tambah Siswa.</td></tr> :
                    filtered.slice(0,200).map((s,i)=> {
                     const wa = waReminderLink(s, Number(s.total_tagihan||0), Number(s.sisa_tagihan||0));
                     const st = s.status_bayar;
@@ -149,6 +159,7 @@ export default function PembayaranPage(){
                       <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${st==='lunas'?'bg-green-100 text-green-700':st==='cicilan'?'bg-amber-100 text-amber-700':'bg-red-100 text-red-700'}`}>{st==='lunas'?'Lunas':st==='cicilan'?'Cicilan':'Belum Lunas'}</span></td>
                       <td className="px-4 py-2.5 text-xs">{fmtRp(Number(s.total_tagihan||0))}</td>
                       <td className="px-4 py-2.5 text-xs font-bold text-amber-700">{fmtRp(Number(s.sisa_tagihan||0))}</td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-gray-700">{lastBayar[s.no_reg] || <span className="text-gray-400">belum ada</span>}</td>
                       <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{s.no_hp_ayah || s.no_hp_ortu || s.no_hp_ibu || '—'}</td>
                       <td className="px-4 py-2.5">
                         <div className="flex gap-1.5">
