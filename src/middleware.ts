@@ -25,10 +25,15 @@ export function middleware(request: NextRequest) {
   if (!session) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
+    const redirectRes = NextResponse.redirect(loginUrl);
+    redirectRes.headers.set('Cache-Control', 'no-store, must-revalidate');
+    return redirectRes;
   }
 
-  return NextResponse.next();
+  // Halaman terproteksi: jangan pernah di-cache browser (cegah back-button menampilkan halaman lama setelah logout)
+  const res = NextResponse.next();
+  res.headers.set('Cache-Control', 'no-store, must-revalidate');
+  return res;
 }
 
 export const config = {
