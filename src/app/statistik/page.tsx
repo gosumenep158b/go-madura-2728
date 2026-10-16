@@ -101,7 +101,7 @@ export default function StatistikPage() {
           <div className="rounded-2xl border border-red-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
             <h2 className="text-sm font-bold text-red-800 dark:text-red-300">Okupansi per Kelas GO</h2>
             <p className="mb-4 text-xs text-gray-500 dark:text-slate-400">Terisi vs kapasitas maksimum</p>
-            <div className="h-96">
+            <div>
               <KapasitasChart data={sorted} />
             </div>
           </div>

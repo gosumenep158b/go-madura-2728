@@ -53,7 +53,7 @@ export function TrendChart({ data }: { data: TrendPoint[] }) {
   if (data.length === 0) return <p className="py-16 text-center text-xs text-gray-400">Belum ada data di TA ini.</p>;
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <AreaChart data={data} margin={{ left: -10, right: 16 }}>
+      <AreaChart data={data} margin={{ top: 14, left: -10, right: 16 }}>
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={RED} stopOpacity={0.35} />
@@ -61,8 +61,9 @@ export function TrendChart({ data }: { data: TrendPoint[] }) {
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#fee2e2" />
-        <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-        <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
+        <XAxis dataKey="label" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+        <YAxis tick={{ fontSize: 11 }} allowDecimals={false} tickLine={false} axisLine={false} width={36}
+          domain={[0, (dataMax: number) => dataMax + 1]} />
         <Tooltip content={<ChartTooltip />} cursor={{ stroke: RED_SOFT }} />
         <Area
           type="monotone" dataKey="jumlah" name="Pendaftar" stroke={RED} strokeWidth={2.5}
