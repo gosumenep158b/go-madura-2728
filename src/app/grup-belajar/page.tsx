@@ -227,8 +227,45 @@ export default function GrupBelajarPage() {
                   </div>
                 </div>
 
-                {/* Tabel Roster Siswa */}
-                <div className="overflow-x-auto border rounded-xl">
+                {/* Tabel Roster Siswa — kartu per siswa di mobile, tabel di desktop */}
+                {/* Mobile: card list */}
+                <div className="md:hidden space-y-3">
+                  {filteredSiswa.length === 0 ? (
+                    <div className="border rounded-xl px-4 py-8 text-center text-gray-400 dark:text-slate-500 text-xs">
+                      Belum ada siswa yang terdaftar di grup kelas ini.
+                    </div>
+                  ) : (
+                    filteredSiswa.map((s, idx) => (
+                      <div key={`${s.no_reg ?? "row"}-${idx}`} className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0 flex-1">
+                            <p className="break-words font-bold text-gray-800 dark:text-slate-100">
+                              {idx + 1}. {s.nama_siswa}
+                            </p>
+                            <p className="mt-0.5 font-mono text-xs text-red-700 dark:text-red-400">{s.no_reg || '—'}</p>
+                          </div>
+                        </div>
+                        <div className="mt-2 flex items-center justify-between gap-3">
+                          <p className="min-w-0 text-xs text-gray-600 dark:text-slate-400">
+                            <span className="inline-block max-w-full truncate bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded font-medium">{s.asal_sekolah || '—'}</span>
+                          </p>
+                          {s.no_hp && (
+                            <a
+                              href={`https://wa.me/62${String(s.no_hp).replace(/^0/, '').replace(/\D/g, '')}`}
+                              target="_blank" rel="noopener noreferrer"
+                              className="shrink-0 rounded-full bg-green-600 px-3 py-1.5 text-[11px] font-bold text-white active:bg-green-700"
+                            >
+                              💬 WA
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Desktop: tabel */}
+                <div className="hidden md:block overflow-x-auto border rounded-xl">
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr className="bg-slate-900 text-white text-[11px] uppercase tracking-widest">
@@ -248,14 +285,14 @@ export default function GrupBelajarPage() {
                         </tr>
                       ) : (
                         filteredSiswa.map((s, idx) => (
-                          <tr key={`${s.no_reg ?? "row"}-${idx}`} className={idx % 2 ? 'bg-red-50 dark:bg-red-950/30/40 dark:bg-slate-800/60' : 'bg-white dark:bg-slate-900'}>
+                          <tr key={`${s.no_reg ?? "row"}-${idx}`} className={idx % 2 ? 'bg-red-50 dark:bg-slate-800/60' : 'bg-white dark:bg-slate-900'}>
                             <td className="px-4 py-2.5 text-xs text-gray-500 dark:text-slate-400">{idx + 1}</td>
-                            <td className="px-4 py-2.5 font-mono text-xs text-red-700 dark:text-red-400">{s.no_reg || '—'}</td>
+                            <td className="px-4 py-2.5 font-mono text-xs whitespace-nowrap text-red-700 dark:text-red-400">{s.no_reg || '—'}</td>
                             <td className="px-4 py-2.5 font-semibold text-gray-800 dark:text-slate-100">{s.nama_siswa}</td>
                             <td className="px-4 py-2.5 text-xs text-gray-600 dark:text-slate-400">
-                              <span className="bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded font-medium">{s.asal_sekolah || '—'}</span>
+                              <span className="bg-gray-100 dark:bg-slate-800 px-2 py-0.5 rounded font-medium whitespace-nowrap">{s.asal_sekolah || '—'}</span>
                             </td>
-                            <td className="px-4 py-2.5 font-mono text-xs text-gray-600 dark:text-slate-400">{s.no_hp || '—'}</td>
+                            <td className="px-4 py-2.5 font-mono text-xs whitespace-nowrap text-gray-600 dark:text-slate-400">{s.no_hp || '—'}</td>
                           </tr>
                         ))
                       )}
