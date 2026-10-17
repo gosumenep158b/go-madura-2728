@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { Eye, EyeOff, LogIn, Award, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, LogIn } from 'lucide-react';
 
 function LoginForm() {
   const router = useRouter();
@@ -58,41 +58,15 @@ function LoginForm() {
         </div>
 
         {/* Top Header / Logo */}
-        <div className="relative z-10 flex items-center justify-between">
-          <div className="bg-white dark:bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-white/20 flex items-center gap-3">
-            <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={36} className="h-9 w-auto object-contain" />
-          </div>
-          <div className="flex items-center gap-2 bg-amber-500 text-amber-950 px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg uppercase tracking-wider">
-            <Sparkles size={14} /> TA 2027/2028 Madura
-          </div>
+        <div className="relative z-10 flex items-center">
+          <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={36} className="h-9 w-auto object-contain drop-shadow-sm" />
         </div>
 
         {/* Middle / Bottom Content */}
         <div className="relative z-10 space-y-5 max-w-xl mb-4">
-          <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-300 border border-white/25 shadow-sm">
-            <Award size={15} /> Bimbel Tatap Muka Berbasis Teknologi Digital
-          </div>
           <h1 className="text-4xl xl:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
             Ganesha Operation <span className="text-amber-400">Madura</span>
           </h1>
-          <p className="text-red-100 text-sm xl:text-base leading-relaxed font-medium drop-shadow">
-            Pusat bimbingan belajar terdepan dengan metode KREATIF. Mengantarkan ribuan siswa meraih impian masuk PTN &amp; PTK favorit.
-          </p>
-
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
-            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
-              <div className="text-2xl font-black text-amber-400">207+</div>
-              <div className="text-xs text-red-100 font-medium">Siswa SLP Terverifikasi</div>
-            </div>
-            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
-              <div className="text-2xl font-black text-amber-400">20+</div>
-              <div className="text-xs text-red-100 font-medium">Kelas GO Aktif</div>
-            </div>
-            <div className="bg-white dark:bg-slate-900/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15">
-              <div className="text-2xl font-black text-amber-400">100%</div>
-              <div className="text-xs text-red-100 font-medium">Fasilitas Unggulan</div>
-            </div>
-          </div>
         </div>
 
         {/* Footer info */}
