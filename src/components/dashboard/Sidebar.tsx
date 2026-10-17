@@ -45,7 +45,7 @@ export default function Sidebar({ onTambah }: SidebarProps) {
         </div>
         <div className="min-w-0">
           <p className="text-[13px] font-black leading-none tracking-tight text-slate-900 dark:text-slate-100">Ganesha Operation</p>
-          <p className="mt-1 text-[11px] font-semibold tracking-wide text-slate-500 dark:text-slate-400">Sumenep · TA 2027/2028</p>
+          <p className="mt-1 text-[11px] font-semibold tracking-wide text-slate-500 dark:text-slate-400">Madura · TA 2027/2028</p>
         </div>
       </div>
 
@@ -130,7 +130,7 @@ export function MobileNav({ onTambah }: SidebarProps) {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  const activeLabel = NAV.find((n) => n.href === pathname)?.label ?? 'GO Sumenep';
+  const activeLabel = NAV.find((n) => n.href === pathname)?.label ?? 'GO Madura';
 
   return (
     <>
@@ -176,7 +176,7 @@ export function MobileNav({ onTambah }: SidebarProps) {
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-[13px] font-black leading-none text-slate-900 dark:text-slate-100">Ganesha Operation</p>
-                  <p className="mt-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400">Sumenep · TA 2027/2028</p>
+                  <p className="mt-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400">Madura · TA 2027/2028</p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} aria-label="Tutup menu" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">

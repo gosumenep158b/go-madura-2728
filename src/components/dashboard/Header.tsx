@@ -10,7 +10,7 @@ export default function Header() {
           </div>
           <div>
             <p className="text-base font-bold leading-tight text-red-700">
-              GO Sumenep <span className="font-medium text-gray-500">· Dashboard Siswa</span>
+              GO Madura <span className="font-medium text-gray-500">· Dashboard Siswa</span>
             </p>
             <p className="text-xs text-gray-500">Tahun Ajaran 2026/2027 · Ganesha Operation</p>
           </div>

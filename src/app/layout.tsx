@@ -7,8 +7,8 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'], dis
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'GO Sumenep \u2013 Dashboard Siswa',
-  description: 'Dashboard manajemen siswa Ganesha Operation Sumenep TA 2027/2028',
+  title: 'GO Madura – Dashboard Siswa',
+  description: 'Dashboard manajemen siswa Ganesha Operation Madura TA 2027/2028',
 };
 
 const themeInit = `(function(){try{var t=localStorage.getItem('go-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();`;

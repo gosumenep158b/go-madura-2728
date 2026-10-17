@@ -43,12 +43,12 @@ function LoginForm() {
   return (
     <div className="min-h-screen w-full flex bg-[#faf8ff]">
       {/* Left Side: Stunning Enhanced GO Building Hero (iofrm split-screen style) */}
-      <div className="hidden lg:flex lg:w-3/5 relative bg-red-950 overflow-hidden flex-col justify-between p-12 text-white shadow-2xl">
+      <div className="hidden lg:flex lg:w-3/5 relative bg-red-950 overflow-hidden flex-col justify-between p-12 text-white">
         {/* Background Enhanced Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/go_building_hero_enhanced.jpg"
-            alt="Ganesha Operation Sumenep Building"
+            alt="Ganesha Operation Madura Building"
             fill
             priority
             sizes="(max-width: 1024px) 0vw, 60vw"
@@ -63,7 +63,7 @@ function LoginForm() {
             <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={36} className="h-9 w-auto object-contain" />
           </div>
           <div className="flex items-center gap-2 bg-amber-500 text-amber-950 px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg uppercase tracking-wider">
-            <Sparkles size={14} /> TA 2027/2028 Sumenep
+            <Sparkles size={14} /> TA 2027/2028 Madura
           </div>
         </div>
 
@@ -73,7 +73,7 @@ function LoginForm() {
             <Award size={15} /> Bimbel Tatap Muka Berbasis Teknologi Digital
           </div>
           <h1 className="text-4xl xl:text-5xl font-black tracking-tight leading-tight text-white drop-shadow-md">
-            Ganesha Operation <span className="text-amber-400">Sumenep</span>
+            Ganesha Operation <span className="text-amber-400">Madura</span>
           </h1>
           <p className="text-red-100 text-sm xl:text-base leading-relaxed font-medium drop-shadow">
             Pusat bimbingan belajar terdepan dengan metode KREATIF. Mengantarkan ribuan siswa meraih impian masuk PTN &amp; PTK favorit.
@@ -97,7 +97,7 @@ function LoginForm() {
 
         {/* Footer info */}
         <div className="relative z-10 text-xs text-red-200 font-medium flex items-center justify-between">
-          <span>© 2026/2027 Ganesha Operation Sumenep</span>
+          <span>© 2026/2027 Ganesha Operation Madura</span>
           <span className="text-amber-300 font-bold">The King of the Fastest Solution</span>
         </div>
       </div>
@@ -111,7 +111,7 @@ function LoginForm() {
             <div className="inline-block bg-white dark:bg-slate-900 p-2.5 rounded-2xl shadow-md border border-red-100 dark:border-slate-800">
               <Image src="/images/logo_go_standar.png" alt="Ganesha Operation" width={120} height={40} className="h-8 w-auto object-contain mx-auto" />
             </div>
-            <h2 className="text-lg font-black text-gray-900 dark:text-slate-50">Ganesha Operation Sumenep</h2>
+            <h2 className="text-lg font-black text-gray-900 dark:text-slate-50">Ganesha Operation Madura</h2>
             <p className="text-xs text-gray-500 dark:text-slate-400">Dashboard Siswa TA 2026/2027</p>
           </div>
 
@@ -188,7 +188,7 @@ function LoginForm() {
           </form>
 
           <div className="text-center text-xs text-gray-400 pt-4 border-t">
-            Ganesha Operation Sumenep · Sistem Manajemen Siswa
+            Ganesha Operation Madura · Sistem Manajemen Siswa
           </div>
 
         </div>
